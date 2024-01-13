@@ -573,6 +573,51 @@ $ echo $?
 1:: the Git working tree of the given directory is dirty
 2:: the given directory is not a Git repository
 
+[#web-scripts]
+=== Web
+
+This section contains scripts related to Web development:
+
+<<compress-gzip,compress-gzip>>:: compress a file with gzip
+
+[#compress-gzip]
+==== compress-gzip
+
+link:scripts/web/compress-gzip.sh[This script] will compress the given file with gzip.
+
+[TIP]
+====
+Here is a fragment to be placed into your `.htaccess` or https://httpd.apache.org/docs/current/configuring.html[Apache HTTPD server configuration file]:
+
+[source]
+----
+<IfModule mod_headers.c>
+  RewriteCond "%{HTTP:Accept-encoding}" "gzip"
+  RewriteCond "%{REQUEST_FILENAME}.gz" -s
+  RewriteRule "^(.*)\.(css|html|js|mjs|svg)$" "/$1.$2.gz" [QSA]
+
+  RewriteRule "\.css\.gz$" "-" [T=text/css,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.html\.gz$" "-" [T=text/html,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.js\.gz$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.mjs\.gz$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.svg\.gz$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+
+  <FilesMatch "(\.css|\.html|\.js|\.mjs|\.svg)\.gz$">
+    Header append Content-Encoding gzip
+    Header append Vary Accept-Encoding
+  </FilesMatch>
+</IfModule>
+----
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/compress-gzip.sh test.txt
+$ find dist \( -type f -name '*.html' -o -name '*.css' \) -exec scripts/web/compress-gzip.sh {} ';'
+----
+
 == Functions
 
 The functions need to be copied into an https://docstore.mik.ua/orelly/unix3/upt/ch29_13.htm#upt3-CHP-29-SECT-13.2.2[$FPATH directory].
