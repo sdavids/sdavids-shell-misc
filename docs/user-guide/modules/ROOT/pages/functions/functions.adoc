@@ -1,0 +1,41 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Functions
+
+The functions need to be copied into an https://docstore.mik.ua/orelly/unix3/upt/ch29_13.htm#upt3-CHP-29-SECT-13.2.2[$FPATH directory].
+
+[IMPORTANT]
+====
+The filename needs to match the name of the function.
+
+.my_func
+[,shell]
+----
+my_func() {}
+----
+====
+
+[TIP]
+====
+Example zsh setup:
+
+[,shell]
+----
+$ mkdir ~/.zfunc
+----
+
+.~/.zshrc
+[,shell]
+----
+readonly ext_func="${HOME}/.zfunc"
+
+export FPATH="${ext_func}:${FPATH}"
+
+for f in ${ext_func}; do
+  # shellcheck disable=SC2046
+  autoload -Uz $(ls "${f}")
+done
+----
+
+The functions should be copied into `~/.zfunc`.
+====

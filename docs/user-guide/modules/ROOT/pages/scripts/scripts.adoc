@@ -1,0 +1,15 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Scripts
+
+[TIP]
+====
+Copy the scripts useful for a given project into a `scripts` folder within the project so they are easily accessible by team members.
+
+[,shell]
+----
+project_root
+├── scripts
+...
+----
+====
