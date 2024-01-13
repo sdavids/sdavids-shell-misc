@@ -578,7 +578,51 @@ $ echo $?
 
 This section contains scripts related to Web development:
 
+<<compress-brotli,compress-brotli>>:: compress a file with brotli
 <<compress-gzip,compress-gzip>>:: compress a file with gzip
+
+[#compress-brotli]
+==== compress-brotli
+
+link:scripts/web/compress-brotli.sh[This script] will compress the given file with https://github.com/google/brotli[brotli].
+
+[NOTE]
+====
+`brotli` needs to be <<brotli,installed>>.
+====
+
+[TIP]
+====
+Here is a fragment to be placed into your `.htaccess` or https://httpd.apache.org/docs/current/configuring.html[Apache HTTPD server configuration file]:
+
+[source]
+----
+<IfModule mod_headers.c>
+  RewriteCond "%{HTTP:Accept-encoding}" "br"
+  RewriteCond "%{REQUEST_FILENAME}.br" -s
+  RewriteRule "^(.*)\.(css|html|js|mjs|svg)$" "/$1.$2.br" [QSA]
+
+  RewriteRule "\.css\.br$" "-" [T=text/css,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.html\.br$" "-" [T=text/html,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.js\.br$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.mjs\.br$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.svg\.br$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+
+  <FilesMatch "(\.css|\.html|\.js|\.mjs|\.svg)\.br$">
+    Header append Content-Encoding br
+    Header append Vary Accept-Encoding
+  </FilesMatch>
+</IfModule>
+----
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/compress-brotli.sh test.txt
+$ find dist \( -type f -name '*.html' -o -name '*.css' \) -exec scripts/web/compress-brotli.sh {} ';'
+----
 
 [#compress-gzip]
 ==== compress-gzip
@@ -952,6 +996,23 @@ $ git config core.hooksPath .githooks
 ====
 
 === Installation
+
+[#brotli]
+==== brotli
+
+===== Linux
+
+[source,shell]
+----
+$ sudo apt-get install brotli
+----
+
+===== Mac
+
+[source,shell]
+----
+$ brew install brotli
+----
 
 [#gh-cli]
 ==== GitHub CLI
