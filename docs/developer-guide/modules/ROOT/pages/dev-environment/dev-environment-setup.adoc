@@ -1,0 +1,20 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Development Environment Setup
+
+[IMPORTANT]
+====
+After cloning this repository you need to install the Git hooks via:
+
+[,console]
+----
+$ git config core.hooksPath .githooks
+----
+
+And configure the https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile[ignore-revs-file]:
+
+[,console]
+----
+$ git config blame.ignoreRevsFile .git-blame-ignore-revs
+----
+====
