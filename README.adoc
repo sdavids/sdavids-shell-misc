@@ -49,6 +49,38 @@ toc::[]
 
 == Scripts
 
+[#general-scripts]
+=== General
+
+This section contains generally useful scripts:
+
+<<shellscript-check,shellscript-check>>:: shellcheck `*.sh` files in the given directory
+
+[#shellscript-check]
+==== shellscript-check
+
+link:scripts/general/shellscript-check.sh[This script] will invoke https://www.shellcheck.net[shellcheck] on `*.sh` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+[NOTE]
+====
+`shellcheck` needs to be <<shellcheck,installed>>.
+====
+
+[TIP]
+====
+If you copy this script into a Node.js-based project you should exclude the `node_modules` directory:
+
+`find … -name '*.sh' -not -path '*/node_modules/*' -print0 …`
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/general/shellscript-check.sh
+$ scripts/general/shellscript-check.sh /tmp
+----
+
 == Functions
 
 The functions need to be copied into an https://docstore.mik.ua/orelly/unix3/upt/ch29_13.htm#upt3-CHP-29-SECT-13.2.2[$FPATH directory].
