@@ -249,6 +249,66 @@ $ scripts/general/shellscript-check.sh
 $ scripts/general/shellscript-check.sh /tmp
 ----
 
+[#git-scripts]
+=== Git
+
+This section contains scripts related to https://git-scm.com[Git]:
+
+<<git-cleanup,git-cleanup>>:: remove untracked files from the working tree and optimize a local repository
+
+[#git-cleanup]
+==== git-cleanup
+
+link:scripts/git/git-cleanup.sh[This script] will do the following:
+
+* remove untracked files from the working tree
+* cleanup remote branches
+* cleanup unnecessary files and optimize the local repository
+
+It should be copied into a Git repository.
+
+[WARNING]
+====
+This script will remove all untracked files.
+
+Sometimes you have untracked files which you do not want to be cleaned up.
+
+For example:
+
+* `.env` or `.envrc` files
+* `\*.crt`, `*.pem` or `*.key` self-signed certificate files
+* IDE metadata
+
+Add them to the https://+git-scm.com/docs/git-clean#Documentation/git-clean.txt--eltpatterngt+[exclusions] to ensure that they will not be removed:
+
+.scripts/git-cleanup.sh
+[source,shell,highlight=2,9]
+----
+  git clean -qfdx \
++  -e .env \
+  -e .fleet \
+  -e .idea \
+  -e .classpath \
+  -e .project \
+  -e .settings \
+  -e .vscode \
++  -e *.pem \
+   .
+----
+====
+
+[NOTE]
+====
+By default, the metadata files of https://eclipseide.org[Eclipse], https://www.jetbrains.com/products/#type=ide[JetBrains IDEs], and https://code.visualstudio.com[Visual Studio Code] are not removed.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/git/git-cleanup.sh
+----
+
 == Functions
 
 The functions need to be copied into an https://docstore.mik.ua/orelly/unix3/upt/ch29_13.htm#upt3-CHP-29-SECT-13.2.2[$FPATH directory].
