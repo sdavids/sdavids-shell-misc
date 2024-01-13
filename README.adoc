@@ -1,0 +1,40 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= sdavids-shell-misc
+Sebastian Davids <sdavids@gmx.de>
+// Metadata:
+:description: Miscellaneous shell-related scripts and functions.
+// Settings:
+:sectanchors:
+:sectlinks:
+// Refs:
+:uri-contributor-covenant: https://www.contributor-covenant.org
+:uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
+:uri-google-style: https://github.com/google/gts
+
+ifdef::env-browser[:outfilesuffix: .adoc]
+
+ifdef::env-github[]
+:outfilesuffix: .adoc
+:badges:
+endif::[]
+
+ifdef::badges[]
+image:https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg[Contributor Covenant,Version 2.1,link={uri-contributor-covenant}]
+image:https://img.shields.io/badge/code%20style-google-blueviolet.svg[Code Style: Google,link={uri-google-style}]
+image:https://img.shields.io/osslifecycle/sdavids/sdavids-shell-misc[OSS Lifecycle]
+image:https://img.shields.io/maintenance/yes/2024[Maintenance]
+image:https://img.shields.io/github/last-commit/sdavids/sdavids-shell-misc[GitHub last commit]
+image:http://isitmaintained.com/badge/resolution/sdavids/sdavids-shell-misc.svg[Resolution Time]
+image:http://isitmaintained.com/badge/open/sdavids/sdavids-shell-misc.svg[Open Issues]
+endif::[]
+
+{description}
+
+https://sdavids.github.io/sdavids-shell-misc/user-guide/index.html[User Guide]
+
+https://sdavids.github.io/sdavids-shell-misc/developer-guide/index.html[Developer Guide]
+
+== License
+
+Apache License, Version 2.0 (link:LICENSES/Apache-2.0.txt[Apache-2.0.txt] or {uri-apache-license}).

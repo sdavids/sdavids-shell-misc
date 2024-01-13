@@ -1,0 +1,43 @@
+---
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+name: ci
+on: # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+permissions: {}
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        # https://github.com/actions/checkout/releases
+        uses: actions/checkout@v4.2.2
+      - name: Classify changes
+        # https://github.com/dorny/paths-filter/releases
+        uses: dorny/paths-filter@v3.0.2
+        id: changes
+        with:
+          filters: |
+            sh:
+              - '**.sh'
+              - 'zfunc/**'
+            yaml:
+              - '**.yaml'
+      - if: steps.changes.outputs.sh == 'true'
+        name: Lint shell scripts
+        run: |
+          find . -type f -name '*.sh' -print0 | xargs -0L1 shellcheck
+          find zfunc -type f -print0 | xargs -0L1 shellcheck
+      - if: steps.changes.outputs.yaml == 'true'
+        name: Lint YAML files
+        run: yamllint --strict .

@@ -1,0 +1,35 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Installation
+
+== ShellCheck
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install shellcheck
+----
+
+=== Mac
+
+[,console]
+----
+$ brew install shellcheck
+----
+
+== yamllint
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install yamllint
+----
+
+=== Mac
+
+[,console]
+----
+$ brew install yamllint
+----
