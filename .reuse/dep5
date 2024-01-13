@@ -1,0 +1,16 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: sdavids-shell-misc
+Upstream-Contact: Sebastian Davids <sdavids@gmx.de>
+Source: https://github.com/sdavids/sdavids-shell-misc
+
+Files: OSSMETADATA
+Copyright: © 2024 Sebastian Davids <sdavids@gmx.de>
+License: Apache-2.0
+
+Files: */*.png
+Copyright: © 2024 Sebastian Davids <sdavids@gmx.de>
+License: Apache-2.0
+
+Files: docs/asciidoc/docinfo/docinfo.html
+Copyright: © 2024 Sebastian Davids <sdavids@gmx.de>
+License: Apache-2.0
