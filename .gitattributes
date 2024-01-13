@@ -1,0 +1,11 @@
+# https://git-scm.com/docs/gitattributes
+
+# https://git-scm.com/docs/gitattributes#__code_text_code
+* text=auto eol=lf
+
+# https://git-scm.com/docs/gitattributes#__code_whitespace_code
+* whitespace=tab-in-indent,trailing-space,tabwidth=2
+
+*.adoc linguist-documentation
+*.md diff=markdown linguist-documentation
+*.sh diff=bash
