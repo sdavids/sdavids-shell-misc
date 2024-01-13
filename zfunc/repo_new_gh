@@ -1,0 +1,80 @@
+# vim:ft=zsh
+
+# shellcheck shell=sh
+
+#
+# Copyright (c) 2024, Sebastian Davids
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# this function needs to be placed in a $FPATH directory
+#
+# add the following to your $ZDOTDIR/.zshrc:
+#
+# autoload -Uz "repo_new_gh"
+#
+
+# gh needs to be in $PATH:
+#
+# https://github.com/cli/cli#installation
+#
+
+repo_new_gh() {
+  if [ -z "$*" ]; then
+    echo "Usage: $0 REPO_NAME"
+  else
+    readonly repo_name="$1"
+
+    readonly template='sdavids/sdavids-project-template'
+
+    # https://cli.github.com/manual/gh_repo_create
+    gh repo create "${repo_name}" \
+      --clone \
+      --template="${template}" \
+      --private \
+      --include-all-branches
+
+    # GitHub is slow so let's wait a bit
+    sleep 5
+
+    # https://cli.github.com/manual/gh_repo_edit
+    gh repo edit \
+      --allow-update-branch \
+      --default-branch main \
+      --delete-branch-on-merge \
+      --enable-auto-merge=false \
+      --enable-discussions=false \
+      --enable-issues=false \
+      --enable-merge-commit=false \
+      --enable-projects=false \
+      --enable-rebase-merge=true \
+      --enable-squash-merge=false \
+      --enable-wiki=false
+
+    # GitHub is slow so let's wait a bit
+    sleep 5
+
+    cd "${repo_name}" || return
+
+    # https://git-scm.com/docs/git-commit
+    git commit \
+      --gpg-sign \
+      --signoff \
+      --amend \
+      --reset-author \
+      --message 'chore: initial'
+
+    git push --force
+  fi
+}
