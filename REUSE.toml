@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+version = 1
+
+SPDX-PackageName = "sdavids-shell-misc"
+SPDX-PackageSupplier = "Sebastian Davids <sdavids@gmx.de>"
+SPDX-PackageDownloadLocation = "https://github.com/sdavids/sdavids-shell-misc"
+
+[[annotations]]
+path = "OSSMETADATA"
+SPDX-FileCopyrightText = "© 2024 Sebastian Davids <sdavids@gmx.de>"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = "docs/asciidoc/docinfo/docinfo.html"
+SPDX-FileCopyrightText = "© 2024 Sebastian Davids <sdavids@gmx.de>"
+SPDX-License-Identifier = "Apache-2.0"

@@ -1,0 +1,10 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Overview
+:uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
+
+Miscellaneous shell-related xref:scripts/scripts.adoc[scripts] and xref:functions/functions.adoc[functions].
+
+== License
+
+{uri-apache-license}[Apache License, Version 2.0]
