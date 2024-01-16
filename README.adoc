@@ -586,6 +586,7 @@ This section contains scripts related to Web development:
 <<minify-css,minify-css>>:: minify CSS files
 <<minify-html,minify-html>>:: minify HTML files
 <<minify-json,minify-json>>:: minify JSON files
+<<minify-json-tags,minify-json-tags>>:: minify JSON-structured script tags
 <<minify-robots,minify-robots>>:: minify the robots.txt file
 <<minify-svg,minify-svg>>:: minify SVG files
 <<minify-traffic-advice,minify-traffic-advice>>:: minify the private prefetch proxy traffic control file
@@ -783,6 +784,66 @@ link:scripts/web/minify-json.sh[This script] will minify the `*.json` files in t
 ----
 $ scripts/web/minify-json.sh
 $ scripts/web/minify-json.sh dist
+----
+
+[#minify-json-tags]
+==== minify-json-tags
+
+link:scripts/web/minify-json-tags.mjs[This script] will minify JSON-structured script tags in the given HTML file.
+
+[source,html]
+----
+<html>
+…
+  <script type="importmap">
+    {
+      "imports": {
+        "utils": "/j/utils.mjs"
+      }
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "https://sdavids.de/"
+    }
+  </script>
+…
+</html>
+----
+
+⇓
+
+[source,html]
+----
+<html>
+…
+<script type="importmap">{"imports":{"utils":"/j/utils.mjs"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","url":"https://sdavids.de/"}</script>
+…
+</html>
+----
+
+[NOTE]
+====
+`npm` needs to be <<node-version-manager,installed>>.
+
+Afterward, you need to install the dependencies of this script:
+
+[source,shell]
+----
+$ npm i --save-dev domutils dom-serializer htmlparser2
+----
+
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/minify-json-tags.mjs dist/index.html
+$ find dist -type f -name '*.html' -exec scripts/web/minify-json-tags.mjs {} ';'
 ----
 
 [#minify-robots]
