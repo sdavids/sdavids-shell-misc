@@ -583,6 +583,7 @@ This section contains scripts related to Web development:
 <<compress-brotli,compress-brotli>>:: compress a file with brotli
 <<compress-gzip,compress-gzip>>:: compress a file with gzip
 <<compress-zstd,compress-zstd>>:: compress a file with zstd
+<<minify-css,minify-css>>:: minify CSS files
 <<minify-html,minify-html>>:: minify HTML files
 
 [#compress-brotli]
@@ -707,6 +708,39 @@ Here is a fragment to be placed into your `.htaccess` or https://httpd.apache.or
 ----
 $ scripts/web/compress-zstd.sh test.txt
 $ find dist \( -type f -name '*.html' -o -name '*.css' \) -exec scripts/web/compress-zstd.sh {} ';'
+----
+
+[#minify-css]
+==== minify-css
+
+link:scripts/web/minify-css.sh[This script] will minify and transpile the `*.css` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+This script uses https://github.com/browserslist/browserslist[browserslist] to determine the transpilation targets.
+
+[NOTE]
+====
+`npx` needs to be <<node-version-manager,installed>>.
+====
+
+[TIP]
+====
+If you do not want the https://browserslist.dev/?q=ZGVmYXVsdHM%3D[defaults] you have https://lightningcss.dev/transpilation.html#cli[several options] to change them.
+
+For example via the following file:
+
+..browserslistrc
+[source]
+----
+last 2 versions
+----
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/minify-css.sh
+$ scripts/web/minify-css.sh dist
 ----
 
 [#minify-html]
