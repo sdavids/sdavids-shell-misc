@@ -585,6 +585,7 @@ This section contains scripts related to Web development:
 <<compress-zstd,compress-zstd>>:: compress a file with zstd
 <<minify-css,minify-css>>:: minify CSS files
 <<minify-html,minify-html>>:: minify HTML files
+<<minify-robots,minify-robots>>:: minify the robots.txt file
 
 [#compress-brotli]
 ==== compress-brotli
@@ -759,6 +760,19 @@ link:scripts/web/minify-html.sh[This script] will minify the `*.html` files in t
 ----
 $ scripts/web/minify-html.sh
 $ scripts/web/minify-html.sh dist
+----
+
+[#minify-robots]
+==== minify-robots
+
+link:scripts/web/minify-robots.sh[This script] will minify the `robots.txt` file in the given directory (`$PWD` if not given).
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/minify-html.sh
+$ scripts/web/minify-robots.sh dist
 ----
 
 == Functions
