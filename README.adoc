@@ -49,8 +49,28 @@ toc::[]
 
 This section contains generally useful scripts:
 
+<<create-timestamp-file,create-timestamp-file>>:: create a file with a timestamp
 <<hash-filename,hash-filename>>:: insert a hash into a filename
 <<shellscript-check,shellscript-check>>:: shellcheck `*.sh` files in the given directory
+
+[#create-timestamp-file]
+==== create-timestamp-file
+
+link:scripts/general/create-timestamp-file.sh[This script] will create a file with the given name; the content will be the https://www.rfc-editor.org/rfc/rfc3339[RFC 3339 timestamp] of the file's creation, e.g.:
+
+[source]
+----
+2024-01-16T16:33:12Z
+----
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/general/create-timestamp-file.sh .timestamp
+$ cat .timestamp
+2024-02-19T10:37:02Z
+----
 
 [#hash-filename]
 ==== hash-filename
