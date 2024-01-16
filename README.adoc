@@ -585,6 +585,7 @@ This section contains scripts related to Web development:
 <<compress-zstd,compress-zstd>>:: compress a file with zstd
 <<minify-css,minify-css>>:: minify CSS files
 <<minify-html,minify-html>>:: minify HTML files
+<<minify-json,minify-json>>:: minify JSON files
 <<minify-robots,minify-robots>>:: minify the robots.txt file
 <<minify-svg,minify-svg>>:: minify SVG files
 <<minify-xml,minify-xml>>:: minify XML files
@@ -762,6 +763,24 @@ link:scripts/web/minify-html.sh[This script] will minify the `*.html` files in t
 ----
 $ scripts/web/minify-html.sh
 $ scripts/web/minify-html.sh dist
+----
+
+[#minify-json]
+==== minify-json
+
+link:scripts/web/minify-json.sh[This script] will minify the `*.json` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+[NOTE]
+====
+`jq` needs to be <<jq,installed>>.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/minify-json.sh
+$ scripts/web/minify-json.sh dist
 ----
 
 [#minify-robots]
@@ -1191,6 +1210,23 @@ Install {gh-cli-install-url}[GitHub CLI].
 [source,shell]
 ----
 $ brew install gh
+----
+
+[#jq]
+==== jq
+
+===== Linux
+
+[source,shell]
+----
+$ sudo apt-get install jq
+----
+
+===== Mac
+
+[source,shell]
+----
+$ brew install jq
 ----
 
 [#node-version-manager]
