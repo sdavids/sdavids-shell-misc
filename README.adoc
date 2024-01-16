@@ -586,6 +586,7 @@ This section contains scripts related to Web development:
 <<minify-css,minify-css>>:: minify CSS files
 <<minify-gif,minify-gif>>:: minify GIF files
 <<minify-html,minify-html>>:: minify HTML files
+<<minify-jpeg,minify-jpeg>>:: minify JPEG files
 <<minify-json,minify-json>>:: minify JSON files
 <<minify-json-tags,minify-json-tags>>:: minify JSON-structured script tags
 <<minify-robots,minify-robots>>:: minify the robots.txt file
@@ -799,6 +800,38 @@ link:scripts/web/minify-html.sh[This script] will minify the `*.html` files in t
 ----
 $ scripts/web/minify-html.sh
 $ scripts/web/minify-html.sh dist
+----
+
+[#minify-jpeg]
+==== minify-jpeg
+
+link:scripts/web/minify-jpeg.sh[This script] will minify the `\*.jpg` and `*.jpeg` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+[NOTE]
+====
+`jpegoptim` needs to be <<jpegoptim,installed>>.
+====
+
+[TIP]
+====
+If you are using macOS you might want to use https://imageoptim.com/mac[ImageOptim] instead of using this script.
+====
+
+[TIP]
+====
+It is advisable to minimize image files before adding them to a Git repository.
+
+Minimizing image files during a build is usually bad idea unless the build generates images files.
+
+Also, you might want to add a <<hash-filename,hash>> to the minified image file before adding it to a Git repository.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/minify-jpeg.sh
+$ scripts/web/minify-jpeg.sh dist
 ----
 
 [#minify-json]
@@ -1357,6 +1390,23 @@ Install {gh-cli-install-url}[GitHub CLI].
 [source,shell]
 ----
 $ brew install gh
+----
+
+[#jpegoptim]
+==== jpegoptim
+
+===== Linux
+
+[source,shell]
+----
+$ sudo apt install jpegoptim
+----
+
+===== Mac
+
+[source,shell]
+----
+$ brew install jpegoptim
 ----
 
 [#jq]
