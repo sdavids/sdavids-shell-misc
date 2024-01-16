@@ -584,6 +584,7 @@ This section contains scripts related to Web development:
 <<compress-gzip,compress-gzip>>:: compress a file with gzip
 <<compress-zstd,compress-zstd>>:: compress a file with zstd
 <<minify-css,minify-css>>:: minify CSS files
+<<minify-gif,minify-gif>>:: minify GIF files
 <<minify-html,minify-html>>:: minify HTML files
 <<minify-json,minify-json>>:: minify JSON files
 <<minify-json-tags,minify-json-tags>>:: minify JSON-structured script tags
@@ -748,6 +749,38 @@ last 2 versions
 ----
 $ scripts/web/minify-css.sh
 $ scripts/web/minify-css.sh dist
+----
+
+[#minify-gif]
+==== minify-gif
+
+link:scripts/web/minify-gif.sh[This script] will minify the `*.gif` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+[NOTE]
+====
+`gifsicle` needs to be <<gifsicle,installed>>.
+====
+
+[TIP]
+====
+If you are using macOS you might want to use https://imageoptim.com/mac[ImageOptim] instead of using this script.
+====
+
+[TIP]
+====
+It is advisable to minimize image files before adding them to a Git repository.
+
+Minimizing image files during a build is usually bad idea unless the build generates images files.
+
+Also, you might want to add a <<hash-filename,hash>> to the minified image file before adding it to a Git repository.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/minify-gif.sh
+$ scripts/web/minify-gif.sh dist
 ----
 
 [#minify-html]
@@ -1293,6 +1326,23 @@ $ sudo apt-get install brotli
 [source,shell]
 ----
 $ brew install brotli
+----
+
+[#gifsicle]
+==== gifsicle
+
+===== Linux
+
+[source,shell]
+----
+$ sudo apt install gifsicle
+----
+
+===== Mac
+
+[source,shell]
+----
+$ brew install gifsicle
 ----
 
 [#gh-cli]
