@@ -16,6 +16,8 @@ Sebastian Davids <sdavids@gmx.de>
 :uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
 :uri-google-style: https://github.com/google/gts
 :gh-cli-install-url: https://github.com/cli/cli#linux--bsd
+:nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
+:fnm-install-url: https://github.com/Schniz/fnm#installation
 
 ifdef::env-browser[:outfilesuffix: .adoc]
 
@@ -388,6 +390,7 @@ This section contains scripts related to Web development:
 <<compress-brotli,compress-brotli>>:: compress a file with brotli
 <<compress-gzip,compress-gzip>>:: compress a file with gzip
 <<compress-zstd,compress-zstd>>:: compress a file with zstd
+<<minify-html,minify-html>>:: minify HTML files
 
 [#compress-brotli]
 ==== compress-brotli
@@ -511,6 +514,24 @@ Here is a fragment to be placed into your `.htaccess` or https://httpd.apache.or
 ----
 $ scripts/web/compress-zstd.sh test.txt
 $ find dist \( -type f -name '*.html' -o -name '*.css' \) -exec scripts/web/compress-zstd.sh {} ';'
+----
+
+[#minify-html]
+==== minify-html
+
+link:scripts/web/minify-html.sh[This script] will minify the `*.html` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+[NOTE]
+====
+`npx` needs to be <<node-version-manager,installed>>.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/minify-html.sh
+$ scripts/web/minify-html.sh dist
 ----
 
 == Functions
@@ -875,6 +896,53 @@ Install {gh-cli-install-url}[GitHub CLI].
 [source,shell]
 ----
 $ brew install gh
+----
+
+[#node-version-manager]
+==== Node Version Manager
+
+Install {fnm-install-url}[fnm] or {nvm-install-url}[NVM].
+
+===== fnm
+
+.~/.zprofile
+[source,shell]
+----
+if command -v fnm > /dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd)"
+fi
+----
+
+===== nvm
+
+.~/.zshrc
+[source,shell]
+----
+export NVM_DIR="${HOME}/.nvm"
+
+[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
+[ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
+
+if command -v nvm > /dev/null 2>&1; then
+  autoload -U add-zsh-hook
+  load-nvmrc() {
+    local nvmrc_path="$(nvm_find_nvmrc)"
+    if [ -n "${nvmrc_path}" ]; then
+      local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+      if [ "${nvmrc_node_version}" = "N/A" ]; then
+        nvm install
+      elif [ "${nvmrc_node_version}" != "$(nvm version)" ]; then
+        nvm use
+      fi
+    elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+      echo "Reverting to nvm default version"
+      nvm use default
+    fi
+  }
+
+  add-zsh-hook chpwd load-nvmrc
+  load-nvmrc
+fi
 ----
 
 [#shellcheck]
