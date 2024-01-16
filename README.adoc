@@ -395,6 +395,7 @@ This section contains scripts related to Web development:
 <<minify-json,minify-json>>:: minify JSON files
 <<minify-robots,minify-robots>>:: minify the robots.txt file
 <<minify-svg,minify-svg>>:: minify SVG files
+<<minify-traffic-advice,minify-traffic-advice>>:: minify the private prefetch proxy traffic control file
 <<minify-webmanifest,minify-webmanifest>>:: minify the web application manifest
 <<minify-xml,minify-xml>>:: minify XML files
 
@@ -634,6 +635,23 @@ Also, you might want to add a <<hash-filename,hash>> to the minified image file 
 ----
 $ scripts/web/minify-svg.sh
 $ scripts/web/minify-svg.sh dist
+----
+
+[#minify-traffic-advice]
+==== minify-traffic-advice
+
+link:scripts/web/minify-traffic-advice.sh[This script] will minify the https://developer.chrome.com/blog/private-prefetch-proxy/#traffic[private prefetch proxy traffic control] file.
+
+[NOTE]
+====
+`jq` needs to be <<jq,installed>>.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/minify-traffic-advice.sh dist/.well-known/traffic-advice
 ----
 
 [#minify-webmanifest]
