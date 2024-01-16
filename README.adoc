@@ -393,6 +393,7 @@ This section contains scripts related to Web development:
 <<minify-css,minify-css>>:: minify CSS files
 <<minify-html,minify-html>>:: minify HTML files
 <<minify-robots,minify-robots>>:: minify the robots.txt file
+<<minify-xml,minify-xml>>:: minify XML files
 
 [#compress-brotli]
 ==== compress-brotli
@@ -580,6 +581,24 @@ link:scripts/web/minify-robots.sh[This script] will minify the `robots.txt` file
 ----
 $ scripts/web/minify-html.sh
 $ scripts/web/minify-robots.sh dist
+----
+
+[#minify-xml]
+==== minify-xml
+
+link:scripts/web/minify-xml.sh[This script] will minify the `*.xml` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+[NOTE]
+====
+`npx` needs to be <<node-version-manager,installed>>.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/minify-xml.sh
+$ scripts/web/minify-xml.sh dist
 ----
 
 == Functions
