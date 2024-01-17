@@ -238,6 +238,7 @@ $ scripts/general/shellscript-check.sh /tmp
 This section contains scripts related to https://git-scm.com[Git]:
 
 <<git-cleanup,git-cleanup>>:: remove untracked files from the working tree and optimize a local repository
+<<git-get-hash,git-get-hash>>:: return the hash of the HEAD commit
 <<git-is-working-tree-clean,git-is-working-tree-clean>>:: check whether the Git working tree  is clean
 
 [#git-cleanup]
@@ -291,6 +292,24 @@ By default, the metadata files of https://eclipseide.org[Eclipse], https://www.j
 [source,shell]
 ----
 $ scripts/git/git-cleanup.sh
+----
+
+[#git-get-hash]
+==== git-get-hash
+
+link:scripts/git/git-get-hash.sh[This script] will return the hash of the HEAD commit of the checked out branch of the given Git repository directory (`$PWD` if not given).
+
+The suffix `-dirty` will be appended if the working tree is dirty.
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/git/git-get-hash.sh
+844881d148be35d7c0a9bcbf5ba23ab79cf14c6e
+$ touch a
+$ scripts/git/git-get-hash.sh
+844881d148be35d7c0a9bcbf5ba23ab79cf14c6e-dirty
 ----
 
 [#git-is-working-tree-clean]
