@@ -255,6 +255,7 @@ $ scripts/general/shellscript-check.sh /tmp
 This section contains scripts related to https://git-scm.com[Git]:
 
 <<git-cleanup,git-cleanup>>:: remove untracked files from the working tree and optimize a local repository
+<<git-is-working-tree-clean,git-is-working-tree-clean>>:: check whether the Git working tree  is clean
 
 [#git-cleanup]
 ==== git-cleanup
@@ -308,6 +309,23 @@ By default, the metadata files of https://eclipseide.org[Eclipse], https://www.j
 ----
 $ scripts/git/git-cleanup.sh
 ----
+
+[#git-is-working-tree-clean]
+==== git-is-working-tree-clean
+
+link:scripts/git/git-is-working-tree-clean.sh[This script] will check whether the Git working tree in the given directory (`$PWD` if not given) is https://git-scm.com/docs/git-clean#_description[clean].
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/git/git-is-working-tree-clean.sh
+$ echo $?
+----
+
+0:: the Git working tree of the given directory is clean
+1:: the Git working tree of the given directory is dirty
+2:: the given directory is not a Git repository
 
 == Functions
 
