@@ -54,10 +54,96 @@ toc::[]
 
 This section contains generally useful scripts:
 
+<<counter,counter>>:: create a counter
 <<create-timestamp-file,create-timestamp-file>>:: create a file with a timestamp
 <<loop,loop>>:: repeat a script repeatedly
 <<hash-filename,hash-filename>>:: insert a hash into a filename
 <<shellscript-check,shellscript-check>>:: shellcheck `*.sh` files in the given directory
+
+[#counter]
+==== counter
+
+link:scripts/general/counter.sh[This script] will create a counter with the given name.
+
+The optional second positive integer parameter will stop the counter when the current count is equal or larger than the given argument.
+
+Invoking this script will print the current count to stdout unless the counter has been removed.
+
+The exit code of the script will be `100` when the count has been increased or `0` when the counter has been removed.
+
+The count is persisted in a file in a temporary directory or `COUNTER_DIR` if set in the environment.
+
+===== Usage
+
+.toggle.sh
+[source,shell]
+----
+#!/usr/bin/env sh
+scripts/general/counter.sh toggle 1 1>/dev/null
+if [ $? -eq 100 ]; then
+  echo 'on'
+else
+  echo 'off'
+fi
+----
+
+.retry.sh
+[source,shell]
+----
+#!/usr/bin/env sh
+COUNTER_DIR="${XDG_STATE_HOME:=${HOME}}/retry" scripts/general/counter.sh retry 3 1>/dev/null
+if [ $? -ne 100 ]; then
+  echo 'tried enough times' >&2
+  exit 50
+fi
+----
+
+[source,shell]
+----
+$ scripts/general/counter.sh my-counter 2
+1
+$ echo $?
+100
+$ scripts/general/counter.sh my-counter 2
+2
+$ echo $?
+100
+$ scripts/general/counter.sh my-counter 2
+$ echo $?
+0
+$ ./toggle.sh
+on
+$ ./toggle.sh
+off
+$ ./toggle.sh
+on
+$ mkdir -p "${XDG_STATE_HOME:=${HOME}}/retry"
+$ ./retry.sh
+$ ls "${XDG_STATE_HOME:=${HOME}}/retry"
+counter-retry
+$ cat /home/example/.local/state/retry/counter-retry
+1
+$ ./retry.sh
+$ cat /home/example/.local/state/retry/counter-retry
+2
+$ ./retry.sh
+$ cat /home/example/.local/state/retry/counter-retry
+3
+$ ./retry.sh
+tried enough times
+$ ls "${XDG_STATE_HOME:=${HOME}}/retry"
+$ rm -rf "${XDG_STATE_HOME:=${HOME}}/retry"
+----
+
+===== Related Scripts
+
+. <<loop,loop>>
++
+[source,shell]
+----
+$ scripts/general/loop.sh 1 0 scripts/general/counter.sh my-counter 5
+12345
+----
 
 [#create-timestamp-file]
 ==== create-timestamp-file
@@ -126,6 +212,16 @@ exit 100 # infinite loop
 ----
 $ scripts/general/loop.sh 10 10 some-script.sh
 $ scripts/general/loop.sh 5 0 some-otherscript-with-parameters.sh a 1
+----
+
+===== Related Scripts
+
+. <<counter,counter>>
++
+[source,shell]
+----
+$ scripts/general/loop.sh 1 0 scripts/general/counter.sh my-counter 5
+12345
 ----
 
 [#shellscript-check]
