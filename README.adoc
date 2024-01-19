@@ -266,6 +266,40 @@ done
 The functions should be copied into `~/.zfunc`.
 ====
 
+[#general-functions]
+=== General
+
+This section contains generally useful functions:
+
+<<color_stderr,color_stderr>>:: color errors red
+
+[#color_stderr]
+==== color_stderr
+
+link:zfunc/color_stderr[This function] will display stderr output in red.
+
+===== Usage
+
+.with-stderr-output.sh
+[source,shell]
+----
+#!/usr/bin/env sh
+echo 'error' >&2
+----
+
+[source,shell,subs="quotes"]
+----
+$ color_stderr ./with-stderr-output.sh
+[red]#error#
+----
+
+ifdef::env-github[]
+[NOTE]
+====
+GitHub unfortunately does not show the "error" above in red.
+====
+endif::[]
+
 == License
 
 Apache License, Version 2.0 (link:LICENSE[] or {uri-apache-license}).
