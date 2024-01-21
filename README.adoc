@@ -393,6 +393,7 @@ This section contains scripts related to Web development:
 <<minify-css,minify-css>>:: minify CSS files
 <<minify-html,minify-html>>:: minify HTML files
 <<minify-robots,minify-robots>>:: minify the robots.txt file
+<<minify-svg,minify-svg>>:: minify SVG files
 <<minify-xml,minify-xml>>:: minify XML files
 
 [#compress-brotli]
@@ -581,6 +582,38 @@ link:scripts/web/minify-robots.sh[This script] will minify the `robots.txt` file
 ----
 $ scripts/web/minify-html.sh
 $ scripts/web/minify-robots.sh dist
+----
+
+[#minify-svg]
+==== minify-svg
+
+link:scripts/web/minify-svg.sh[This script] will minify the `*.svg` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+[NOTE]
+====
+`npx` needs to be <<node-version-manager,installed>>.
+====
+
+[TIP]
+====
+If you are using macOS you might want to use https://imageoptim.com/mac[ImageOptim] instead of using this script.
+====
+
+[TIP]
+====
+It is advisable to minimize image files before adding them to a Git repository.
+
+Minimizing image files during a build is usually bad idea unless the build generates images files.
+
+Also, you might want to add a <<hash-filename,hash>> to the minified image file before adding it to a Git repository.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/minify-svg.sh
+$ scripts/web/minify-svg.sh dist
 ----
 
 [#minify-xml]
