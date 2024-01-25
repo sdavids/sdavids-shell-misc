@@ -22,6 +22,7 @@ Sebastian Davids <sdavids@gmx.de>
 :gh-cli-install-url: https://github.com/cli/cli#linux--bsd
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
 :fnm-install-url: https://github.com/Schniz/fnm#installation
+:oxipng-install-url: https://github.com/shssoichiro/oxipng/issues/69
 
 ifdef::env-browser[:outfilesuffix: .adoc]
 
@@ -589,6 +590,7 @@ This section contains scripts related to Web development:
 <<minify-jpeg,minify-jpeg>>:: minify JPEG files
 <<minify-json,minify-json>>:: minify JSON files
 <<minify-json-tags,minify-json-tags>>:: minify JSON-structured script tags
+<<minify-png,minify-png>>:: minify PNG files
 <<minify-robots,minify-robots>>:: minify the robots.txt file
 <<minify-svg,minify-svg>>:: minify SVG files
 <<minify-traffic-advice,minify-traffic-advice>>:: minify the private prefetch proxy traffic control file
@@ -910,6 +912,38 @@ $ npm i --save-dev domutils dom-serializer htmlparser2
 ----
 $ scripts/web/minify-json-tags.mjs dist/index.html
 $ find dist -type f -name '*.html' -exec scripts/web/minify-json-tags.mjs {} ';'
+----
+
+[#minify-png]
+==== minify-png
+
+link:scripts/web/minify-png.sh[This script] will minify the `*.png` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+[NOTE]
+====
+This script will invoke `optipng` and/or `oxipng`; therefore install <<optipng,optipng>> and/or <<oxipng,oxipng>>.
+====
+
+[TIP]
+====
+If you are using macOS you might want to use https://imageoptim.com/mac[ImageOptim] instead of using this script.
+====
+
+[TIP]
+====
+It is advisable to minimize image files before adding them to a Git repository.
+
+Minimizing image files during a build is usually bad idea unless the build generates images files.
+
+Also, you might want to add a <<hash-filename,hash>> to the minified image file before adding it to a Git repository.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/web/minify-png.sh
+$ scripts/web/minify-png.sh dist
 ----
 
 [#minify-robots]
@@ -1471,6 +1505,37 @@ if command -v nvm > /dev/null 2>&1; then
   add-zsh-hook chpwd load-nvmrc
   load-nvmrc
 fi
+----
+
+[#optipng]
+==== optipng
+
+===== Linux
+
+[source,shell]
+----
+$ sudo apt install optipng
+----
+
+===== Mac
+
+[source,shell]
+----
+$ brew install optipng
+----
+
+[#oxipng]
+==== oxipng
+
+===== Linux
+
+Install {oxipng-install-url}[oxipng].
+
+===== Mac
+
+[source,shell]
+----
+$ brew install oxipng
 ----
 
 [#shellcheck]
