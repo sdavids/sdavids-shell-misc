@@ -576,6 +576,34 @@ $ echo $?
 1:: the Git working tree of the given directory is dirty
 2:: the given directory is not a Git repository
 
+[#nodejs-scripts]
+=== Node.js
+
+This section contains scripts related to https://nodejs.org[Node.js]:
+
+<<nodejs-preinstall,preinstall>>:: exclude `node_modules` from Time Machine backups and Spotlight indexing
+
+[#nodejs-preinstall]
+==== preinstall
+
+link:scripts/nodejs/preinstall.sh/[This script] will exclude the `node_modules` directory from https://support.apple.com/en-us/104984[Time Machine] backups and prevent its https://support.apple.com/guide/mac-help/prevent-spotlight-searches-in-files-mchl1bb43b84/mac[Spotlight indexing].
+
+===== Usage
+
+. Copy the script to your Node.js project.
+. Register the script as a `preinstall` https://docs.npmjs.com/cli/v10/using-npm/scripts#life-cycle-scripts[life cycle script]:
++
+.package.json
+[source,jsonc]
+----
+{
+...
+  "scripts": {
+    "preinstall": "scripts/preinstall.sh"
+  }
+}
+----
+
 [#web-scripts]
 === Web
 
