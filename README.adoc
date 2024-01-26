@@ -1567,6 +1567,48 @@ Alternatively, you can remove `--gpg-sign`:
 $ repo_new_local my-new-local-repo
 ----
 
+[#java-functions]
+=== Java
+
+This section contains functions related to https://dev.java[Java]:
+
+<<jar_manifest,jar_manifest>>:: display the manifest of a JAR
+
+[#jar_manifest]
+==== jar_manifest
+
+link:zfunc/jar_manifest[This function] will display the https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html[manifest] of the given JAR file.
+
+===== Usage
+
+[source,shell]
+----
+$ jar_manifest apiguardian-api-1.1.2.jar
+Manifest-Version: 1.0
+Bnd-LastModified: 1624798392241
+Build-Date: 2021-06-27
+Build-Revision: aa952a1b9d5b4e9cc0af853e2c140c2455b397be
+Build-Time: 14:53:10.089+0200
+Built-By: @API Guardian Team
+Bundle-Description: @API Guardian
+Bundle-DocURL: https://github.com/apiguardian-team/apiguardian
+Bundle-ManifestVersion: 2
+Bundle-Name: apiguardian-api
+Bundle-SymbolicName: org.apiguardian.api
+Bundle-Vendor: apiguardian.org
+Bundle-Version: 1.1.2
+Created-By: 11.0.11 (AdoptOpenJDK)
+Export-Package: org.apiguardian.api;version="1.1.2"
+Implementation-Title: apiguardian-api
+Implementation-Vendor: apiguardian.org
+Implementation-Version: 1.1.2
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.6))"
+Specification-Title: apiguardian-api
+Specification-Vendor: apiguardian.org
+Specification-Version: 1.1.2
+Tool: Bnd-5.3.0.202102221516
+----
+
 == License
 
 Apache License, Version 2.0 (link:LICENSES/Apache-2.0.txt[Apache-2.0.txt] or {uri-apache-license}).
