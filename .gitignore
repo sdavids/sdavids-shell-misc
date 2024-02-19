@@ -35,6 +35,9 @@ jffi*.dylib
 *.p12
 *.pfx
 
+### Java
+*.jks
+
 ### environment files ###
 .env
 
