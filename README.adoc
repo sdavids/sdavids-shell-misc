@@ -236,6 +236,350 @@ $ scripts/general/shellscript-check.sh
 $ scripts/general/shellscript-check.sh /tmp
 ----
 
+[#certificates-scripts]
+=== Certificates
+
+This section contains scripts related to certificates:
+
+<<create-self-signed-cert,create-self-signed-cert>>:: create a private key and self-signed certificate
+
+[#create-self-signed-cert]
+==== create-self-signed-cert
+
+link:scripts/cert/create-self-signed-cert.sh[This script] will create a private key `key.pem` and a self-signed certificate `cert.pem` in the given directory (`$PWD` if not given).
+
+The given directory will be created if it does not exit yet.
+
+The optional second positive integer parameter (range: [1, 24855]) specifies the number of days the generated certificate is valid for; the default is 30 days.
+
+The optional third parameter is the common name (`localhost` if not given) of the certificate to be added.
+
+On macOS, the certificate will be added to the "login" keychain also.
+
+[WARNING]
+====
+Both `key.pem` and `cert.pem` https://owasp.org/www-project-devsecops-guideline/latest/01a-Secrets-Management[should not be checked into version control]!
+
+If the given directory is inside a Git working tree the script will offer to modify the https://git-scm.com/docs/gitignore[.gitignore] file:
+
+[source,shell]
+----
+WARNING: key.pem and/or cert.pem is not ignored in '/Users/example/tmp/.gitignore'
+
+Do you want me to modify your .gitignore file (Y/N)?
+----
+====
+
+[NOTE]
+====
+The certificate created by this script is useful if you do not use mutual TLS, the HTTP-client can be configured to ignore self-signed certificates, or if you can add the certificate to your trust store.
+
+[source,shell]
+----
+$ curl --insecure ...
+$ wget --no-check-certificate ...
+$ http --verify=no ...
+----
+====
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[source,jsonc]
+----
+{
+...
+  "scripts": {
+    "cert:create": "scripts/create-self-signed-cert.sh certs"
+  }
+}
+----
+
+[source,shell]
+----
+$ npm run cert:create
+----
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/cert/create-self-signed-cert.sh
+$ scripts/cert/create-self-signed-cert.sh dist/etc/nginx
+$ scripts/cert/create-self-signed-cert.sh . 10
+Adding 'localhost' certificate (expires on: 2024-03-09) to keychain /Users/example/Library/Keychains/login.keychain-db ...
+$ date -Idate
+2024-02-28
+$ stat -f '%A %N' *.pem
+600 cert.pem
+600 key.pem
+$ scripts/cert/create-self-signed-cert.sh ~/.local/secrets/certs/https.local 30 https.local
+Adding 'https.local' certificate (expires on: 2024-03-29) to keychain /Users/example/Library/Keychains/login.keychain-db ...
+----
+
+===== MacOS
+
+Check your login keychain in  _Keychain Access_; _Secure Sockets Layer (SSL)_ should be set to "Always Trust":
+
+image::docs/asciidoc/images/self-signed-macos.png[]
+
+[NOTE]
+====
+Chrome and Safari need no further configuration.
+====
+
+===== Firefox (MOZILLA_PKIX_ERROR_SELF_SIGNED_CERT)
+
+You need to bypass the https://support.mozilla.org/en-US/kb/error-codes-secure-websites#w_self-signed-certificate[self-signed certificate warning] by clicking on "Advanced" and then "Accept the Risk and Continue":
+
+image::docs/asciidoc/images/self-signed-firefox.png[]
+
+[#https-apache]
+===== Apache HTTP Server Example
+
+[source,shell]
+----
+$ scripts/cert/create-self-signed-cert.sh ~/.local/secrets/certs/localhost
+$ docker run --rm httpd:2.4.58-alpine cat /usr/local/apache2/conf/httpd.conf > httpd.conf.orig
+$ sed -e 's/^#\(Include .*httpd-ssl.conf\)/\1/' \
+      -e 's/^#\(LoadModule .*mod_ssl.so\)/\1/' \
+      -e 's/^#\(LoadModule .*mod_socache_shmcb.so\)/\1/' \
+      httpd.conf.orig > httpd.conf
+$ mkdir -p htdocs
+$ printf '<!doctype html><title>Test</title><h1>Test' > htdocs/index.html
+$ docker run -i -t --rm -p 3000:443 \
+  -v "$PWD/htdocs:/usr/local/apache2/htdocs:ro" \
+  -v "$PWD/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro" \
+  -v "$HOME/.local/secrets/certs/localhost/cert.pem:/usr/local/apache2/conf/server.crt:ro" \
+  -v "$HOME/.local/secrets/certs/localhost/key.pem:/usr/local/apache2/conf/server.key:ro" \
+  httpd:2.4.58-alpine
+----
+
+=> https://localhost:3000
+
+[#https-nginx]
+===== nginx Example
+
+[source,shell]
+----
+$ scripts/cert/create-self-signed-cert.sh ~/.local/secrets/certs/localhost
+$ printf 'server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+  ssl_certificate /etc/ssl/certs/server.crt;
+  ssl_certificate_key /etc/ssl/private/server.key;
+  location / {
+    root   /usr/share/nginx/html;
+    index  index.html;
+  }
+}' > nginx.conf
+$ mkdir -p html
+$ printf '<!doctype html><title>Test</title><h1>Test' > html/index.html
+$ docker run -i -t --rm -p 3000:443 \
+  -v "$PWD/html:/usr/share/nginx/html:ro" \
+  -v "$PWD/nginx.conf:/etc/nginx/conf.d/default.conf:ro" \
+  -v "$HOME/.local/secrets/certs/localhost/cert.pem:/etc/ssl/certs/server.crt:ro" \
+  -v "$HOME/.local/secrets/certs/localhost/key.pem:/etc/ssl/private/server.key:ro" \
+  nginx:1.25.4-alpine3.18-slim
+----
+
+[unstyled]
+* => https://localhost:3000
+
+[#https-go]
+===== Go Example
+
+.link:scripts/cert/server.go[scripts/cert/server.go]
+[source,go]
+----
+func main() {
+  const port = 3000
+
+  server := http.Server{
+    Addr:         fmt.Sprintf(":%d", port),
+    ReadTimeout:  5 * time.Second,
+    WriteTimeout: 5 * time.Second,
+    IdleTimeout:  5 * time.Second,
+    Handler: http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+      _, err := w.Write([]byte("<!doctype html><title>Test</title><h1>Test"))
+      if err != nil {
+        slog.Error("handle response", slog.Any("error", err))
+      }
+    }),
+  }
+  defer func(server *http.Server) {
+    if err := server.Close(); err != nil {
+      slog.Error("server close", slog.Any("error", err))
+      os.Exit(70)
+    }
+  }(&server)
+
+  slog.Info(fmt.Sprintf("Listen local: https://localhost:%d", port))
+
+  if err := server.ListenAndServeTLS("cert.pem", "key.pem"); err != nil {
+    slog.Error("listen", slog.Any("error", err))
+    os.Exit(70)
+  }
+}
+----
+
+[source,shell]
+----
+$ cd scripts/cert
+$ ./create-self-signed-cert.sh
+$ go run server.go
+----
+
+=> https://localhost:3000
+
+====== More Information
+
+* https://pkg.go.dev/net/http#hdr-Servers[HTTP Servers]
+* https://www.man7.org/linux/man-pages/man3/sysexits.h.3head.html[Exit Codes for Programs]
+
+[#https-nodejs]
+===== NodeJS Example
+
+.link:scripts/cert/server.mjs[scripts/cert/server.mjs]
+[source,javascript]
+----
+let https;
+try {
+  https = await import('node:https');
+} catch (_) {
+  console.error('https support is disabled');
+  process.exit(78);
+}
+
+const port = 3000;
+
+const server = https.createServer(
+  {
+    key: readFileSync('key.pem'),
+    cert: readFileSync('cert.pem'),
+  },
+  (_, w) => {
+    w.writeHead(200).end('<!doctype html><title>Test</title><h1>Test');
+  },
+);
+server.keepAliveTimeout = 5000;
+server.requestTimeout = 5000;
+server.timeout = 5000;
+server.listen(port);
+
+console.log(`Listen local: https://localhost:${port}`);
+
+['uncaughtException', 'unhandledRejection'].forEach((s) =>
+  process.once(s, (e) => {
+    console.error(e);
+    process.exit(70);
+  }),
+);
+['SIGINT', 'SIGTERM'].forEach((s) => process.once(s, () => process.exit(0)));
+----
+
+[source,shell]
+----
+$ cd scripts/cert
+$ ./create-self-signed-cert.sh
+$ node server.mjs
+----
+
+=> https://localhost:3000
+
+====== More Information
+
+* https://nodejs.org/api/https.html[https]
+* https://nodejs.org/api/process.html#signal-events[Signal events]
+* https://marketsplash.com/tutorials/node-js/node-js-uncaught-exception/[How To Handle Node.js Uncaught Exception Properly]
+* https://www.man7.org/linux/man-pages/man3/sysexits.h.3head.html[Exit Codes for Programs]
+
+[#https-java]
+===== Java Example
+
+.link:scripts/cert/Server.java[scripts/cert/Server.java]
+[source,java]
+----
+public final class Server {
+
+  public static void main(String[] args) throws Exception {
+    var port = 3000;
+
+    var server =
+        HttpsServer.create(
+            new InetSocketAddress(port),
+            0,
+            "/",
+            exchange -> {
+              var response = "<!doctype html><title>Test</title><h1>Test";
+              exchange.sendResponseHeaders(HTTP_OK, response.length());
+              try (var body = exchange.getResponseBody()) {
+                body.write(response.getBytes());
+              } catch (IOException e) {
+                LOGGER.log(SEVERE, "handle response", e);
+              }
+            });
+    server.setHttpsConfigurator(new HttpsConfigurator(newSSLContext()));
+    server.setExecutor(newVirtualThreadPerTaskExecutor());
+    server.start();
+
+    LOGGER.info(format("Listen local: https://localhost:%d", port));
+  }
+
+  static {
+    System.setProperty("sun.net.httpserver.maxReqTime", "5");
+    System.setProperty("sun.net.httpserver.maxRspTime", "5");
+    System.setProperty("sun.net.httpserver.idleInterval", "5000");
+  }
+
+  private static final Logger LOGGER = getLogger(MethodHandles.lookup().lookupClass().getName());
+
+  private static SSLContext newSSLContext() throws Exception {
+    var keyStorePath = requireNonNull(getenv("KEYSTORE_PATH"), "keystore path");
+    var keyStorePassword =
+        requireNonNull(getenv("KEYSTORE_PASS"), "keystore password").toCharArray();
+
+    var keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+    keyStore.load(newInputStream(Path.of(keyStorePath)), keyStorePassword);
+
+    var keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+    keyManagerFactory.init(keyStore, keyStorePassword);
+
+    var trustManagerFactory =
+        TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+    trustManagerFactory.init(keyStore);
+
+    var sslContext = SSLContext.getInstance("TLS");
+    sslContext.init(
+        keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
+
+    return sslContext;
+  }
+}
+----
+
+[source,shell]
+----
+$ cd scripts/cert
+$ ./create-self-signed-cert.sh
+$ openssl pkcs12 -export -in cert.pem -inkey key.pem -out certificate.p12 -name localhost -password pass:changeit
+$ keytool -importkeystore -srckeystore certificate.p12 -srcstoretype pkcs12 -srcstorepass changeit -destkeystore keystore.jks -deststorepass changeit
+$ KEYSTORE_PATH=keystore.jks KEYSTORE_PASS=changeit java Server.java
+----
+
+=> https://localhost:3000
+
+====== More Information
+
+* https://docs.oracle.com/en/java/javase/21/docs/api/jdk.httpserver/module-summary.html[Module jdk.httpserver]
+* https://docs.oracle.com/en/java/javase/21/docs/api/jdk.httpserver/com/sun/net/httpserver/package-summary.html[Package com.sun.net.httpserver]
+* https://docs.oracle.com/en/java/javase/21/docs/specs/man/keytool.html#commands-for-importing-contents-from-another-keystore[keytool - Commands for Importing Contents from Another Keystore]
+
+===== Related Scripts
+
 [#git-scripts]
 === Git
 
