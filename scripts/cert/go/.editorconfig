@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# http://EditorConfig.org
+
+[*.go]
+max_line_length = off
+indent_style = tab
+indent_size = 4
+
+[go.mod]
+max_line_length = off
+indent_style = tab
+indent_size = 4
