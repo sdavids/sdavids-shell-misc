@@ -242,6 +242,7 @@ $ scripts/general/shellscript-check.sh /tmp
 This section contains scripts related to certificates:
 
 <<create-self-signed-cert,create-self-signed-cert>>:: create a private key and self-signed certificate
+<<delete-self-signed-cert,delete-self-signed-cert>>:: delete the private key and self-signed certificate
 
 [#create-self-signed-cert]
 ==== create-self-signed-cert
@@ -579,6 +580,71 @@ $ KEYSTORE_PATH=keystore.jks KEYSTORE_PASS=changeit java Server.java
 * https://docs.oracle.com/en/java/javase/21/docs/specs/man/keytool.html#commands-for-importing-contents-from-another-keystore[keytool - Commands for Importing Contents from Another Keystore]
 
 ===== Related Scripts
+
+. <<delete-self-signed-cert,delete-self-signed-cert>>
+
+[#delete-self-signed-cert]
+==== delete-self-signed-cert
+
+link:scripts/cert/delete-self-signed-cert.sh[This script] will delete the private key `key.pem` and the self-signed certificate `cert.pem` from the given directory (`$PWD` if not given).
+
+If the given directory is not `$PWD` and is empty after the removal it will be removed as well.
+
+The optional second parameter is the common name (`localhost` if not given) of the certificate to be removed.
+
+On macOS, the certificate will be removed from the "login" keychain also.
+
+[NOTE]
+====
+Chrome and Safari need no further configuration.
+====
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[source,jsonc]
+----
+{
+...
+  "scripts": {
+    "cert:delete": "scripts/delete-self-signed-cert.sh certs"
+  }
+}
+----
+
+[source,shell]
+----
+$ npm run cert:delete
+----
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/cert/delete-self-signed-cert.sh
+Removing 'localhost' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
+$ scripts/cert/delete-self-signed-cert.sh ~/.local/secrets/certs/localhost
+Removing 'localhost' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
+$ scripts/cert/delete-self-signed-cert.sh ~/.local/secrets/certs/https.local https.local
+Removing 'https.local' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
+----
+
+===== Firefox
+
+You can delete the certificate via `Firefox > Preferences > Privacy & Security > Certificates`; click "View Certificates...":
+
+image::docs/asciidoc/images/self-signed-firefox-delete-1.png[]
+
+Click on the "Servers" tab:
+
+image::docs/asciidoc/images/self-signed-firefox-delete-2.png[]
+
+===== Related Scripts
+
+. <<create-self-signed-cert,create-self-signed-cert>>
 
 [#git-scripts]
 === Git
