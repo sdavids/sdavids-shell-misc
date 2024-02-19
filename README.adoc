@@ -261,6 +261,7 @@ This section contains scripts related to certificates:
 <<create-self-signed-cert,create-self-signed-cert>>:: create a private key and self-signed certificate
 <<delete-self-signed-cert,delete-self-signed-cert>>:: delete the private key and self-signed certificate
 <<renew-self-signed-cert,renew-self-signed-cert>>:: renew the private key and self-signed certificate
+<<verify-self-signed-cert,verify-self-signed-cert>>:: verify the self-signed certificate
 
 [#create-self-signed-cert]
 ==== create-self-signed-cert
@@ -334,7 +335,7 @@ Certificates with more than 180 days validity will https://support.apple.com/en-
 
 [TIP]
 ====
-Copy the script (and its related <<delete-self-signed-cert,delete>> and <<renew-self-signed-cert,renew>> scripts) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+Copy the script (and its related <<delete-self-signed-cert,delete>>, <<renew-self-signed-cert,renew>> and <<verify-self-signed-cert,verify>> scripts) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
 
 .package.json
 [source,jsonc]
@@ -344,7 +345,8 @@ Copy the script (and its related <<delete-self-signed-cert,delete>> and <<renew-
   "scripts": {
     "cert:create": "scripts/create-self-signed-cert.sh certs",
     "cert:delete": "scripts/delete-self-signed-cert.sh certs",
-    "cert:renew": "scripts/renew-self-signed-cert.sh certs"
+    "cert:renew": "scripts/renew-self-signed-cert.sh certs",
+    "cert:verify": "scripts/delete-self-signed-cert.sh certs"
   }
 }
 ----
@@ -354,6 +356,7 @@ Copy the script (and its related <<delete-self-signed-cert,delete>> and <<renew-
 $ npm run cert:create
 $ npm run cert:delete
 $ npm run cert:renew
+$ npm run cert:verify
 ----
 ====
 
@@ -747,6 +750,7 @@ $ ./gradlew quarkusDev
 
 . <<delete-self-signed-cert,delete-self-signed-cert>>
 . <<renew-self-signed-cert,renew-self-signed-cert>>
+. <<verify-self-signed-cert,verify-self-signed-cert>>
 . <<git-cleanup,git-cleanup>>
 
 [#delete-self-signed-cert]
@@ -874,6 +878,62 @@ notAfter=Aug 17 16:53:53 2024 GMT
 
 . <<create-self-signed-cert,create-self-signed-cert>>
 . <<delete-self-signed-cert,delete-self-signed-cert>>
+
+[#verify-self-signed-cert]
+==== verify-self-signed-cert
+
+link:scripts/cert/verify-self-signed-cert.sh[This script] will verify the self-signed certificate `cert.pem` in the given directory (`$PWD` if not given).
+
+On macOS, the certificate will be verified in the "login" keychain also.
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[source,jsonc]
+----
+{
+...
+  "scripts": {
+    "cert:verify": "scripts/verify-self-signed-cert.sh certs"
+  }
+}
+----
+
+[source,shell]
+----
+$ npm run cert:verify
+----
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/cert/verify-self-signed-cert.sh
+$ scripts/cert/verify-self-signed-cert.sh ~/.local/secrets/certs/localhost
+keychain: "/Users/example/Library/Keychains/login.keychain-db"
+...
+    "labl"<blob>="localhost"
+...
+/Users/example/.local/secrets/certs/localhost/cert.pem
+Certificate:
+...
+        Issuer: CN=localhost
+        Validity
+            Not Before: Feb 28 11:54:32 2024 GMT
+            Not After : Mar 29 11:54:32 2024 GMT
+        Subject: CN=localhost
+...
+            X509v3 Subject Alternative Name:
+                DNS:localhost
+...
+----
+
+===== Related Scripts
+
+. <<create-self-signed-cert,create-self-signed-cert>>
 
 [#git-scripts]
 === Git
