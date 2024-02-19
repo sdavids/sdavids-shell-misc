@@ -243,6 +243,7 @@ This section contains scripts related to certificates:
 
 <<create-self-signed-cert,create-self-signed-cert>>:: create a private key and self-signed certificate
 <<delete-self-signed-cert,delete-self-signed-cert>>:: delete the private key and self-signed certificate
+<<verify-self-signed-cert,verify-self-signed-cert>>:: verify the self-signed certificate
 
 [#create-self-signed-cert]
 ==== create-self-signed-cert
@@ -582,6 +583,7 @@ $ KEYSTORE_PATH=keystore.jks KEYSTORE_PASS=changeit java Server.java
 ===== Related Scripts
 
 . <<delete-self-signed-cert,delete-self-signed-cert>>
+. <<verify-self-signed-cert,verify-self-signed-cert>>
 
 [#delete-self-signed-cert]
 ==== delete-self-signed-cert
@@ -641,6 +643,80 @@ image::docs/asciidoc/images/self-signed-firefox-delete-1.png[]
 Click on the "Servers" tab:
 
 image::docs/asciidoc/images/self-signed-firefox-delete-2.png[]
+
+===== Related Scripts
+
+. <<create-self-signed-cert,create-self-signed-cert>>
+
+[#verify-self-signed-cert]
+==== verify-self-signed-cert
+
+link:scripts/cert/verify-self-signed-cert.sh[This script] will verify the self-signed certificate `cert.pem` in the given directory (`$PWD` if not given).
+
+The optional second parameter is the common name (`localhost` if not given) of the certificate to verify.
+
+On macOS, the certificate will be verified in the "login" keychain also.
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[source,jsonc]
+----
+{
+...
+  "scripts": {
+    "cert:verify": "scripts/verify-self-signed-cert.sh certs"
+  }
+}
+----
+
+[source,shell]
+----
+$ npm run cert:verify
+----
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/cert/verify-self-signed-cert.sh
+$ scripts/cert/verify-self-signed-cert.sh ~/.local/secrets/certs/localhost
+keychain: "/Users/example/Library/Keychains/login.keychain-db"
+...
+    "labl"<blob>="localhost"
+...
+/Users/example/.local/secrets/certs/localhost/cert.pem
+Certificate:
+...
+        Issuer: CN=localhost, UID=example, O=Sebastian Davids
+        Validity
+            Not Before: Feb 28 11:54:32 2024 GMT
+            Not After : Mar 29 11:54:32 2024 GMT
+        Subject: CN=localhost, UID=example, O=Sebastian Davids
+...
+            X509v3 Subject Alternative Name:
+                DNS:localhost
+...
+$ scripts/cert/verify-self-signed-cert.sh ~/.local/secrets/certs/https.local https.local
+keychain: "/Users/example/Library/Keychains/login.keychain-db"
+...
+    "labl"<blob>="https.local"
+/Users/example/.local/secrets/certs/https.local/cert.pem
+Certificate:
+...
+        Issuer: CN=https.local, UID=example, O=Sebastian Davids
+        Validity
+            Not Before: Feb 28 11:49:00 2024 GMT
+            Not After : Mar 29 11:49:00 2024 GMT
+        Subject: CN=https.local, UID=example, O=Sebastian Davids
+...
+            X509v3 Subject Alternative Name:
+                DNS:https.local
+...
+----
 
 ===== Related Scripts
 
