@@ -15,6 +15,7 @@ Sebastian Davids <sdavids@gmx.de>
 :uri-contributor-covenant: https://www.contributor-covenant.org
 :uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
 :uri-google-style: https://github.com/google/gts
+:docker-install-url: https://docs.docker.com/install/
 :gh-cli-install-url: https://github.com/cli/cli#linux--bsd
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
 :fnm-install-url: https://github.com/Schniz/fnm#installation
@@ -721,6 +722,103 @@ Certificate:
 ===== Related Scripts
 
 . <<create-self-signed-cert,create-self-signed-cert>>
+
+[#docker-scripts]
+=== Docker
+
+This section contains scripts related to https://docs.docker.com[Docker]:
+
+<<docker-build,docker-build>>:: build the image
+
+The scripts should be copied into a project, e.g.:
+
+[source,shell]
+----
+<project root directory>
+├── Dockerfile
+└── scripts
+    ├── docker-build.sh
+    ├── ...
+----
+
+And then invoked from the directory containing the `Dockerfile`:
+
+[source,shell]
+----
+$ scripts/docker-build.sh
+----
+
+[NOTE]
+====
+All scripts need `Docker` to be <<docker,installed>>.
+====
+
+[IMPORTANT]
+====
+You should modify the `label_group`, `namespace`, and `repository` shell variables in the copied scripts--the values need to match in all scripts:
+
+[source,shell]
+----
+readonly label_group='de.sdavids.docker.group'
+readonly namespace='sdavids-shell-misc'
+readonly repository='sdavids-shell-misc-docker'
+----
+
+The scripts expect the image to be named `${namespace}/${repository}` having a label `${label_group}=${namespace}`.
+====
+
+[TIP]
+====
+You can try the scripts with the link:scripts/docker/Dockerfile[example Dockerfile]:
+
+[source,shell]
+----
+$ scripts/docker/docker-build.sh local scripts/docker/Dockerfile
+----
+====
+
+[#docker-build]
+==== docker-build
+
+link:scripts/docker/docker-build.sh[This script] will build the `${namespace}/${repository}` image, i.e. the project's image.
+
+The optional first parameter will be one of the two images' https://docs.docker.com/engine/reference/commandline/image_build/#tag[tags] (`local` if not given).
+The image will always be tagged with `latest`.
+
+The optional second parameter is the path to the https://docs.docker.com/reference/cli/docker/image/build/#file[Dockerfile] (`$PWD/Dockerfile` if not given) to be used.
+
+The script will pass the hash of the HEAD commit of the checked out branch as a https://docs.docker.com/engine/reference/commandline/image_build/#build-arg[build argument] named `git_commit` to the _Dockerfile_; the suffix `-next` will be appended if the working tree is dirty.
+
+The script will pass the creation timestamp of the HEAD commit of the checked out branch as a https://docs.docker.com/engine/reference/commandline/image_build/#build-arg[build argument] named `created_at` to the _Dockerfile_; the current time will be used if the working tree is dirty.
+Alternatively, you can use the https://reproducible-builds.org/docs/source-date-epoch/[SOURCE_DATE_EPOCH] environment variable to pass in the timestamp.
+
+[NOTE]
+====
+See the <<docker-scripts,general notes>> of the Docker section.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/docker/docker-build.sh
+...
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:latest
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:local
+...
+$ scripts/docker/docker-build.sh 1.2.3
+...
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:latest
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:1.2.3
+...
+$ scripts/docker/docker-build.sh local scripts/docker/Dockerfile
+...
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:latest
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:local
+...
+----
+
+===== Related Scripts
 
 [#git-scripts]
 === Git
@@ -2303,6 +2401,11 @@ $ sudo apt-get install brotli
 $ brew install brotli
 ----
 
+[#docker]
+==== Docker
+
+Install {docker-install-url}[Docker].
+
 [#gifsicle]
 ==== gifsicle
 
@@ -2332,6 +2435,20 @@ Install {gh-cli-install-url}[GitHub CLI].
 [source,shell]
 ----
 $ brew install gh
+----
+
+[#hadolint]
+==== hadolint
+
+===== Linux
+
+Install https://github.com/hadolint/hadolint?tab=readme-ov-file#install[hadolint].
+
+===== Mac
+
+[source,shell]
+----
+$ brew install hadolint
 ----
 
 [#jdk]
