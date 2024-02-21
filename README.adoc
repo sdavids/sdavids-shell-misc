@@ -1608,6 +1608,7 @@ Certificate:
 This section contains scripts related to https://docs.docker.com[Docker]:
 
 <<docker-build,docker-build>>:: build the image
+<<docker-cleanup,docker-cleanup>>:: remove all project-related containers, images, networks, and volumes
 
 The scripts should be copied into a project, e.g.:
 
@@ -1617,6 +1618,7 @@ The scripts should be copied into a project, e.g.:
 ├── Dockerfile
 └── scripts
     ├── docker-build.sh
+    ├── docker-cleanup.sh
     ├── ...
 ----
 
@@ -1653,6 +1655,11 @@ You can try the scripts with the link:scripts/docker/Dockerfile[example Dockerfi
 [source,shell]
 ----
 $ scripts/docker/docker-build.sh -d scripts/docker/Dockerfile
+----
+
+[source,shell]
+----
+$ scripts/docker/docker-cleanup.sh
 ----
 ====
 
@@ -1709,6 +1716,31 @@ $ SOURCE_DATE_EPOCH=0 scripts/docker/docker-build.sh -d scripts/docker/Dockerfil
 ----
 
 ===== Related Scripts
+
+. <<docker-cleanup,docker-cleanup>>
+
+[#docker-cleanup]
+==== docker-cleanup
+
+link:scripts/docker/docker-cleanup.sh[This script] removes all containers, images, networks, and volumes with the label `${label_group}=${repository}`, i.e. all project-related Docker artifacts.
+
+[NOTE]
+====
+The related scripts will ensure the `${label_group}=${repository}` label has been set.
+
+See the <<docker-scripts,general notes>> of the Docker section.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/docker/docker-cleanup.sh
+----
+
+===== Related Scripts
+
+. <<docker-build,docker-build>>
 
 [#git-scripts]
 === Git
