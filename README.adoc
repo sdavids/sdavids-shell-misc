@@ -1609,6 +1609,7 @@ This section contains scripts related to https://docs.docker.com[Docker]:
 
 <<docker-build,docker-build>>:: build the image
 <<docker-cleanup,docker-cleanup>>:: remove all project-related containers, images, networks, and volumes
+<<docker-inspect,docker-inspect>>:: display detailed information on the container
 <<docker-remove,docker-remove>>:: remove the container and associated unnamed volumes
 <<docker-start,docker-start>>:: start the image
 <<docker-sh,docker-sh>>:: open a shell into the running container
@@ -1669,6 +1670,7 @@ $ scripts/docker/docker-start.sh
 
 [source,shell]
 ----
+$ scripts/docker/docker-inspect.sh
 $ scripts/docker/docker-sh.sh
 ----
 
@@ -1760,6 +1762,23 @@ $ scripts/docker/docker-cleanup.sh
 
 . <<docker-build,docker-build>>
 . <<docker-start,docker-start>>
+
+[#docker-inspect]
+==== docker-inspect
+
+link:scripts/docker/docker-inspect.sh[This script] will display detailed information on the container named `${container_name}`, i.e. the project's container.
+
+[NOTE]
+====
+See the <<docker-scripts,general notes>> of the Docker section.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/docker/docker-inspect.sh
+----
 
 [#docker-remove]
 ==== docker-remove
