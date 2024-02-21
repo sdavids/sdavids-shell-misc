@@ -1609,6 +1609,7 @@ This section contains scripts related to https://docs.docker.com[Docker]:
 
 <<docker-build,docker-build>>:: build the image
 <<docker-cleanup,docker-cleanup>>:: remove all project-related containers, images, networks, and volumes
+<<docker-remove,docker-remove>>:: remove the container and associated unnamed volumes
 <<docker-start,docker-start>>:: start the image
 <<docker-stop,docker-stop>>:: stop the container
 
@@ -1668,6 +1669,7 @@ $ scripts/docker/docker-start.sh
 [source,shell]
 ----
 $ scripts/docker/docker-stop.sh
+$ scripts/docker/docker-remove.sh
 $ scripts/docker/docker-cleanup.sh
 ----
 ====
@@ -1752,6 +1754,30 @@ $ scripts/docker/docker-cleanup.sh
 
 . <<docker-build,docker-build>>
 . <<docker-start,docker-start>>
+
+[#docker-remove]
+==== docker-remove
+
+link:scripts/docker/docker-remove.sh[This script] will remove the `${container_name}` container and any unnamed volumes associated with it, i.e. the project's container and volumes.
+
+The container will be stopped before removal.
+
+[NOTE]
+====
+See the <<docker-scripts,general notes>> of the Docker section.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/docker/docker-remove.sh
+----
+
+===== Related Scripts
+
+. <<docker-cleanup,docker-cleanup>>
+. <<docker-stop,docker-stop>>
 
 [#docker-start]
 ==== docker-start
