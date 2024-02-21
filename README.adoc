@@ -1609,6 +1609,7 @@ This section contains scripts related to https://docs.docker.com[Docker]:
 
 <<docker-build,docker-build>>:: build the image
 <<docker-cleanup,docker-cleanup>>:: remove all project-related containers, images, networks, and volumes
+<<docker-start,docker-start>>:: start the image
 
 The scripts should be copied into a project, e.g.:
 
@@ -1636,16 +1637,19 @@ All scripts need `Docker` to be <<docker,installed>>.
 
 [IMPORTANT]
 ====
-You should modify the `label_group`, `namespace`, and `repository` shell variables in the copied scripts--the values need to match in all scripts:
+You should modify the `container_name`, `label_group`, `namespace`, and `repository` shell variables in the copied scripts--the values need to match in all scripts:
 
 [source,shell]
 ----
+readonly container_name="sdavids-shell-misc-docker-example"
 readonly label_group='de.sdavids.docker.group'
 readonly namespace='de.sdavids'
 readonly repository='sdavids-shell-misc'
 ----
 
 The scripts expect the image to be named `${namespace}/${repository}` having a label `${label_group}=${repository}`.
+
+The scripts expect the container to be named `${container_name}`.
 ====
 
 [TIP]
@@ -1655,7 +1659,10 @@ You can try the scripts with the link:scripts/docker/Dockerfile[example Dockerfi
 [source,shell]
 ----
 $ scripts/docker/docker-build.sh -d scripts/docker/Dockerfile
+$ scripts/docker/docker-start.sh
 ----
+
+=> http://localhost:3000
 
 [source,shell]
 ----
@@ -1718,6 +1725,7 @@ $ SOURCE_DATE_EPOCH=0 scripts/docker/docker-build.sh -d scripts/docker/Dockerfil
 ===== Related Scripts
 
 . <<docker-cleanup,docker-cleanup>>
+. <<docker-start,docker-start>>
 
 [#docker-cleanup]
 ==== docker-cleanup
@@ -1736,6 +1744,40 @@ See the <<docker-scripts,general notes>> of the Docker section.
 [source,shell]
 ----
 $ scripts/docker/docker-cleanup.sh
+----
+
+===== Related Scripts
+
+. <<docker-build,docker-build>>
+. <<docker-start,docker-start>>
+
+[#docker-start]
+==== docker-start
+
+link:scripts/docker/docker-start.sh[This script] will start the `${image_name}` image with the tag `local`, i.e. the project's locally built image.
+
+The container will be named `${container_name}` and labeled with `${label_group}=${repository}`.
+
+[NOTE]
+====
+See the <<docker-scripts,general notes>> of the Docker section.
+====
+
+[IMPORTANT]
+====
+This script is a starting point--modify it to your project's needs in conjunction with its _Dockerfile_.
+====
+
+[TIP]
+====
+The provided link:scripts/docker/Dockerfile[example Dockerfile] will start a simple HTTP server.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/docker/docker-start.sh
 ----
 
 ===== Related Scripts
