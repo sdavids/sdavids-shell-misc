@@ -581,7 +581,45 @@ $ echo $?
 
 This section contains scripts related to https://nodejs.org[Node.js]:
 
+<<nodejs-clean-node,clean-node>>:: delete `node_modules` and `package-lock.json`
 <<nodejs-preinstall,preinstall>>:: exclude `node_modules` from Time Machine backups and Spotlight indexing
+
+[#nodejs-clean-node]
+==== clean-node
+
+link:scripts/nodejs/clean-node.sh/[This script] will delete both the `node_modules` directory and the `package-lock.json` file in the given directory (`$PWD` if not given).
+
+This is useful to get a link:docs/asciidoc/images/node_modules.png[clean slate] after dependency updates.
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[source,jsonc]
+----
+{
+...
+  "scripts": {
+    "clean:node": "scripts/clean-node.sh"
+  }
+}
+----
+
+[source,shell]
+----
+$ npm run clean:node
+$ npm i
+----
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/nodejs/clean-node.sh
+$ scripts/nodejs/clean-node.sh /tmp/nodejs-example-project
+----
 
 [#nodejs-preinstall]
 ==== preinstall
