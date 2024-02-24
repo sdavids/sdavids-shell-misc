@@ -272,6 +272,7 @@ The functions should be copied into `~/.zfunc`.
 This section contains generally useful functions:
 
 <<color_stderr,color_stderr>>:: color errors red
+<<ls_extensions,ls_extensions>>:: displays all file extensions
 
 [#color_stderr]
 ==== color_stderr
@@ -299,6 +300,32 @@ ifdef::env-github[]
 GitHub unfortunately does not show the "error" above in red.
 ====
 endif::[]
+
+[#ls_extensions]
+==== ls_extensions
+
+link:zfunc/ls_extensions[This function] will display all file extensions (case-insensitive) and their count in the given directory (`$PWD` if not given) and its subdirectories.
+
+===== Usage
+
+[source,shell]
+----
+$ ls_extensions
+   5 sh
+$ ls_extensions /tmp/example
+   3 txt
+   1 png
+$ tree -a /tmp/example
+.
+├── a.b.txt
+├── a.txt
+├── b.TXT
+└── d
+    ├── .ignored
+    └── e.png
+----
+
+===== Related Functions
 
 == License
 
