@@ -1377,7 +1377,42 @@ $ repo_new_local my-new-local-repo
 
 This section contains functions related to https://dev.java[Java]:
 
+<<jar_is_multi_release,jar_is_multi_release>>:: display whether a JAR is a multi-release JAR
 <<jar_manifest,jar_manifest>>:: display the manifest of a JAR
+
+
+[#jar_is_multi_release]
+==== jar_is_multi_release
+
+link:zfunc/jar_is_multi_release[This function] will display whether the given JAR file is a https://docs.oracle.com/en/java/javase/21/docs/specs/jar/jar.html#multi-release-jar-files[multi-release JAR] file (`1`) or not (`0`).
+
+[NOTE]
+====
+The exit code of this function is the inverse of the displayed value.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ curl -O -s https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar
+$ jar_is_multi_release junit-jupiter-api-5.10.2.jar
+0
+$ echo $?
+1
+
+$ curl -O -s https://repo1.maven.org/maven2/net/bytebuddy/byte-buddy/1.14.12/byte-buddy-1.14.12.jar
+$ jar_is_multi_release byte-buddy-1.14.12.jar
+1
+$ echo $?
+0
+$ jar_manifest byte-buddy-1.14.12.jar | grep Multi
+Multi-Release: true
+----
+
+===== Related Functions
+
+. <<jar_manifest,jar_manifest>>
 
 [#jar_manifest]
 ==== jar_manifest
