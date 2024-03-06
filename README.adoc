@@ -576,6 +576,65 @@ $ echo $?
 1:: the Git working tree of the given directory is dirty
 2:: the given directory is not a Git repository
 
+[#java-scripts]
+=== Java
+
+This section contains scripts related to https://dev.java[Java]:
+
+<<jar-java-versions,jar-java-versions>>:: display Java and class file versions contained in a JAR
+
+Related: <<java-functions,Java Functions>>
+
+[#jar-java-versions]
+==== jar-java-versions
+
+link:scripts/java/jar-java-versions.sh[This script] will display the Java and https://javaalmanac.io/bytecode/versions/[class file versions] used by the classes within the given JAR file.
+
+If you use the optional second positive integer parameter (range: [5, n)) only non-matching versions will be displayed and if there is at least one mismatch the exit code will be `100` instead of `0`.
+
+[NOTE]
+====
+`javap` needs to be installed; it is supplied with a <<jdk,JDK>>.
+====
+
+[TIP]
+====
+This script is useful to verify that you have not inadvertently forgotten the https://docs.oracle.com/en/java/javase/21/docs/specs/man/javac.html#option-release[release] option while building your classes if you want to target a specific Java version.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ curl -O -s https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar
+$ jar_is_multi_release junit-jupiter-api-5.10.2.jar
+0
+$ scripts/java/jar-java-versions.sh junit-jupiter-api-5.10.2.jar
+Java Version:  8; Class File Version: 52
+$ scripts/java/jar-java-versions.sh junit-jupiter-api-5.10.2.jar 8
+$ echo $?
+0
+$ scripts/java/jar-java-versions.sh junit-jupiter-api-5.10.2.jar 11
+Java Version:  8; Class File Version: 52
+$ echo $?
+100
+
+$ curl -O -s https://repo1.maven.org/maven2/net/bytebuddy/byte-buddy/1.14.12/byte-buddy-1.14.12.jar
+$ jar_is_multi_release byte-buddy-1.14.12.jar
+1
+$ scripts/java/jar-java-versions.sh byte-buddy-1.14.12.jar
+Java Version:  5; Class File Version: 49
+Java Version:  6; Class File Version: 50
+$ scripts/java/jar-java-versions.sh byte-buddy-1.14.12.jar 5
+Java Version:  6; Class File Version: 50
+$ echo $?
+100
+----
+
+===== Related Functions
+
+. <<jar_is_multi_release,jar_is_multi_release>>
+
 [#nodejs-scripts]
 === Node.js
 
@@ -1718,6 +1777,22 @@ Install {gh-cli-install-url}[GitHub CLI].
 ----
 $ brew install gh
 ----
+
+[#jdk]
+==== JDK
+
+There are https://whichjdk.com[several different JDKs] and multiple options of installing them.
+
+The https://whichjdk.com/#what-is-the-best-way-to-install-a-jdk-for-local-development[recommended] way is to https://sdkman.io/install[install via SDKMAN!]:
+
+[source,shell]
+----
+$ sdk install java
+----
+
+===== More Information
+
+https://sdkman.io/jdks[SDKMAN! - JDK Distributions]
 
 [#jpegoptim]
 ==== jpegoptim
