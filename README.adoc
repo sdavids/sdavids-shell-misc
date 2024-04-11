@@ -1702,6 +1702,129 @@ Specification-Version: 1.1.2
 Tool: Bnd-5.3.0.202102221516
 ----
 
+[#gradle-functions]
+=== Gradle
+
+This section contains functions related to https://gradle.org[Gradle]:
+
+<<gradle_new_java_library,gradle_new_java_library>>:: creates a new Gradle Java library project with sensible, modern defaults
+
+[#gradle_new_java_library]
+==== gradle_new_java_library
+
+link:zfunc/gradle_new_java_library[This function] will create a new Gradle https://docs.gradle.org/current/userguide/java_library_plugin.html[Java library] project with sensible, modern defaults and the given name.
+
+The optional second parameter is the directory (`$PWD` if not given) the project is created in.
+
+[NOTE]
+====
+`gradle` needs to be <<gradle,installed>>.
+====
+
+[NOTE]
+====
+A Git repository will also be initialized for the project if `git` is installed.
+
+This script uses https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[Git commit signing]; you need to:
+
+* configure your https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key#telling-git-about-your-gpg-key[local git
+config]
+
+Alternatively, you can remove `--gpg-sign`:
+
+.zfunc/gradle_new_java_library
+[source,shell,highlight=3]
+----
+  git commit \
+    --quiet \
+-   --gpg-sign \
+    --signoff \
+----
+====
+
+[TIP]
+====
+The generated default package will be `org.example`.
+
+You can https://docs.gradle.org/8.6/release-notes.html#simpler-source-package-handling[change the default] by adding `org.gradle.buildinit.source.package` to your `gradle.properties`:
+
+[source,shell]
+----
+printf 'org.gradle.buildinit.source.package=my.org' >> "${GRADLE_USER_HOME:=${HOME}}/gradle.properties"
+----
+====
+
+[TIP]
+====
+You might want to customize the defaults for the created `gradle.properties`, `.gitignore`, `.gitattributes`, or `.editorconfig`, e.g.:
+
+.zfunc/gradle_new_java_library
+[source,shell,highlight=10..23]
+----
+  cat << 'EOF' > .editorconfig
+  # http://EditorConfig.org
+
+  root = true
+
+  [*]
+  charset = utf-8
+  end_of_line = lf
+  insert_final_newline = true
++ trim_trailing_whitespace = true
++ indent_style = space
++ indent_size = 2
++ max_line_length = 80
++
++ [*.md]
++ trim_trailing_whitespace = false
++ max_line_length = off
++
++ [*.properties]
++ max_line_length = off
++
++ [*.{java,kts}]
++ max_line_length = 100
+  EOF
+----
+====
+
+===== Usage
+
+[source,shell]
+----
+$ gradle_new_java_library example-java-library
+$ gradle_new_java_library other-java-library /tmp
+$ tree --noreport .
+.
+├── gradle
+│   ├── libs.versions.toml
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── lib
+│   ├── build.gradle.kts
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── org
+│       │   │       └── example
+│       │   │           └── Library.java
+│       │   └── resources
+│       └── test
+│           ├── java
+│           │   └── org
+│           │       └── example
+│           │           └── LibraryTest.java
+│           └── resources
+└── settings.gradle.kts
+$ git status
+On branch main
+nothing to commit, working tree clean
+----
+
 == License
 
 Apache License, Version 2.0 (link:LICENSES/Apache-2.0.txt[Apache-2.0.txt] or {uri-apache-license}).
@@ -1817,6 +1940,23 @@ $ sudo apt-get install jq
 [source,shell]
 ----
 $ brew install jq
+----
+
+[#gradle]
+==== Gradle
+
+First <<jdk,install a JDK>>.
+
+There are https://gradle.org/install/[multiple options] of installing Gradle.
+
+Recommended:
+
+* https://sdkman.io/install[SDKMAN!]
+* Homebrew
++
+[source,shell]
+----
+$ brew install gradle
 ----
 
 [#node-version-manager]
