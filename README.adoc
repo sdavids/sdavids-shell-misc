@@ -255,6 +255,7 @@ $ scripts/general/shellscript-check.sh /tmp
 This section contains scripts related to https://git-scm.com[Git]:
 
 <<git-author-date-initial,git-author-date-initial>>:: displays the initial author dates of the committed files
+<<git-author-date-last,git-author-date-last>>:: displays the last author dates of the committed files
 <<git-cleanup,git-cleanup>>:: remove untracked files from the working tree and optimize a local repository
 <<git-get-hash,git-get-hash>>:: return the hash of the HEAD commit
 <<git-get-short-hash,git-get-short-hash>>:: return the short hash of the HEAD commit
@@ -319,6 +320,119 @@ M       a.txt
 2022-04-16T15:59:50+02:00
 
 A       a.txt
+----
+
+===== Related Scripts
+
+. <<git-author-date-last,git-author-date-last>>
++
+[source,shell]
+----
+$ scripts/git/git-author-date-initial.sh /tmp/example
+2022-04-16T15:59:50+02:00 a.txt
+2022-04-16T15:59:50+02:00 b.txt
+2022-04-16T16:00:14+02:00 c/d.txt
+2023-04-16T16:00:41+02:00 e.txt
+$ scripts/git/git-author-date-last.sh /tmp/example
+2024-04-16T16:01:19+02:00 a.txt
+2022-04-16T15:59:50+02:00 b.txt
+2022-04-16T16:00:14+02:00 c/d.txt
+2023-04-16T16:00:41+02:00 e.txt
+$ scripts/git/git-author-date-initial.sh /tmp/example | cut -c 1-4,26- > initial.txt
+$ scripts/git/git-author-date-last.sh /tmp/example | cut -c 1-4,26- > last.txt
+$ diff initial.txt last.txt
+1c1
+< 2022 a.txt
+---
+> 2024 a.txt
+----
+
+[#git-author-date-last]
+==== git-author-date-last
+
+link:scripts/git/git-author-date-last.sh[This script] will display the last https://git-scm.com/book/en/v2/Distributed-Git-Maintaining-a-Project#_git_am[author dates] of the files of the given Git repository directory (`$PWD` if not given).
+
+If you use the optional second parameter then only the author date of the given file path will be displayed.
+
+[NOTE]
+====
+The last author date is the date of the last Git status change to a committed file of a Git repository.
+====
+
+[TIP]
+====
+You can use this script to verify the latest publication year of your https://reuse.software/faq/#years-copyright[copyright statements].
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/git/git-author-date-last.sh /tmp/example
+2024-04-16T16:01:19+02:00 a.txt
+2022-04-16T15:59:50+02:00 b.txt
+2022-04-16T16:00:14+02:00 c/d.txt
+2023-04-16T16:00:41+02:00 e.txt
+$ scripts/git/git-author-date-last.sh /tmp/example | cut -c 1-4,26-
+2024 a.txt
+2022 b.txt
+2022 c/d.txt
+2023 e.txt
+$ scripts/git/git-author-date-last.sh /tmp/example a.txt
+2024-04-16T16:01:19+02:00 a.txt
+$ tree --noreport -a -I .git /tmp/example
+/tmp/example
+├── a.txt
+├── b.txt
+├── c
+│   └── d.txt
+└── e.txt
+$ (cd /tmp/example && git --no-pager log --format=%aI --name-status)
+2024-04-16T16:01:19+02:00
+
+M       a.txt
+2023-04-16T16:00:41+02:00
+
+A       e.txt
+2022-04-16T16:00:14+02:00
+
+A       c/d.txt
+2022-04-16T15:59:50+02:00
+
+A       a.txt
+A       b.txt
+$ (cd /tmp/example && git --no-pager log --format=%aI --name-status a.txt)
+2024-04-16T16:01:19+02:00
+
+M       a.txt
+2022-04-16T15:59:50+02:00
+
+A       a.txt
+----
+
+===== Related Scripts
+
+. <<git-author-date-initial,git-author-date-initial>>
++
+[source,shell]
+----
+$ scripts/git/git-author-date-initial.sh /tmp/example
+2022-04-16T15:59:50+02:00 a.txt
+2022-04-16T15:59:50+02:00 b.txt
+2022-04-16T16:00:14+02:00 c/d.txt
+2023-04-16T16:00:41+02:00 e.txt
+$ scripts/git/git-author-date-last.sh /tmp/example
+2024-04-16T16:01:19+02:00 a.txt
+2022-04-16T15:59:50+02:00 b.txt
+2022-04-16T16:00:14+02:00 c/d.txt
+2023-04-16T16:00:41+02:00 e.txt
+$ scripts/git/git-author-date-initial.sh /tmp/example | cut -c 1-4,26- > initial.txt
+$ scripts/git/git-author-date-last.sh /tmp/example | cut -c 1-4,26- > last.txt
+$ diff initial.txt last.txt
+1c1
+< 2022 a.txt
+---
+> 2024 a.txt
 ----
 
 [#git-cleanup]
