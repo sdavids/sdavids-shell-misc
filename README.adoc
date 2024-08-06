@@ -19,6 +19,7 @@ Sebastian Davids <sdavids@gmx.de>
 :uri-contributor-covenant: https://www.contributor-covenant.org
 :uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
 :uri-google-style: https://github.com/google/gts
+:easyrsa-install-url: https://easy-rsa.readthedocs.io/en/latest/#obtaining-and-using-easy-rsa
 :fnm-install-url: https://github.com/Schniz/fnm#installation
 :gh-cli-install-url: https://github.com/cli/cli#linux--bsd
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
@@ -256,12 +257,106 @@ $ scripts/general/shellscript-check.sh /tmp
 [#certificates-scripts]
 === Certificates
 
-This section contains scripts related to certificates:
+This section contains scripts related to standalone and certificate authority based certificates:
 
+. Standalone certificates
++
+[NOTE]
+====
+Standalone certificates are useful if you do not use mutual TLS or if the server's certificate verifier supports using a trust anchor as both a CA certificate and an end-entity certificate.
+====
++
 <<create-self-signed-cert,create-self-signed-cert>>:: create a private key and self-signed certificate
 <<delete-self-signed-cert,delete-self-signed-cert>>:: delete the private key and self-signed certificate
 <<renew-self-signed-cert,renew-self-signed-cert>>:: renew the private key and self-signed certificate
 <<verify-self-signed-cert,verify-self-signed-cert>>:: verify the self-signed certificate
+
+. Certificate authority based certificates
++
+[NOTE]
+====
+Certificate authority based certificates are useful if you want to use mutual TLS or if the server's certificate verifier does not support using a trust anchor as both a CA certificate and an end-entity certificate (e.g. https://docs.rs/craftls/latest/rustls/#non-features[rusttls]).
+====
++
+<<create-ca,create-ca>>:: create a certificate authority and its root certificate
+
+[TIP]
+====
+Standalone certificates are simpler to use than certificate authority based certificates.
+====
+
+[#create-ca]
+==== create-ca
+
+link:scripts/cert/create-ca.sh[This script] will create a certificate authority and its root certificate `ca.crt`.
+
+The `ca.crt` root certificate will be created in the following location:
+
+Linux::
++
+. `$EASYRSA_PKI` (if set)
+. `$XDG_DATA_HOME/easyrsa` (if `$XDG_DATA_HOME` is set)
+. `$HOME/.easyrsa`
+
+macOS::
++
+. `$EASYRSA_PKI` (if set)
+. `$XDG_DATA_HOME/easyrsa` (if `$XDG_DATA_HOME` is set)
+. `$HOME/Library/Application Support/easyrsa`
+
+The directory will be created if it does not exit yet.
+
+Additionally, the following environment variables affect the created root certificate:
+
+`EASYRSA_REQ_CN`:: the common name of the root certificate; the default contains "Easy-RSA CA", the creation date, and the hostname
+`EASYRSA_CA_EXPIRE`:: the expiration time of the root certificate in days; the default is 180 days
+
+On CentOS, Debian, Fedora, Mint, Red Hat, and Ubuntu, the CA root certificate will be added to the trust store and made available to Linux command-line tools.
+
+On macOS, the CA root certificate will be added to the "System" keychain.
+
+[NOTE]
+====
+`easyrsa` needs to be <<easyrsa,installed>>.
+====
+
+===== Usage
+
+[source,shell]
+----
+$ export EASYRSA_PKI="${HOME}/.local/secrets/easyrsa/pki"
+$ scripts/cert/create-ca.sh
+Created certificate authority "Easy-RSA CA (2024-08-05, example-host)"; expires on: 2025-02-01; certificate:
+
+/Users/example/.local/secrets/easyrsa/pki/ca.crt
+...
+$ date -Idate
+2024-08-05
+$ stat -f '%A %N' ~/.local/secrets/easyrsa/pki/ca.crt
+600 /Users/example/.local/secrets/easyrsa/pki/ca.crt
+----
+
+[#create-ca-mac]
+===== macOS
+
+Check your "System" keychain in _Keychain Access_; _When using this certificate_ should be set to "Always Trust":
+
+image::docs/asciidoc/images/ca-macos.png[]
+
+[NOTE]
+====
+Chrome, Firefox, and Safari need no further configuration.
+====
+
+===== More Information
+
+* https://easy-rsa.readthedocs.io/en/latest/[Easy-RSA 3]
+* https://easy-rsa.readthedocs.io/en/latest/advanced/#environmental-variables-reference[EASYRSA_PKI, EASYRSA_REQ_CN, and EASYRSA_CA_EXPIRE]
+* https://www.digitalocean.com/community/tutorial-collections/how-to-set-up-and-configure-a-certificate-authority-ca[How To Set Up and Configure a Certificate Authority (CA)]
+* https://www.redhat.com/sysadmin/ca-certificates-cli[Red Hat - Making CA certificates available to Linux command-line tools]
+* https://ubuntu.com/server/docs/install-a-root-ca-certificate-in-the-trust-store[Ubuntu - Install a root CA certificate in the trust store]
+* https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox[Setting Up Certificate Authorities (CAs) in Firefox]
+* https://support.apple.com/en-us/103214[Apple's Certificate Transparency policy]
 
 [#create-self-signed-cert]
 ==== create-self-signed-cert
@@ -2834,6 +2929,20 @@ $ brew install brotli
 [source,shell]
 ----
 $ sudo apt-get install curl
+----
+
+[#easyrsa]
+==== easyrsa
+
+===== Linux
+
+Install {easyrsa-install-url}[easyrsa].
+
+===== Mac
+
+[source,shell]
+----
+$ brew install easy-rsa
 ----
 
 [#gifsicle]
