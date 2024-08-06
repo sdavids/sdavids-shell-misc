@@ -280,6 +280,7 @@ Certificate authority based certificates are useful if you want to use mutual TL
 +
 <<create-ca,create-ca>>:: create a certificate authority and its root certificate
 <<create-ca-based-cert,create-ca-based-cert>>:: create a private key and self-signed certificate based on a certificate authority
+<<verify-ca-based-cert,verify-ca-based-cert>>:: verify the certificate authority based certificate
 
 [TIP]
 ====
@@ -436,7 +437,7 @@ Certificates with more than 180 days validity will https://support.apple.com/en-
 
 [TIP]
 ====
-Copy the script (and its related <<create-ca,create-ca>> script) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+Copy the script (and its related <<create-ca,create-ca>> and <<verify-ca-based-cert,verify>> scripts) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
 
 .package.json
 [source,jsonc]
@@ -445,7 +446,8 @@ Copy the script (and its related <<create-ca,create-ca>> script) into your Node.
 ...
   "scripts": {
     "cert:ca": "scripts/create-ca.sh",
-    "cert:create": "scripts/create-self-signed-cert.sh certs"
+    "cert:create": "scripts/create-self-signed-cert.sh certs",
+    "cert:verify": "scripts/verify-self-signed-cert.sh certs"
   }
 }
 ----
@@ -454,6 +456,7 @@ Copy the script (and its related <<create-ca,create-ca>> script) into your Node.
 ----
 $ npm run cert:ca
 $ npm run cert:create
+$ npm run cert:verify
 ----
 ====
 
@@ -862,6 +865,7 @@ $ ./gradlew quarkusDev
 ===== Related Scripts
 
 . <<create-ca,create-ca>>
+. <<verify-ca-based-cert,verify-ca-based-cert>>
 . <<create-self-signed-cert,create-self-signed-cert>>
 . <<git-cleanup,git-cleanup>>
 
@@ -1481,6 +1485,65 @@ notAfter=Aug 17 16:53:53 2024 GMT
 
 . <<create-self-signed-cert,create-self-signed-cert>>
 . <<delete-self-signed-cert,delete-self-signed-cert>>
+
+[#verify-ca-based-cert]
+==== verify-ca-based-cert
+
+link:scripts/cert/verify-ca-based-cert.sh[This script] will verify the certificate authority based certificate `cert.pem` in the given directory (`$PWD` if not given).
+
+On macOS, the CA root certificate will be verified in the "System" keychain also.
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[source,jsonc]
+----
+{
+...
+  "scripts": {
+    "cert:verify": "scripts/verify-ca-based-cert.sh certs"
+  }
+}
+----
+
+[source,shell]
+----
+$ npm run cert:verify
+----
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/cert/verify-ca-based-cert.sh
+$ scripts/cert/verify-ca-based-cert.sh ~/.local/secrets/certs/localhost
+keychain: "/Library/Keychains/System.keychain"
+...
+    "labl"<blob>="Easy-RSA CA (2024-08-05, example-host)"
+...
+/Users/example/.local/secrets/certs/localhost/cert.pem
+Certificate:
+        Issuer: CN=Easy-RSA CA (2024-08-05, example-host)
+        Validity
+            Not Before: Aug  5 14:48:36 2024 GMT
+            Not After : Sep  4 14:48:36 2024 GMT
+        Subject: CN=localhost
+...
+            X509v3 Authority Key Identifier:
+...
+                DirName:/CN=Easy-RSA CA (2024-08-05, example-host)
+...
+            X509v3 Subject Alternative Name:
+                DNS:localhost
+...
+----
+
+===== Related Scripts
+
+. <<create-ca-based-cert,create-ca-based-cert>>
 
 [#verify-self-signed-cert]
 ==== verify-self-signed-cert
