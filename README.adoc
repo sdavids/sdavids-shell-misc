@@ -260,6 +260,7 @@ This section contains scripts related to certificates:
 
 <<create-self-signed-cert,create-self-signed-cert>>:: create a private key and self-signed certificate
 <<delete-self-signed-cert,delete-self-signed-cert>>:: delete the private key and self-signed certificate
+<<renew-self-signed-cert,renew-self-signed-cert>>:: renew the private key and self-signed certificate
 
 [#create-self-signed-cert]
 ==== create-self-signed-cert
@@ -333,7 +334,7 @@ Certificates with more than 180 days validity will https://support.apple.com/en-
 
 [TIP]
 ====
-Copy the script (and its related <<delete-self-signed-cert,delete>> script) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+Copy the script (and its related <<delete-self-signed-cert,delete>> and <<renew-self-signed-cert,renew>> scripts) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
 
 .package.json
 [source,jsonc]
@@ -342,7 +343,8 @@ Copy the script (and its related <<delete-self-signed-cert,delete>> script) into
 ...
   "scripts": {
     "cert:create": "scripts/create-self-signed-cert.sh certs",
-    "cert:delete": "scripts/delete-self-signed-cert.sh certs"
+    "cert:delete": "scripts/delete-self-signed-cert.sh certs",
+    "cert:renew": "scripts/renew-self-signed-cert.sh certs"
   }
 }
 ----
@@ -351,6 +353,7 @@ Copy the script (and its related <<delete-self-signed-cert,delete>> script) into
 ----
 $ npm run cert:create
 $ npm run cert:delete
+$ npm run cert:renew
 ----
 ====
 
@@ -743,6 +746,7 @@ $ ./gradlew quarkusDev
 ===== Related Scripts
 
 . <<delete-self-signed-cert,delete-self-signed-cert>>
+. <<renew-self-signed-cert,renew-self-signed-cert>>
 . <<git-cleanup,git-cleanup>>
 
 [#delete-self-signed-cert]
@@ -807,6 +811,69 @@ image::docs/asciidoc/images/self-signed-firefox-delete-2.png[]
 ===== Related Scripts
 
 . <<create-self-signed-cert,create-self-signed-cert>>
+. <<renew-self-signed-cert,renew-self-signed-cert>>
+
+[#renew-self-signed-cert]
+==== renew-self-signed-cert
+
+link:scripts/cert/renew-self-signed-cert.sh[This script] will renew the private key `key.pem` and the self-signed certificate `cert.pem` in the given directory (`$PWD` if not given).
+
+The optional second positive integer parameter (range: [1, 24855]) specifies the number of days the certificate is valid for; the default is 30 days.
+
+The optional third parameter is the common name (`localhost` if not given) of the certificate to be renewed.
+
+On macOS, the certificate will be renewed in the "login" keychain also.
+
+[WARNING]
+====
+Certificates with more than 180 days validity will https://support.apple.com/en-us/103214[not be accepted by the Apple platform] or Safari.
+====
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[source,jsonc]
+----
+{
+...
+  "scripts": {
+    "cert:renew": "scripts/renew-self-signed-cert.sh certs"
+  }
+}
+----
+
+[source,shell]
+----
+$ npm run cert:renew
+----
+====
+
+===== Usage
+
+[source,shell]
+----
+$ scripts/cert/renew-self-signed-cert.sh
+$ scripts/cert/renew-self-signed-cert.sh dist/etc/nginx
+$ scripts/cert/renew-self-signed-cert.sh . 30
+$ openssl x509 -enddate -noout -in ~/.local/secrets/certs/https.local/cert.pem
+notAfter=Aug  8 11:18:36 2024 GMT
+$ scripts/cert/renew-self-signed-cert.sh ~/.local/secrets/certs/https.local 10 https.local
+Removing 'https.local' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
+Adding 'https.local' certificate (expires on: 2024-09-17) to keychain /Users/example/Library/Keychains/login.keychain-db ...
+$ date -Idate
+2024-08-07
+$ openssl x509 -startdate -noout -in ~/.local/secrets/certs/https.local/cert.pem
+notBefore=Aug  7 16:53:53 2024 GMT
+$ openssl x509 -enddate -noout -in ~/.local/secrets/certs/https.local/cert.pem
+notAfter=Aug 17 16:53:53 2024 GMT
+----
+
+===== Related Scripts
+
+. <<create-self-signed-cert,create-self-signed-cert>>
+. <<delete-self-signed-cert,delete-self-signed-cert>>
 
 [#git-scripts]
 === Git
