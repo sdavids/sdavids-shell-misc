@@ -5,4 +5,5 @@
 
 * xref:index.adoc[]
 * xref:scripts/scripts.adoc[]
+** xref:scripts/general/general.adoc[]
 * xref:functions/functions.adoc[]
