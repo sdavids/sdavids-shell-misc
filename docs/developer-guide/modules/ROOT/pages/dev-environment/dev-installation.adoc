@@ -65,6 +65,19 @@ Install {gh-cli-install-url}[GitHub CLI].
 $ brew install gh
 ----
 
+== Gradle
+
+First <<jdk,install a JDK>>.
+
+There are https://gradle.org/install/[multiple options] of installing Gradle.
+
+The recommended way is to https://sdkman.io/install[install via SDKMAN!]:
+
+[,console]
+----
+$ sdk install gradle
+----
+
 == gzip
 
 === Linux
