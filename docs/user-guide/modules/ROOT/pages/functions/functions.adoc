@@ -19,7 +19,7 @@ my_func() {}
 ====
 Example zsh setup:
 
-[,shell]
+[,console]
 ----
 $ mkdir ~/.zfunc
 ----
