@@ -10,6 +10,7 @@ Install and enable the following plugins:
 
 * https://plugins.jetbrains.com/plugin/7495\--ignore[.ignore]
 * https://plugins.jetbrains.com/plugin/7391-asciidoc[AsciiDoc]
+* https://plugins.jetbrains.com/plugin/8527-google-java-format[google-java-format]
 * https://plugins.jetbrains.com/plugin/10456-prettier[prettier]
 * https://plugins.jetbrains.com/plugin/13122-shell-script[Shell Script]
 
