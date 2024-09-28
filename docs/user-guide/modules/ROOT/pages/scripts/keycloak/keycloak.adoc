@@ -1,0 +1,5 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Keycloak
+
+This section contains scripts related to https://www.keycloak.org[Keycloak]:
