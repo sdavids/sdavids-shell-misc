@@ -22,6 +22,19 @@ $ sudo apt-get install brotli
 $ brew install brotli
 ----
 
+== curl
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install curl
+----
+
+=== Mac
+
+`curl` is part of the standard macOS installation.
+
 == gifsicle
 
 === Linux
@@ -67,6 +80,21 @@ $ sudo apt-get install gzip
 ----
 $ brew install gzip
 ----
+
+== JDK
+
+There are https://whichjdk.com[several different JDKs] and multiple options of installing them.
+
+The https://whichjdk.com/#what-is-the-best-way-to-install-a-jdk-for-local-development[recommended] way is to https://sdkman.io/install[install via SDKMAN!]:
+
+[,console]
+----
+$ sdk install java
+----
+
+=== More Information
+
+https://sdkman.io/jdks[SDKMAN! - JDK Distributions]
 
 == jpegoptim
 
