@@ -18,6 +18,22 @@ $ sudo apt-get install shellcheck
 $ brew install shellcheck
 ----
 
+== shfmt
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install shfmt
+----
+
+=== Mac
+
+[,console]
+----
+$ brew install shfmt
+----
+
 == yamllint
 
 === Linux
