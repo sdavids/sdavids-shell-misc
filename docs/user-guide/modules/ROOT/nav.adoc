@@ -5,6 +5,8 @@
 
 * xref:index.adoc[]
 * xref:scripts/scripts.adoc[]
+** xref:scripts/cert/cert.adoc[]
+*** Standalone
 ** xref:scripts/general/general.adoc[]
 *** xref:scripts/general/copy-shell-scripts.adoc[]
 *** xref:scripts/general/counter.adoc[]
