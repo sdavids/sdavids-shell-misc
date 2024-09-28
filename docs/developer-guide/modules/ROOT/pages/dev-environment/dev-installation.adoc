@@ -187,6 +187,19 @@ if command -v nvm >/dev/null 2>&1; then
 fi
 ----
 
+== OpenSSL
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install openssl
+----
+
+=== Mac
+
+`openssl` is part of the standard macOS installation.
+
 == optipng
 
 === Linux
