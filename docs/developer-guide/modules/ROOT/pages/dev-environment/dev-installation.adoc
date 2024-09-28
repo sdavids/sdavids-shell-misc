@@ -207,6 +207,19 @@ $ sudo apt-get install shfmt
 $ brew install shfmt
 ----
 
+== unzip
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install unzip
+----
+
+=== Mac
+
+`unzip` is part of the standard macOS installation.
+
 == yamllint
 
 === Linux
