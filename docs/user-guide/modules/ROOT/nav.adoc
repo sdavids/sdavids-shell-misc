@@ -34,6 +34,7 @@
 *** xref:scripts/java/java-format-check.adoc[]
 *** xref:scripts/java/jar-java-versions.adoc[]
 *** xref:scripts/java/jar-min-java-version.adoc[]
+** xref:scripts/keycloak/keycloak.adoc[]
 ** xref:scripts/nodejs/nodejs.adoc[]
 *** xref:scripts/nodejs/clean-node.adoc[]
 *** xref:scripts/nodejs/dependency-check-node.adoc[]
