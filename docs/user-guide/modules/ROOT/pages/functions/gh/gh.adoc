@@ -1,0 +1,7 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= GitHub
+
+This section contains functions related to https://docs.github.com/en/rest?apiVersion=2022-11-28[GitHub] and https://cli.github.com[GitHub CLI]:
+
+Related: xref:scripts/gh/gh.adoc[GitHub Scripts]
