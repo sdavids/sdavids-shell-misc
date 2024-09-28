@@ -1,0 +1,7 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Java
+
+This section contains scripts related to https://dev.java[Java]:
+
+Related: xref:functions/java/java.adoc[Java Functions]
