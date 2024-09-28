@@ -1,6 +1,21 @@
 // SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
 = Installation
+:gh-cli-install-url: https://github.com/cli/cli#linux--bsd
+
+[#gh-cli]
+== GitHub CLI
+
+=== Linux
+
+Install {gh-cli-install-url}[GitHub CLI].
+
+=== Mac
+
+[,console]
+----
+$ brew install gh
+----
 
 == jq
 
