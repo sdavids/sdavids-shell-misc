@@ -5,3 +5,5 @@
 This section contains functions related to https://git-scm.com[Git]:
 
 xref:functions/git/ls-extensions-git.adoc[]:: display all file extensions for tracked files
+
+Related: xref:scripts/git/git.adoc[Git Scripts]
