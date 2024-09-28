@@ -71,6 +71,22 @@ $ ln -s ~/.local/share/easyrsa/easyrsa ~/.local/bin/easyrsa
 $ rm ~/Downloads/easy-rsa.tgz
 ----
 
+== exiftool
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install exiftool
+----
+
+=== Mac
+
+[,console]
+----
+$ brew install exiftool
+----
+
 == gifsicle
 
 === Linux
@@ -276,6 +292,22 @@ Install {oxipng-install-url}[oxipng].
 [,console]
 ----
 $ brew install oxipng
+----
+
+== qpdf
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install qpdf
+----
+
+=== Mac
+
+[,console]
+----
+$ brew install qpdf
 ----
 
 == ShellCheck
