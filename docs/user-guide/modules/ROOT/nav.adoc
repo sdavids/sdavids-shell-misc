@@ -64,6 +64,7 @@
 *** xref:scripts/keycloak/keycloak-access-token.adoc[]
 *** xref:scripts/keycloak/keycloak-access-token-decoded.adoc[]
 *** xref:scripts/keycloak/keycloak-decode-access-token.adoc[]
+** xref:scripts/latex/latex.adoc[]
 ** xref:scripts/nodejs/nodejs.adoc[]
 *** xref:scripts/nodejs/clean-node.adoc[]
 *** xref:scripts/nodejs/dependency-check-node.adoc[]

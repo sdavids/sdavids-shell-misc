@@ -14,6 +14,7 @@ Install and enable the following plugins:
 * https://plugins.jetbrains.com/plugin/8527-google-java-format[google-java-format]
 * https://plugins.jetbrains.com/plugin/10456-prettier[prettier]
 * https://plugins.jetbrains.com/plugin/13122-shell-script[Shell Script]
+* https://plugins.jetbrains.com/plugin/9473-texify-idea[TeXiFy IDEA]
 
 === Settings
 
@@ -35,6 +36,7 @@ Install and enable the following extensions:
 * https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode[AsciiDoc]
 * https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker[Docker]
 * https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint[ESLint]
+* https://marketplace.visualstudio.com/items?itemName=mathematic.vscode-latex[LaTeX]
 * https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode[Prettier]
 * https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck[ShellCheck]
 * https://marketplace.visualstudio.com/items?itemName=mkhl.shfmt[shfmt]
