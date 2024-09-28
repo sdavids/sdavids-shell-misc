@@ -16,3 +16,4 @@
 *** xref:scripts/general/shellscript-format.adoc[]
 *** xref:scripts/general/shellscript-format-check.adoc[]
 * xref:functions/functions.adoc[]
+** xref:functions/general/general.adoc[]
