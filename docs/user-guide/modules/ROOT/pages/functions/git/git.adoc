@@ -1,0 +1,5 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Git
+
+This section contains functions related to https://git-scm.com[Git]:
