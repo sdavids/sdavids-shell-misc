@@ -1,0 +1,5 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= AsciiDoc
+
+This section contains scripts related to https://docs.asciidoctor.org/asciidoc/latest/[AsciiDoc]:
