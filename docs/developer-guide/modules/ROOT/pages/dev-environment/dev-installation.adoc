@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
 = Installation
+:easyrsa-install-url: https://easy-rsa.readthedocs.io/en/latest/#obtaining-and-using-easy-rsa
 :fnm-install-url: https://github.com/Schniz/fnm#installation
 :gh-cli-install-url: https://github.com/cli/cli#linux--bsd
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
@@ -34,6 +35,35 @@ $ sudo apt-get install curl
 === Mac
 
 `curl` is part of the standard macOS installation.
+
+== EasyRSA
+
+[IMPORTANT]
+====
+Ensure that you install version `3.1.7` and not `3.2.0`!
+
+Version `3.2.0` is an incompatible https://github.com/OpenVPN/easy-rsa/releases/tag/v3.2.0[development snapshot release].
+====
+
+=== Linux
+
+Install {easyrsa-install-url}[EasyRSA].
+
+=== Mac
+
+[WARNING]
+====
+Unfortunately, homebrew provides `easy-rsa` version `3.2.0` at this point in time (August 2024).
+====
+
+[,console]
+----
+$ curl -L https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.7/EasyRSA-3.1.7.tgz -o ~/Downloads/easy-rsa.tgz
+$ tar -xzf ~/Downloads/easy-rsa.tgz -C ~/.local/share
+$ mv  ~/.local/share/EasyRSA-3.1.7 ~/.local/share/easyrsa
+$ ln -s ~/.local/share/easyrsa/easyrsa ~/.local/bin/easyrsa
+$ rm ~/Downloads/easy-rsa.tgz
+----
 
 == gifsicle
 
