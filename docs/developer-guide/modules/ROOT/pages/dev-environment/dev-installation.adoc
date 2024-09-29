@@ -1,9 +1,11 @@
 // SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
 = Installation
+:docker-install-url: https://docs.docker.com/install/
 :easyrsa-install-url: https://easy-rsa.readthedocs.io/en/latest/#obtaining-and-using-easy-rsa
 :fnm-install-url: https://github.com/Schniz/fnm#installation
 :gh-cli-install-url: https://github.com/cli/cli#linux--bsd
+:hadolint-install-url: https://github.com/hadolint/hadolint?tab=readme-ov-file#install
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
 :oxipng-install-url: https://github.com/shssoichiro/oxipng/issues/69
 
@@ -35,6 +37,10 @@ $ sudo apt-get install curl
 === Mac
 
 `curl` is part of the standard macOS installation.
+
+== Docker
+
+Install {docker-install-url}[Docker].
 
 == EasyRSA
 
@@ -122,6 +128,19 @@ $ sudo apt-get install gzip
 [,console]
 ----
 $ brew install gzip
+----
+
+== hadolint
+
+=== Linux
+
+Install {hadolint-install-url}[hadolint].
+
+=== Mac
+
+[,console]
+----
+$ brew install hadolint
 ----
 
 == JDK
