@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 = Certificates
 
-This section contains scripts related to <<standalone-certificates,standalone>> certificates.
+This section contains scripts related to <<standalone-certificates,standalone>> and <<certificate-authority-based-certificates,certificate authority based>> certificates.
 
 == Standalone Certificates
 
@@ -15,3 +15,15 @@ xref:scripts/cert/create-self-signed-cert.adoc[]:: create a private key and self
 xref:scripts/cert/delete-self-signed-cert.adoc[]:: delete the private key and self-signed certificate
 xref:scripts/cert/renew-self-signed-cert.adoc[]:: renew the private key and self-signed certificate
 xref:scripts/cert/verify-self-signed-cert.adoc[]:: verify the self-signed certificate
+
+== Certificate Authority Based Certificates
+
+[NOTE]
+====
+Certificate authority based certificates are useful if you want to use mutual TLS or if the server's certificate verifier does not support using a trust anchor as both a CA certificate and an end-entity certificate (e.g. https://docs.rs/craftls/latest/rustls/#non-features[rusttls]).
+====
+
+[TIP]
+====
+Standalone certificates are simpler to use than certificate authority based certificates.
+====
