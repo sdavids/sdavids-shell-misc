@@ -5,6 +5,7 @@
 
 * xref:index.adoc[]
 * xref:scripts/scripts.adoc[]
+** xref:scripts/asciidoc/asciidoc.adoc[]
 ** xref:scripts/cert/cert.adoc[]
 *** Standalone
 **** xref:scripts/cert/create-self-signed-cert.adoc[]
