@@ -11,6 +11,7 @@
 **** xref:scripts/cert/delete-self-signed-cert.adoc[]
 **** xref:scripts/cert/renew-self-signed-cert.adoc[]
 **** xref:scripts/cert/verify-self-signed-cert.adoc[]
+*** Certificate Authority Based
 ** xref:scripts/general/general.adoc[]
 *** xref:scripts/general/copy-shell-scripts.adoc[]
 *** xref:scripts/general/counter.adoc[]
