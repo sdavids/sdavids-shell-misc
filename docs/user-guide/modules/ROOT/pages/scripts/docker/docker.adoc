@@ -1,0 +1,56 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Docker
+:dockerfile_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/Dockerfile
+
+This section contains scripts related to https://docs.docker.com[Docker]:
+
+== Usage
+
+The scripts should be copied into a project, e.g.:
+
+[,shell]
+----
+<project root directory>
+├── Dockerfile
+└── scripts
+    ├── ...
+----
+
+And then invoked from the directory containing the `Dockerfile`:
+
+[,console]
+----
+----
+
+[NOTE]
+====
+All scripts need Docker to be xref:developer-guide::dev-environment/dev-installation.adoc#docker[installed].
+====
+
+[IMPORTANT]
+====
+You should modify the `container_name`, `label_group`, `namespace`, and `repository` shell variables in the copied scripts--the values need to match in all scripts:
+
+[,shell]
+----
+readonly container_name="sdavids-shell-misc-docker-example"
+readonly label_group='de.sdavids.docker.group'
+readonly namespace='de.sdavids'
+readonly repository='sdavids-shell-misc'
+----
+
+The scripts expect the image to be named `$+{namespace}+/$+{repository}+` having a label `$+{label_group}+=$+{repository}+`.
+
+The scripts expect the container to be named `$+{container_name}+`.
+====
+
+[TIP]
+====
+You can try the scripts with the {dockerfile_url}[example Dockerfile]:
+
+[,shell]
+----
+$ scripts/docker/docker_build.sh -d scripts/docker/Dockerfile
+----
+====
