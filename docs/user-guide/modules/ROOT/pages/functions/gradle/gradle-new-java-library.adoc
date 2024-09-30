@@ -1,0 +1,129 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= gradle_new_java_library
+:function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/gradle_new_java_library
+
+{function_url}[This function^] will create a new Gradle https://docs.gradle.org/current/userguide/java_library_plugin.html[Java library] project with sensible, modern defaults and the given name.
+
+The optional second parameter is the directory (`$PWD` if not given) the project is created in.
+
+[NOTE]
+====
+A Git repository will also be initialized for the project if `git` is installed.
+
+A Git `pre-commit` https://git-scm.com/docs/githooks[hook] will be added also.
+
+This script uses https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[Git commit signing]; you need to:
+
+* configure your https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key#telling-git-about-your-gpg-key[local git
+config]
+* https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-gpg-key-to-your-github-account#adding-a-gpg-key[add your public GPG key] to GitHub
+
+Alternatively, you can remove `--gpg-sign`:
+
+.zfunc/gradle_new_java_library
+[,shell,highlight=3]
+----
+  git commit \
+    --quiet \
+-   --gpg-sign \
+    --signoff \
+----
+====
+
+[TIP]
+====
+The generated default package will be `org.example`.
+
+You can https://docs.gradle.org/8.6/release-notes.html#simpler-source-package-handling[change the default] by adding `org.gradle.buildinit.source.package` in https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_configuration_properties[Gradle properties]:
+
+[,console]
+----
+printf 'org.gradle.buildinit.source.package=my.org' >> "${GRADLE_USER_HOME:=${HOME}}/gradle.properties"
+----
+
+If you want https://docs.gradle.org/8.7/release-notes.html#generating-concise-projects-with-gradle-init[no comments]  to be generated add `org.gradle.buildinit.comments=false` in https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_configuration_properties[Gradle properties]:
+
+[,console]
+----
+printf 'org.gradle.buildinit.comments=false' >> "${GRADLE_USER_HOME:=${HOME}}/gradle.properties"
+----
+====
+
+[TIP]
+====
+You might want to customize the defaults for the created `gradle.properties`, `.gitignore`, `.gitattributes`, or `.editorconfig`, e.g.:
+
+.zfunc/gradle_new_java_library
+[,shell]
+----
+      cat << 'EOF' >gradle.properties
+  ...
+  EOF
+
+      cat << 'EOF' >.gitignore
+  ...
+  EOF
+
+      cat << 'EOF' >.gitattributes
+  ...
+  ...
+  EOF
+
+      cat << 'EOF' >.editorconfig
+  ...
+  EOF
+----
+====
+
+== Usage
+
+[,shell]
+----
+$ gradle_new_java_library example-java-library
+$ gradle_new_java_library other-java-library /tmp
+$ tree --noreport -a -I .git .
+.
+├── .editorconfig
+├── .git-blame-ignore-revs
+├── .gitattributes
+├── .githooks
+│   └── pre-commit
+├── .gitignore
+├── gradle
+│   ├── libs.versions.toml
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── lib
+│   ├── build.gradle.kts
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── org
+│       │   │       └── example
+│       │   │           └── Library.java
+│       │   └── resources
+│       └── test
+│           ├── java
+│           │   └── org
+│           │       └── example
+│           │           └── LibraryTest.java
+│           └── resources
+└── settings.gradle.kts
+$ git status
+On branch main
+nothing to commit, working tree clean
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#gradle[Gradle]
+
+== More Information
+
+* https://docs.gradle.org/current/userguide/build_init_plugin.html[Gradle - Build Init Plugin]
+* https://docs.gradle.org/current/userguide/java_library_plugin.html[Gradle - Java library]
