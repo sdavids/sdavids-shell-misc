@@ -16,6 +16,7 @@
 *** xref:scripts/general/shellscript-format.adoc[]
 *** xref:scripts/general/shellscript-format-check.adoc[]
 ** xref:scripts/git/git.adoc[]
+*** xref:scripts/git/git-cleanup.adoc[]
 * xref:functions/functions.adoc[]
 ** xref:functions/general/general.adoc[]
 *** xref:functions/general/color-stderr.adoc[]
