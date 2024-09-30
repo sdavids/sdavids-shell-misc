@@ -1,0 +1,74 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= dependency_check_node
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/nodejs/dependency_check_node.sh
+
+{script_url}[This script^] checks for dependency updates of the https://nodejs.org/en[Node.js] project in the given directory (`$PWD` if not given).
+
+The optional second parameter determines whether https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager#introduction-to-npm[NPM] should ignore https://docs.npmjs.com/cli/v10/using-npm/config#ignore-scripts[pre- or post-scripts] (default: `true`) while resolving the project's dependencies.
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "dependency:updates": "scripts/dependency_check_node.sh"
+  }
+}
+----
+
+[,console]
+----
+$ npm run dependency:updates
+----
+====
+
+[TIP]
+====
+For https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html#3-minimize-attack-surfaces-by-ignoring-run-scripts[security reasons] you might want to disable the https://docs.npmjs.com/cli/v10/using-npm/config#ignore-scripts[pre- or post-scripts] globally via:
+
+[,console]
+----
+$ npm config set ignore-scripts true
+----
+
+Use `--no-ignore-scripts` to enable the pre- or post-scripts for a specific NPM command:
+
+[,console]
+----
+$ npm install --no-ignore-scripts
+----
+
+You can show your current configuration via:
+
+[,console]
+----
+$ npm config ls -l
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/dependency_check_node.sh
+----
+
+[,shell]
+----
+$ scripts/dependency_check_node.sh /tmp/example
+$ scripts/dependency_check_node.sh /tmp/example false
+
+Package             Current  Wanted  Latest  Location                         Depended by  Package Type     Homepage
+esbuild              0.23.0  0.23.0  0.23.1  node_modules/esbuild             example      devDependencies  https://github.com/evanw/esbuild#readme
+husky                 9.1.4   9.1.4   9.1.5  node_modules/husky               example      devDependencies  https://github.com/typicode/husky#readme
+----
+
+== Related Scripts
+
+* xref:scripts/nodejs/clean-node.adoc[]
