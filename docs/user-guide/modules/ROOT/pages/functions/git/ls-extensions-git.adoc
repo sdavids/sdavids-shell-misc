@@ -1,0 +1,90 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= ls_extensions_git
+:function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/ls_extensions_git
+
+{function_url}[This function^] will display all file extensions (case-insensitive) of tracked files and their count in the given Git directory (`$PWD` if not given) and its subdirectories.
+
+[TIP]
+====
+This script, in conjunction with the xref:functions/general/ls-extensions.adoc[] script, is helpful in determining whether you have covered your files properly in your https://git-scm.com/docs/gitattributes[.gitattributes] file.
+
+[,shell]
+----
+$ tree --noreport -a -I .git .
+.
+├── gradle
+│   └── wrapper
+│       └── gradle-wrapper.jar
+└── gradlew.bat
+
+$ ls_extensions
+   1 jar
+   1 bat
+
+$ git check-attr -a gradlew.bat                                           <1>
+$ git check-attr -a gradle/wrapper/gradle-wrapper.jar
+
+$ printf '*.bat text eol=crlf\n*.jar binary\n' > .gitattributes           <2>
+$ cat .gitattributes
+*.bat text eol=crlf
+*.jar binary
+
+$ git check-attr -a gradlew.bat
+gradlew.bat: text: set
+gradlew.bat: eol: crlf
+$ git check-attr -a gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.jar: binary: set
+gradle/wrapper/gradle-wrapper.jar: diff: unset
+gradle/wrapper/gradle-wrapper.jar: merge: unset
+gradle/wrapper/gradle-wrapper.jar: text: unset
+
+$ ls_extensions_git                                                       <3>
+
+$ git add gradlew.bat gradle/wrapper/gradle-wrapper.jar                   <4>
+
+$ ls_extensions_git                                                       <5>
+   1 jar
+   1 bat
+----
+====
+
+<1> Both `gradlew.bat` and `gradle-wrapper.jar` have no attributes set--if we would add them to the Git index at this point they would https://dev.to/deadlybyte/please-add-gitattributes-to-your-git-repository-1jld[not be handled properly] by Git.
+
+<2> Add the appropriate attributes for JAR and Windows batch files.
+
+<3> Nothing has been added to the Git index yet: So `ls_extensions_git` shows no file extensions.
+
+<4> Add both files to the Git index.
+
+<5> Both file extensions will be reported once they are in the Git index.
+
+== Usage
+
+[,shell]
+----
+$ ls_extensions_git
+   5 sh
+$ ls_extensions_git /tmp/example
+   3 txt
+   1 png
+$ tree --noreport -a -I .git /tmp/example
+/tmp/example
+├── a.b.txt
+├── a.txt
+├── b.TXT
+├── d
+│   ├── .ignored
+│   └── e.png
+└── out.txt
+$ git ls-files
+a.b.txt
+a.txt
+b.txt
+d/.ignored
+d/e.png
+----
+
+== Related Functions
+
+* xref:functions/general/ls-extensions.adoc[]
