@@ -1,0 +1,17 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= minify_traffic_advice
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/minify_traffic_advice.sh
+
+{script_url}[This script^] will minify the https://developer.chrome.com/blog/private-prefetch-proxy/#traffic[private prefetch proxy traffic control] file.
+
+== Usage
+
+[,shell]
+----
+$ scripts/web/minify_traffic_advice.sh dist/.well-known/traffic-advice
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#jq[jq]
