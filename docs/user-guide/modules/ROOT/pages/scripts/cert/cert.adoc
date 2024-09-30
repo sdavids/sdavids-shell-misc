@@ -13,3 +13,4 @@ Standalone certificates are useful if you do not use mutual TLS or if the server
 
 xref:scripts/cert/create-self-signed-cert.adoc[]:: create a private key and self-signed certificate
 xref:scripts/cert/delete-self-signed-cert.adoc[]:: delete the private key and self-signed certificate
+xref:scripts/cert/renew-self-signed-cert.adoc[]:: renew the private key and self-signed certificate
