@@ -20,3 +20,4 @@
 *** xref:functions/general/color-stderr.adoc[]
 *** xref:functions/general/ls-extensions.adoc[]
 ** xref:functions/git/git.adoc[]
+*** xref:functions/git/ls-extensions-git.adoc[]
