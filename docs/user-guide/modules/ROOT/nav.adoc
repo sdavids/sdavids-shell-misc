@@ -32,6 +32,7 @@
 *** xref:scripts/web/compress-gzip.adoc[]
 *** xref:scripts/web/compress-zstd.adoc[]
 *** xref:scripts/web/minify-css.adoc[]
+*** xref:scripts/web/minify-gif.adoc[]
 *** xref:scripts/web/minify-html.adoc[]
 *** xref:scripts/web/minify-json.adoc[]
 *** xref:scripts/web/minify-json-tags.adoc[]
