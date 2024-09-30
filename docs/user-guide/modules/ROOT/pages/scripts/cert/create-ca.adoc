@@ -1,0 +1,125 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= create_ca
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/create_ca.sh
+
+{script_url}[This script^] will create a certificate authority and its root certificate `ca.crt`.
+
+The certificate authority will be created in the following location:
+
+Linux::
++
+. `$EASYRSA_PKI` (if set)
+. `$XDG_DATA_HOME/easyrsa/pki` (if `$XDG_DATA_HOME` is set)
+. `$HOME/.easyrsa/pki`
+
+macOS::
++
+. `$EASYRSA_PKI` (if set)
+. `$XDG_DATA_HOME/easyrsa/pki` (if `$XDG_DATA_HOME` is set)
+. `$HOME/Library/Application Support/easyrsa/pki`
+
+The directory will be created if it does not exit yet.
+
+The `ca.crt` root certificate will be created in the directory above.
+
+On CentOS, Debian, Fedora, Mint, Red Hat, and Ubuntu the CA root certificate will be added to the trust store and made available to Linux command-line tools.
+
+On macOS, the CA root certificate will be added to the "System" keychain.
+
+[NOTE]
+====
+Chrome, Firefox, and Safari need no further configuration--you should restart your browser though.
+
+Docker needs to be restarted.
+====
+
+[IMPORTANT]
+====
+The following environment variables affect the creation of the root certificate:
+
+`EASYRSA_REQ_CN`:: the common name of the root certificate; the default contains "Easy-RSA CA", the creation date, and the hostname
+[#create-ca-expire]
+`EASYRSA_CA_EXPIRE`:: the expiration time of the root certificate in days; the default is 180 days
+====
+
+[IMPORTANT]
+====
+When the CA root certificate <<create-ca-expire,expires>>, the entire CA, copied root certificates, and all created and copied certificates become invalid.
+
+It is https://github.com/OpenVPN/easy-rsa/issues/936[not possible] to renew the CA root certificate--therefore you need to delete the CA and xref:scripts/cert/create-ca.adoc[create a new one].
+
+If you have copied the root certificate to other locations you need to copy it again; if you have copied it into a Docker image you need to rebuild that image with the new certificate.
+
+You need to create new certificates based on this new CA.
+====
+
+[TIP]
+====
+Add `EASYRSA_PKI` to your shell's startup file (e.g. `.bashrc` or `.zshrc`):
+
+.~/.zshrc
+[,shell]
+----
+export EASYRSA_PKI="${HOME}/.local/secrets/easyrsa/pki"
+----
+====
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "cert:ca:create": "scripts/create_ca.sh"
+  }
+}
+----
+
+[,console]
+----
+$ npm run cert:ca:create
+----
+====
+
+== Usage
+
+[,shell]
+----
+$ export EASYRSA_PKI="${HOME}/.local/secrets/easyrsa/pki"
+$ scripts/cert/create_ca.sh
+Created certificate authority 'Easy-RSA CA (2024-08-05, example-host)'; expires on: 2025-02-01; certificate:
+
+/Users/example/.local/secrets/easyrsa/pki/ca.crt
+...
+$ date -Idate
+2024-08-05
+$ stat -f '%A %N' ~/.local/secrets/easyrsa/pki/ca.crt
+600 /Users/example/.local/secrets/easyrsa/pki/ca.crt
+----
+
+[#create-ca-mac]
+=== macOS
+
+Check your "System" keychain in _Keychain Access_; _When using this certificate_ should be set to "Always Trust":
+
+image::ca-macos.png[]
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#easyrsa[EasyRSA]
+
+== More Information
+
+* https://easy-rsa.readthedocs.io/en/latest/[Easy-RSA 3]
+* https://easy-rsa.readthedocs.io/en/latest/advanced/#environmental-variables-reference[EASYRSA_PKI, EASYRSA_REQ_CN, and EASYRSA_CA_EXPIRE]
+* https://www.digitalocean.com/community/tutorial-collections/how-to-set-up-and-configure-a-certificate-authority-ca[How To Set Up and Configure a Certificate Authority (CA)]
+* https://www.redhat.com/sysadmin/ca-certificates-cli[Red Hat - Making CA certificates available to Linux command-line tools]
+* https://www.baeldung.com/linux/ca-certificate-management#1-debian-distributions[Alpine/Debian-based distributions - How to add CA certificates]
+* https://ubuntu.com/server/docs/install-a-root-ca-certificate-in-the-trust-store[Ubuntu - Install a root CA certificate in the trust store]
+* https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox[Setting Up Certificate Authorities (CAs) in Firefox]
+* https://support.apple.com/en-us/103214[Apple's Certificate Transparency policy]
