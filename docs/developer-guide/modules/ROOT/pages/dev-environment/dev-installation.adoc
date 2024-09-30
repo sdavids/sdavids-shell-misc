@@ -67,6 +67,22 @@ $ sudo apt-get install gzip
 $ brew install gzip
 ----
 
+== jpegoptim
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install jpegoptim
+----
+
+=== Mac
+
+[,console]
+----
+$ brew install jpegoptim
+----
+
 == jq
 
 === Linux
