@@ -7,6 +7,7 @@ This section contains scripts related to https://docs.docker.com[Docker]:
 
 xref:scripts/docker/docker-build.adoc[]:: build the image
 xref:scripts/docker/docker-cleanup.adoc[]:: remove all project-related containers, images, networks, and volumes
+xref:scripts/docker/docker-health.adoc[]:: query the health status of the container
 xref:scripts/docker/docker-inspect.adoc[]:: display detailed information on the container
 xref:scripts/docker/docker-remove.adoc[]:: remove the container and associated unnamed volumes
 xref:scripts/docker/docker-sh.adoc[]:: open a shell into the running container
@@ -69,6 +70,7 @@ $ scripts/docker/docker_start.sh
 
 [,shell]
 ----
+$ scripts/docker/docker_health.sh
 $ scripts/docker/docker_inspect.sh
 $ scripts/docker/docker_sh.sh
 ----
