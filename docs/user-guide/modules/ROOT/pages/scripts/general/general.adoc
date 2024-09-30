@@ -5,6 +5,7 @@
 This section contains generally useful scripts:
 
 xref:scripts/general/copy-shell-scripts.adoc[]:: copy `*.sh` files from a source to a destination directory
+xref:scripts/general/counter.adoc[]:: create a counter
 xref:scripts/general/create-timestamp-file.adoc[]:: create a file with a timestamp
 xref:scripts/general/fix-permissions.adoc[]:: fix the directory, file, and script permissions in the given directory
 xref:scripts/general/hash-filename.adoc[]:: insert a hash into a filename
