@@ -81,7 +81,7 @@ Certificates with more than 180 days validity will https://support.apple.com/en-
 
 [TIP]
 ====
-Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc[delete] script) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc[delete] and xref:scripts/cert/renew-self-signed-cert.adoc[renew] scripts) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
 
 .package.json
 [,json]
@@ -91,6 +91,7 @@ Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc
   "scripts": {
     "cert:create": "scripts/create_self_signed_cert.sh certs",
     "cert:delete": "scripts/delete_self_signed_cert.sh certs",
+    "cert:renew": "scripts/renew_self_signed_cert.sh certs",
 ...
   }
 }
@@ -100,6 +101,7 @@ Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc
 ----
 $ npm run cert:create
 $ npm run cert:delete
+$ npm run cert:renew
 ----
 ====
 
@@ -499,6 +501,7 @@ $ ./gradlew quarkusDev
 == Related Scripts
 
 * xref:scripts/cert/delete-self-signed-cert.adoc[]
+* xref:scripts/cert/renew-self-signed-cert.adoc[]
 * xref:scripts/git/git-cleanup.adoc[]
 
 == More Information

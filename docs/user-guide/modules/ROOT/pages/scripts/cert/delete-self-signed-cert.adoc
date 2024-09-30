@@ -69,3 +69,4 @@ Select the certificate and click "Delete...".
 == Related Scripts
 
 * xref:scripts/cert/create-self-signed-cert.adoc[]
+* xref:scripts/cert/renew-self-signed-cert.adoc[]
