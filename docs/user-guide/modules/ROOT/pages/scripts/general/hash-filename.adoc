@@ -1,0 +1,25 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= hash_filename
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/general/hash_filename.sh
+
+{script_url}[This script^] will rename a given file; the new filename will have a hash inserted, e.g.:
+
+`test.txt` ⇒ `test.da39a3e.txt`
+
+Use the optional second parameter `-e` to print the new filename to stdout.
+
+== Usage
+
+[,shell]
+----
+$ scripts/general/hash_filename.sh test.txt
+$ scripts/general/hash_filename.sh test-echo.txt -e
+test-echo.da39a3e.txt
+----
+
+[,console]
+----
+$ find . \( -type f -name '*.jpg' -o -name '*.png' \) \
+-exec scripts/general/hash_filename.sh {} \;
+----
