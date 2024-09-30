@@ -19,3 +19,16 @@ $ KEYSTORE_PATH=keystore.jks KEYSTORE_PASS=changeit java Server.java
 ----
 
 => https://localhost:3000
+
+== With certificate authority based certificates
+
+[source,shell]
+----
+$ ../../create_ca.sh
+$ ../../create_ca_based_cert.sh
+$ openssl pkcs12 -export -in cert.pem -inkey key.pem -out certificate.p12 -name localhost -password pass:changeit
+$ keytool -importkeystore -srckeystore certificate.p12 -srcstoretype pkcs12 -srcstorepass changeit -destkeystore keystore.jks -deststorepass changeit
+$ KEYSTORE_PATH=keystore.jks KEYSTORE_PASS=changeit java Server.java
+----
+
+=> https://localhost:3000

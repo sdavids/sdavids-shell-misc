@@ -17,3 +17,14 @@ $ go run server.go
 ----
 
 => https://localhost:3000
+
+== With certificate authority based certificates
+
+[source,shell]
+----
+$ ../../create_ca.sh
+$ ../../create_ca_based_cert.sh
+$ go run server.go
+----
+
+=> https://localhost:3000

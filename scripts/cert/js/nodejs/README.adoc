@@ -17,3 +17,14 @@ $ node server.mjs
 ----
 
 => https://localhost:3000
+
+== With certificate authority based certificates
+
+[source,shell]
+----
+$ ../../create_ca.sh
+$ ../../create_ca_based_cert.sh
+$ node server.mjs
+----
+
+=> https://localhost:3000
