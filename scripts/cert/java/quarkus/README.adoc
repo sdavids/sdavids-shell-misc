@@ -18,6 +18,17 @@ $ ./gradlew quarkusDev
 
 => https://localhost:3000
 
+== With certificate authority based certificates
+
+[source,shell]
+----
+$ ../../create_ca.sh
+$ ../../create_ca_based_cert.sh
+$ ./gradlew quarkusDev
+----
+
+=> https://localhost:3000
+
 == With Quarkus CLI commands
 
 see https://quarkus.io/guides/tls-registry-reference#quarkus-cli-commands-and-development-ca-certificate-authority[Quarkus CLI commands and development CA (Certificate Authority)]
