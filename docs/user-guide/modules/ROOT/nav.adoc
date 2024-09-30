@@ -20,6 +20,7 @@
 *** xref:scripts/git/git-author-date-last.adoc[]
 *** xref:scripts/git/git-cleanup.adoc[]
 *** xref:scripts/git/git-delete-branches.adoc[]
+*** xref:scripts/git/git-delete-dsstore-files.adoc[]
 *** xref:scripts/git/git-get-hash.adoc[]
 *** xref:scripts/git/git-get-short-hash.adoc[]
 *** xref:scripts/git/git-is-working-tree-clean.adoc[]
