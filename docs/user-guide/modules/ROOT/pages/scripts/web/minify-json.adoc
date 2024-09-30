@@ -19,4 +19,4 @@ $ scripts/web/minify_json.sh dist
 
 == Prerequisites
 
-* xref:developer-guide::dev-environment/dev-installation.adoc#jq[]
+* xref:developer-guide::dev-environment/dev-installation.adoc#jq[jq]

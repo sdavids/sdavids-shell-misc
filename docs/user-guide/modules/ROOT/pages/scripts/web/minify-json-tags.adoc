@@ -1,0 +1,66 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= minify_json_tags
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/minify_json_tags.mjs
+
+{script_url}[This script^] will minify JSON-structured script tags in the given HTML file.
+
+[,html]
+----
+<html>
+…
+  <script type="importmap">
+    {
+      "imports": {
+        "utils": "/j/utils.mjs"
+      }
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "https://sdavids.de/"
+    }
+  </script>
+…
+</html>
+----
+
+⇓
+
+[,html]
+----
+<html>
+…
+<script type="importmap">{"imports":{"utils":"/j/utils.mjs"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","url":"https://sdavids.de/"}</script>
+…
+</html>
+----
+
+== Usage
+
+[,shell]
+----
+$ node scripts/web/minify_json_tags.mjs dist/index.html
+----
+
+[,console]
+----
+$ find dist -type f -name '*.html' -exec node scripts/web/minify_json_tags.mjs {} \;
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#node-version-manager[npx]
++
+[NOTE]
+====
+Afterward, you need to install the dependencies of this script:
+
+[,console]
+----
+$ npm i --save-dev domutils dom-serializer htmlparser2
+----
+====
