@@ -1,0 +1,589 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= AsciiDoc Showcase
+Sebastian Davids <sdavids@gmx.de>
+// no space here, otherwise the TOC will be placed incorrectly
+:description: AsciiDoc Showcase
+// https://docs.asciidoctor.org/asciidoc/latest/sections/section-ref/#section-attributes
+:sectnums:
+:sectanchors:
+:sectlinks:
+// https://docs.asciidoctor.org/asciidoc/latest/toc/position/
+:toc: macro
+:toc-placement!:
+// https://docs.asciidoctor.org/asciidoc/latest/macros/links/#hide-uri-scheme
+:hide-uri-scheme:
+// https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/#source-highlighting-and-formatting-attributes
+:source-highlighter: rouge
+:rouge-style: github
+// https://docs.asciidoctor.org/asciidoc/latest/macros/images-directory/#imagesdir-attribute-syntax
+:imagesdir: images
+// https://docs.asciidoctor.org/asciidoc/latest/macros/ui-macros/
+:experimental:
+// https://docs.asciidoctor.org/asciidoc/latest/document/doctype/
+:doctype: book
+// https://docs.asciidoctor.org/asciidoc/latest/sections/chapters/#chapter-signifier
+:!chapter-signifier:
+
+// https://docs.asciidoctor.org/asciidoc/latest/toc/position/#at-macro
+toc::[]
+
+// https://docs.asciidoctor.org/asciidoc/latest/blocks/assign-id/
+[#source-code]
+== Source Code
+
+=== Inline Source Code
+
+// https://docs.asciidoctor.org/asciidoc/latest/blocks/admonitions/
+[WARNING]
+====
+Copy & Paste Hell!
+====
+
+// https://docs.asciidoctor.org/asciidoc/latest/verbatim/source-blocks/
+[source,java]
+----
+class Main {
+  void main() {
+    System.out.println("Hello, World!");
+  }
+}
+----
+
+=== Included Source Code
+
+[TIP]
+====
+Why not use the actual sources with highlighting, line numbers, callouts, and skip the file header?
+====
+
+// https://docs.asciidoctor.org/asciidoc/latest/blocks/add-title/
+// https://docs.asciidoctor.org/asciidoc/latest/verbatim/source-highlighter/#enable-line-numbering
+// https://docs.asciidoctor.org/asciidoc/latest/verbatim/highlight-lines/
+// https://docs.asciidoctor.org/asciidoc/latest/directives/include-lines/
+[source,java,linenums,highlight=3..5]
+.src/java/Main.java
+----
+include::src/java/Main.java[lines=3..-1]
+----
+
+// https://docs.asciidoctor.org/asciidoc/latest/verbatim/callouts/
+<1> `// tag::main[]` starts a tag named "main"
+<2> `// end::main[]` ends the tag
+
+Just the method defined with the `main` the tag and fix indentation:
+
+// https://docs.asciidoctor.org/asciidoc/latest/directives/include-with-indent/
+// https://docs.asciidoctor.org/asciidoc/latest/directives/include-tagged-regions/
+[source,java,indent=0]
+----
+include::src/java/Main.java[tags=main]
+----
+
+== Miscellaneous
+
+=== Software Documentation
+
+// https://docs.asciidoctor.org/asciidoc/latest/macros/keyboard-macro/#keyboard-macro-syntax
+kbd:[Ctrl+Alt+Delete]
+
+// https://docs.asciidoctor.org/asciidoc/latest/macros/ui-macros/#button-macro-syntax
+Press btn:[OK]
+
+// https://docs.asciidoctor.org/asciidoc/latest/macros/ui-macros/#menu-macro-syntax
+Select menu:File[Export > RAW]
+
+=== Sidebars
+
+// https://docs.asciidoctor.org/asciidoc/latest/blocks/sidebars/
+.Delete commented lines with sed
+****
+IMPORTANT: Unfortunately, Mac und Linux handle `sed -i` differently:
+
+.Mac
+[source,shell]
+----
+sed -i '' '/^[@#]/d' "$file"
+----
+
+.Linux
+[source,shell]
+----
+sed -i '/^[@#]/d' "$file"
+----
+****
+
+=== Anchors
+
+// https://docs.asciidoctor.org/asciidoc/latest/macros/xref/#internal-cross-references
+<<source-code>>
+
+// https://docs.asciidoctor.org/asciidoc/latest/macros/xref/#explicit-link-text
+<<mindmap,Color MindMap>>
+
+// https://docs.asciidoctor.org/asciidoc/latest/directives/include-multiple-times-in-same-document/
+xref:contact-chowe[Cameron Howe]
+
+xref:contact-jmacmillan[Joe MacMillan]
+
+== Lists
+
+// https://docs.asciidoctor.org/asciidoc/latest/lists/ordered/#styles
+[decimal]
+. numbered
+
+.. bulleted
+
+* one
+* two
+
+// https://docs.asciidoctor.org/asciidoc/latest/macros/url-macro/#link-text
+.. with colored symbols (colors defined as https://docs.asciidoctor.org/pdf-converter/latest/roles/[roles] in `themes/basic-theme.yml`)
++
+// https://docs.asciidoctor.org/asciidoc/latest/lists/unordered/#custom-markers
+[unstyled]
+// https://docs.asciidoctor.org/pdf-converter/latest/theme/custom-role/
+** [.green]#▲# positive
+** ▶︎ neutral
+** [.red]#▼# negative
+
+// https://docs.asciidoctor.org/asciidoc/latest/lists/separating/#using-a-line-comment
+//-
+
+[arabic]
+. separate two consecutive lists with `//-`.
+// https://docs.asciidoctor.org/asciidoc/latest/lists/continuation/#list-continuation
++
+more content for the same item
++
+[source,java]
+----
+System.out.println("YAY!");
+----
++
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut odio augue. Nam tristique rhoncus tortor, vitae sollicitudin risus hendrerit.
+
+. definition lists
+
+.. Question/Answer
++
+// https://docs.asciidoctor.org/asciidoc/latest/lists/qanda/
+[qanda]
+What is the answer?::
+42
+
+Computer says?::
+Is it safe?::
+No.
+
+.. on next line
++
+// https://docs.asciidoctor.org/asciidoc/latest/lists/description/
+e.g.:: for example
++
+[CAUTION]
+====
+Do not confuse with <<abbrev-ie,i.e.>>
+====
+[#abbrev-ie]
+i.e.:: that is
+et al.:: and others
+
+.. on same line
+// https://docs.asciidoctor.org/asciidoc/latest/lists/horizontal/
+[horizontal]
+small::
++
+// https://docs.asciidoctor.org/asciidoc/latest/macros/image-size/
+image::dragonfly.jpg[,100]
+
+normal::
++
+image::dragonfly.jpg[,200]
+
+large::
++
+image::dragonfly.jpg[]
+
+. includes with parameters
++
+[disc]
+// https://docs.asciidoctor.org/asciidoc/latest/directives/include-list-item-content/
+* {empty}
++
+--
+// https://docs.asciidoctor.org/asciidoc/latest/directives/include-multiple-times-in-same-document/
+:contact_id: chowe
+:name: Cameron Howe
+:email: c.howe@mutiny.com
+
+include::_includes/contact.adoc[]
+--
++
+* {empty}
++
+--
+:contact_id: jmacmillan
+:name: Joe MacMillan
+:email: j.macmillan@calnect.com
+
+include::_includes/contact.adoc[]
+--
+
+== Tables
+
+=== Simple
+
+// https://docs.asciidoctor.org/asciidoc/latest/tables/build-a-basic-table/#add-a-header-row-to-the-table
+// https://docs.asciidoctor.org/asciidoc/latest/tables/format-cell-content/
+// https://docs.asciidoctor.org/asciidoc/latest/tables/align-by-cell/#horizontal-operators
+[%header,cols="1,^1,>2m"]
+|===
+
+| First
+| Last
+| Money ($)
+
+| Homer
+| Simpson
+|-12.76
+
+| Marge
+| Simpson
+| 4,538.90
+
+|===
+
+=== Inline CSV
+
+// https://docs.asciidoctor.org/asciidoc/latest/tables/striping/
+[stripes=odd]
+,===
+1,2,3
+4,5,6
+7,8,9
+,===
+
+=== Included CSV
+
+// https://docs.asciidoctor.org/asciidoc/latest/tables/data-format/#csv-and-tsv
+[%header,format=csv]
+|===
+include::src/csv/data.csv[]
+|===
+
+=== Cell Content
+
+// https://docs.asciidoctor.org/asciidoc/latest/tables/format-cell-content/#cell-styles-and-their-operators
+[cols="1,2a"]
+|===
+| Col 1 | Col 2
+
+// https://docs.asciidoctor.org/asciidoc/latest/tables/align-by-cell/#vertical-operators
+.>| Source Code
+|
+
+[source,java]
+----
+List<String> collectorCollection =
+  productList.stream().map(Product::getName).collect(Collectors.toList());
+----
+
+.^| List
+|
+
+. one
+. two
+.. two-one
+. three
+
+.<| Table in Table
+|
+
+[cols="2,1a"]
+!===
+! Col1 ! Col2
+
+! C11
+! C12
+
+!===
+
+|===
+
+== Diagrams
+
+[#mindmap]
+=== MindMap
+
+// https://docs.asciidoctor.org/diagram-extension/latest/diagram_types/plantuml/
+[plantuml,diagram-mindmap,svg]
+....
+@startmindmap
+
+* Colors
+**[#lightgreen] Green
+
+left side
+
+**[#ffbbcc] Rose
+
+right side
+
+**[#lightblue] Blue
+
+@endmindmap
+....
+
+https://plantuml.com/mindmap-diagram[MindMap]
+
+=== Class Diagram
+
+[plantuml,diagram-classes,svg]
+....
+@startuml
+
+hide members
+hide circle
+
+interface Repository <<interface>>
+abstract AbstractDbRepository
+class FileRepository
+class SQLiteRepository
+class PostgreSQLRepository
+
+Repository <|-- AbstractDbRepository
+Repository <|-- FileRepository
+AbstractDbRepository <|-- PostgreSQLRepository
+AbstractDbRepository <|-- SQLiteRepository
+
+@enduml
+....
+
+https://plantuml.com/class-diagram[Class Diagram]
+
+=== Sequence Diagram
+
+[plantuml,diagram-sequence,svg]
+....
+@startuml
+
+skinparam responseMessageBelowArrow true
+
+autonumber
+
+Alice -> Bob: Wassup?
+...
+...5 minutes later...
+...
+Alice <- Bob: AAK
+
+@enduml
+....
+
+https://plantuml.com/sequence-diagram[Sequence Diagram]
+
+=== Activity Diagram
+
+[plantuml,diagram-activity,svg]
+....
+@startuml
+
+start
+if (condition A) then (yes)
+  :Text 1;
+elseif (condition B) then (yes)
+  fork
+    :A;
+  fork again
+    :B;
+  end fork {or}
+  :Text 2;
+  end
+else (no)
+  fork
+    :C;
+  fork again
+    :D;
+  end merge
+  :Text 3;
+endif
+:Text 4;
+stop
+
+@enduml
+....
+
+https://plantuml.com/activity-diagram-beta[Activity Diagram]
+
+[#c4-diagram]
+=== C4 Diagram
+
+[plantuml,diagram-c4,svg]
+----
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+HIDE_STEREOTYPE()
+
+Person(s, "Support")
+Person(c, "Customer")
+
+System(t, "Test System")
+System(p, "Prod System")
+SystemDb_Ext(i, "Issue Tracker")
+
+Rel(s, i, "Uses", "https")
+Rel(s, t, "Uses", "https")
+Rel_L(s, p, "Uses", "https")
+
+Rel_R(c, p, "Uses", "https")
+Rel(c, i, "Uses", "https")
+
+@enduml
+----
+
+https://github.com/plantuml-stdlib/C4-PlantUML?tab=readme-ov-file#system-context--system-landscape-diagrams[C4-PlantUML]
+
+// https://docs.asciidoctor.org/asciidoc/latest/blocks/breaks/#page-breaks
+<<<
+
+=== Tree Diagram
+
+[plantuml,diagram-tree,svg]
+....
+@startuml
+
+skinparam Legend {
+	BackgroundColor transparent
+	BorderColor transparent
+}
+legend
+Root
+|_ 1
+  |_ a
+  |_ b
+|_ 2
+  |_ a
+end legend
+
+@enduml
+....
+
+=== Math Diagrams
+
+[cols=".^1a,.^1a"]
+|===
+
+|
+
+[plantuml,diagram-math1,svg]
+....
+@startmath
+f(t)=(a_0)/2 + sum_(n=1)^ooa_ncos((npit)/L)+sum_(n=1)^oo b_n\ sin((npit)/L)
+@endmath
+....
+
+|
+
+[plantuml,diagram-math2,svg]
+....
+@startmath
+[[a,b\],[c,d\]\]((n),(k))
+@endmath
+....
+
+|===
+
+https://plantuml.com/ascii-math[Math Diagram]
+
+=== Gantt Diagrams
+
+// https://docs.asciidoctor.org/asciidoc/latest/macros/image-position/#positioning-attributes
+[plantuml,diagram-gant1,svg,align="center"]
+....
+@startgantt
+
+hide footbox
+
+saturday are closed
+sunday are closed
+
+Project starts 2024-09-16
+Print between 2024-09-16 and 2024-10-25
+
+[Review 1] as [R1] happens at 2024-09-25
+[Review 2] as [R2] happens on 14 days after [R1]'s end
+[Review 3] as [R3] happens on 14 days after [R2]'s end
+
+@endgantt
+....
+
+// https://docs.asciidoctor.org/asciidoc/latest/macros/image-size/#width-and-height-attributes
+[plantuml,diagram-gant2,svg,align="center",width=560]
+....
+@startgantt
+
+language de
+
+hide footbox
+
+saturday are closed
+sunday are closed
+
+Project starts 2024-09-16
+Print between 2024-09-16 and 2024-10-25
+
+[Review 1] as [R1] happens at 2024-09-25
+[Review 2] as [R2] happens on 14 days after [R1]'s end
+[Review 3] as [R3] happens on 14 days after [R2]'s end
+
+@endgantt
+....
+
+[plantuml,diagram-gant3,svg,align="center"]
+....
+@startgantt
+
+<style>
+ganttDiagram {
+  timeline {
+    LineColor transparent
+    FontColor transparent
+  }
+}
+</style>
+
+hide footbox
+
+[Task1] as [T1] requires 4 days
+[T1] is colored in Orange
+
+then [Task2] as [T2] requires 6 days
+[T2] is colored in Orange
+
+-- Phase 2 --
+
+then [Task3] as [T3] requires 10 days
+[T3] is colored in Orange
+
+[Task4] as [T4] requires 5 day
+
+[T2] -> [T4]
+
+-- Phase 3 --
+
+[Task 6] as [T6] requires 4 days
+[T6] is colored in Orange
+[T3] -> [T6]
+
+legend
+|= Color |= Task Type |
+|<#Orange>| Critical Path |
+end legend
+
+@endgantt
+....
+
+https://plantuml.com/gantt-diagram[Gantt Diagram]
