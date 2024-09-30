@@ -1,0 +1,35 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= docker_cleanup
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_cleanup.sh
+
+{script_url}[This script^] removes all containers, images, networks, and volumes with the label `$+{label_group}+=$+{repository}+`, i.e. all project-related Docker artifacts.
+
+[NOTE]
+====
+The related scripts will ensure the `$+{label_group}+=$+{repository}+` label has been set.
+
+See the general Docker script xref:scripts/docker/docker.adoc#usage[usage notes].
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/docker/docker_cleanup.sh
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#docker[Docker]
+
+== Related Scripts
+
+* xref:scripts/docker/docker-build.adoc[]
+
+== More Information
+
+* https://docs.docker.com/reference/cli/docker/container/prune/[docker container prune]
+* https://docs.docker.com/reference/cli/docker/network/prune/[docker network prune]
+* https://docs.docker.com/reference/cli/docker/image/prune/[docker image prune]
+* https://docs.docker.com/reference/cli/docker/volume/prune/[docker volume prune]

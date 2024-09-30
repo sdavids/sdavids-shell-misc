@@ -22,6 +22,7 @@
 **** xref:scripts/cert/verify-ca-based-cert.adoc[]
 ** xref:scripts/docker/docker.adoc[]
 *** xref:scripts/docker/docker-build.adoc[]
+*** xref:scripts/docker/docker-cleanup.adoc[]
 ** xref:scripts/general/general.adoc[]
 *** xref:scripts/general/copy-shell-scripts.adoc[]
 *** xref:scripts/general/counter.adoc[]

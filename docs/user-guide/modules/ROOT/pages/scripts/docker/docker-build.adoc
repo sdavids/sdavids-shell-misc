@@ -67,3 +67,7 @@ $ SOURCE_DATE_EPOCH=0 scripts/docker/docker_build.sh -d scripts/docker/Dockerfil
 == Prerequisites
 
 * xref:developer-guide::dev-environment/dev-installation.adoc#docker[Docker]
+
+== Related Scripts
+
+* xref:scripts/docker/docker-cleanup.adoc[]
