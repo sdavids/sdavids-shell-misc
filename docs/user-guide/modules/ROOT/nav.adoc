@@ -69,6 +69,7 @@
 *** xref:scripts/nodejs/dependency-check-node.adoc[]
 *** xref:scripts/nodejs/macos-node-modules-fix.adoc[]
 ** xref:scripts/pdf/pdf.adoc[]
+*** xref:scripts/pdf/pdf-remove-metadata.adoc[]
 ** xref:scripts/web/web.adoc[]
 *** xref:scripts/web/compress-brotli.adoc[]
 *** xref:scripts/web/compress-gzip.adoc[]

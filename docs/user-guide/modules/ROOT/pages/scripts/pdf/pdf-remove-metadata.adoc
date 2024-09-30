@@ -1,0 +1,37 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= pdf_remove_metadata
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/pdf/pdf_remove_metadata.sh
+
+{script_url}[This script^] removes the metadata from the given PDF file.
+
+[NOTE]
+====
+You can use `exiftool` to display the metadata of a PDF file:
+
+[,shell]
+----
+$ exiftool test.pdf
+ExifTool Version Number         : 12.76
+File Name                       : example.pdf
+...
+PDF Version                     : 1.4
+----
+====
+
+== Usage
+
+[,shell]
+----
+$ scripts/pdf/pdf_remove_metadata.sh test.pdf
+----
+
+[,console]
+----
+$ find dist -type f -name '*.pdf' -exec scripts/pdf/pdf_remove_metadata.sh {} \;
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#exiftool[exiftool]
+* xref:developer-guide::dev-environment/dev-installation.adoc#qpdf[qpdf]
