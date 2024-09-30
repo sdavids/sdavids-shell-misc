@@ -8,6 +8,7 @@
 ** xref:scripts/cert/cert.adoc[]
 *** Standalone
 **** xref:scripts/cert/create-self-signed-cert.adoc[]
+**** xref:scripts/cert/delete-self-signed-cert.adoc[]
 ** xref:scripts/general/general.adoc[]
 *** xref:scripts/general/copy-shell-scripts.adoc[]
 *** xref:scripts/general/counter.adoc[]
