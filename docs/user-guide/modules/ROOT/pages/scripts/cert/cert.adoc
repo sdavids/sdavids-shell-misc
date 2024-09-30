@@ -33,3 +33,4 @@ xref:scripts/cert/copy-ca-root-cert.adoc[]:: copies the root certificate of the 
 xref:scripts/cert/create-ca.adoc[]:: create a certificate authority and its root certificate
 xref:scripts/cert/create-ca-based-cert.adoc[]:: create a private key and certificate based on a certificate authority
 xref:scripts/cert/delete-ca.adoc[]:: delete the certificate authority
+xref:scripts/cert/delete-ca-based-cert.adoc[]:: delete the certificate authority based private key and certificate
