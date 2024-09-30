@@ -1,0 +1,22 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= minify_json
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/minify_json.sh
+
+{script_url}[This script^] will minify the `*.json` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+== Usage
+
+[,console]
+----
+$ scripts/web/minify_json.sh
+----
+
+[,shell]
+----
+$ scripts/web/minify_json.sh dist
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#jq[]
