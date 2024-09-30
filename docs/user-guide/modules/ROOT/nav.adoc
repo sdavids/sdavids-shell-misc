@@ -31,6 +31,7 @@
 *** xref:scripts/web/compress-brotli.adoc[]
 *** xref:scripts/web/compress-gzip.adoc[]
 *** xref:scripts/web/compress-zstd.adoc[]
+*** xref:scripts/web/minify-css.adoc[]
 *** xref:scripts/web/minify-html.adoc[]
 * xref:functions/functions.adoc[]
 ** xref:functions/general/general.adoc[]
