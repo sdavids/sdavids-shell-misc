@@ -1,19 +1,31 @@
 // SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
-= repo_new_gh
-:function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/repo_new_gh
+= repo_new_local
+:function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/repo_new_local
 
-{function_url}[This function^] will create and checkout a new private GitHub repository from a https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository[GitHub template repository] with the given name.
+{function_url}[This function^] will create a new local Git repository based on a https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository[GitHub template repository] with the given name.
 
 [IMPORTANT]
 ====
-You should change the template being used:
+This function needs the GitHub `delete_repo` permission.
 
-.zfunc/repo_new_gh
-[,shell]
+[,console]
+----
+$ gh auth refresh -h github.com -s delete_repo
+----
+====
+
+[IMPORTANT]
+====
+You should change the GitHub user and template being used:
+
+.zfunc/repo_new_local
+[,shell,highlight=2,4]
 ----
 - readonly template='sdavids/sdavids-project-template'
 + readonly template='my-github-user/my-template'
+- readonly gh_user_id='sdavids'
++ readonly gh_user_id='my-github-user'
 ----
 ====
 
@@ -27,7 +39,7 @@ config]
 
 Alternatively, you can remove `--gpg-sign`:
 
-.zfunc/repo_new_gh
+.zfunc/repo_new_local
 [,shell,highlight=3]
 ----
   git commit \
@@ -42,7 +54,7 @@ Alternatively, you can remove `--gpg-sign`:
 Sometimes GitHub is slow or you have bad latency.
 In that case you need to increase the time used to wait between GitHub interactions:
 
-.zfunc/repo_new_gh
+.zfunc/repo_new_local
 [,shell]
 ----
 wait_for_github=10
@@ -53,7 +65,7 @@ wait_for_github=10
 
 [,console]
 ----
-$ repo_new_gh my-new-repo
+$ repo_new_local my-new-local-repo
 ----
 
 == Prerequisites
@@ -62,10 +74,8 @@ $ repo_new_gh my-new-repo
 
 == Related Functions
 
-* xref:functions/gh/repo-new-local.adoc[]
+* xref:functions/gh/repo-new-gh.adoc[]
 
 == More Information
 
 * https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository[GitHub template repository]
-* https://cli.github.com/manual/gh_repo_create[gh repo create]
-* https://cli.github.com/manual/gh_repo_edit[gh repo edit]
