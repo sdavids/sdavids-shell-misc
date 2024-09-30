@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# https://docs.gradle.org/current/userguide/platforms.html#sub:conventional-dependencies-toml
+
+[plugins]
+# https://plugins.gradle.org/plugin/io.quarkus
+quarkusPlugin = "io.quarkus:3.15.1"
+
+[libraries]
+# https://github.com/quarkusio/quarkus/releases
+quarkusPlatform = "io.quarkus.platform:quarkus-bom:3.15.1"
