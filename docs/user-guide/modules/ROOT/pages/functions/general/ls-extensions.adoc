@@ -23,3 +23,7 @@ $ tree --noreport -a /tmp/example
     ├── .ignored
     └── e.png
 ----
+
+== Related Functions
+
+* xref:functions/git/ls-extensions-git.adoc[]

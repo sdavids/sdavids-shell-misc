@@ -1,0 +1,20 @@
+# vim:ft=zsh
+
+# shellcheck shell=bash
+
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# this function needs to be placed in a $FPATH directory
+#
+# add the following to your $ZDOTDIR/.zshrc:
+#
+# autoload -Uz "ls_extensions_git"
+#
+
+ls_extensions_git() {
+  (
+    cd "${1:-$PWD}" || return
+    git ls-files -z | xargs -0 -I {} find -E '{}' -type f -not -name '.*' -regex '.+\.[^.\/]+$' | rev | cut -d. -f1 | rev | tr '[:upper:]' '[:lower:]' | sort | uniq -c | sort -rn
+  )
+}
