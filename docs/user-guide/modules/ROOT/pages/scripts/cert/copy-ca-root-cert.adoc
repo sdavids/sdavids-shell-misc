@@ -1,0 +1,62 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= copy_ca_root_cert
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/copy_ca_root_cert.sh
+
+{script_url}[This script^] will copy the root certificate `ca.crt` of the certificate authority to the given directory (`$PWD` if not given).
+
+The given directory will be created if it does not exit yet.
+
+[IMPORTANT]
+====
+Ensure that the xref:scripts/cert/create-ca.adoc[certificate authority has been created].
+====
+
+[WARNING]
+====
+`ca.crt` https://owasp.org/www-project-devsecops-guideline/latest/01a-Secrets-Management[should not be checked into version control]!
+
+If the given directory is inside a Git working tree the script will offer to modify the https://git-scm.com/docs/gitignore[.gitignore] file:
+
+[,shell]
+----
+WARNING: ca.crt is not ignored in '/Users/example/tmp/.gitignore'
+
+Do you want me to modify your .gitignore file (Y/N)?
+----
+
+Related Script:       xref:scripts/git/git-cleanup.adoc#git-cleanup-untracked-exclusions[git-cleanup]
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/cert/copy_ca_root_cert.sh
+----
+
+[,shell]
+----
+$ scripts/cert/copy_ca_root_cert.sh ~/.local/secrets/certs/ca-root
+$ stat -f '%A %N' ~/.local/secrets/certs/ca-root/ca.crt
+600 /Users/example/.local/secrets/certs/ca-root/ca.crt
+$ openssl x509 -issuer -noout -in ~/.local/secrets/certs/ca-root/ca.crt
+issuer=CN=Easy-RSA CA (2024-08-05, example-host)
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#easyrsa[EasyRSA]
+
+== Related Scripts
+
+* xref:scripts/cert/create-ca.adoc[]
+* xref:scripts/cert/delete-ca.adoc[]
+
+== More Information
+
+* https://easy-rsa.readthedocs.io/en/latest/[Easy-RSA 3]
+* https://www.digitalocean.com/community/tutorial-collections/how-to-set-up-and-configure-a-certificate-authority-ca[How To Set Up and Configure a Certificate Authority (CA)]
+* https://www.redhat.com/sysadmin/ca-certificates-cli[Red Hat - Making CA certificates available to Linux command-line tools]
+* https://www.baeldung.com/linux/ca-certificate-management#1-debian-distributions[Alpine/Debian-based distributions - How to add CA certificates]
+* https://ubuntu.com/server/docs/install-a-root-ca-certificate-in-the-trust-store[Ubuntu - Install a root CA certificate in the trust store]
