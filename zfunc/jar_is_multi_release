@@ -1,0 +1,21 @@
+# vim:ft=zsh
+
+# shellcheck shell=sh
+
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# unzip needs to be in $PATH
+#   Linux:
+#     sudo apt-get install unzip
+
+# this function needs to be placed in a $FPATH directory
+#
+# add the following to your $ZDOTDIR/.zshrc:
+#
+# autoload -Uz "jar_is_multi_release"
+#
+
+jar_is_multi_release() {
+  unzip -q -c "$1" META-INF/MANIFEST.MF | grep -cim1 'Multi-Release: true'
+}
