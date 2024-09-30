@@ -1,0 +1,74 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= verify_ca_based_cert
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/verify_ca_based_cert.sh
+
+{script_url}[This script^] will verify the certificate authority based certificate `cert.pem` in the given directory (`$PWD` if not given).
+
+On macOS, the CA root certificate will be verified in the "System" keychain also.
+
+[IMPORTANT]
+====
+Ensure that the xref:scripts/cert/create-ca.adoc[certificate authority has been created] and a xref:scripts/cert/create-ca-based-cert.adoc[private key and certificate have been created] before executing this script.
+====
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "cert:verify": "scripts/verify_ca_based_cert.sh certs"
+  }
+}
+----
+
+[,console]
+----
+$ npm run cert:verify
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/cert/verify_ca_based_cert.sh
+----
+
+[,shell]
+----
+$ scripts/cert/verify_ca_based_cert.sh ~/.local/secrets/certs/localhost
+keychain: "/Library/Keychains/System.keychain"
+...
+    "labl"<blob>="Easy-RSA CA (2024-08-05, example-host)"
+...
+/Users/example/.local/secrets/certs/localhost/cert.pem
+Certificate:
+        Issuer: CN=Easy-RSA CA (2024-08-05, example-host)
+        Validity
+            Not Before: Aug  5 14:48:36 2024 GMT
+            Not After : Sep  4 14:48:36 2024 GMT
+        Subject: CN=localhost
+...
+            X509v3 Authority Key Identifier:
+...
+                DirName:/CN=Easy-RSA CA (2024-08-05, example-host)
+...
+            X509v3 Subject Alternative Name:
+                DNS:localhost
+...
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#easyrsa[EasyRSA]
+* xref:developer-guide::dev-environment/dev-installation.adoc#openssl[OpenSSL]
+
+== Related Scripts
+
+* xref:scripts/cert/create-ca-based-cert.adoc[]

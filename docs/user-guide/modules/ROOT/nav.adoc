@@ -19,6 +19,7 @@
 **** xref:scripts/cert/delete-ca.adoc[]
 **** xref:scripts/cert/delete-ca-based-cert.adoc[]
 **** xref:scripts/cert/renew-ca-based-cert.adoc[]
+**** xref:scripts/cert/verify-ca-based-cert.adoc[]
 ** xref:scripts/general/general.adoc[]
 *** xref:scripts/general/copy-shell-scripts.adoc[]
 *** xref:scripts/general/counter.adoc[]
