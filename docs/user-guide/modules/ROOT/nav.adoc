@@ -7,4 +7,5 @@
 * xref:scripts/scripts.adoc[]
 ** xref:scripts/general/general.adoc[]
 *** xref:scripts/general/shellscript-format.adoc[]
+*** xref:scripts/general/shellscript-format-check.adoc[]
 * xref:functions/functions.adoc[]

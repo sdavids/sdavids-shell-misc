@@ -5,3 +5,4 @@
 This section contains generally useful scripts:
 
 xref:scripts/general/shellscript-format.adoc[]:: format the shell script sources in the given directory
+xref:scripts/general/shellscript-format-check.adoc[]:: check the formatting of shell script sources in the given directory
