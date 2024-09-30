@@ -1,0 +1,23 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Quarkus TLS Example
+Sebastian Davids <sdavids@gmx.de>
+// Metadata:
+:description: Quarkus TLS Example
+// Settings:
+:source-highlighter: rouge
+:rouge-style: github
+
+== With standalone certificates
+
+[source,shell]
+----
+$ ../../create_self_signed_cert.sh
+$ ./gradlew quarkusDev
+----
+
+=> https://localhost:3000
+
+== With Quarkus CLI commands
+
+see https://quarkus.io/guides/tls-registry-reference#quarkus-cli-commands-and-development-ca-certificate-authority[Quarkus CLI commands and development CA (Certificate Authority)]

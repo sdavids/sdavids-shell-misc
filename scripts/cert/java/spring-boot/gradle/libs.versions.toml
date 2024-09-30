@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# https://docs.gradle.org/current/userguide/platforms.html#sub:conventional-dependencies-toml
+
+[plugins]
+# https://plugins.gradle.org/plugin/io.spring.dependency-management
+springDependencyManagement = "io.spring.dependency-management:1.1.6"
+# https://github.com/spring-projects/spring-boot/releases
+# https://plugins.gradle.org/plugin/org.springframework.boot
+springBoot = "org.springframework.boot:3.4.0"

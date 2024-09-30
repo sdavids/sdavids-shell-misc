@@ -1,0 +1,21 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Java TLS Example
+Sebastian Davids <sdavids@gmx.de>
+// Metadata:
+:description: Java TLS Example
+// Settings:
+:source-highlighter: rouge
+:rouge-style: github
+
+== With standalone certificates
+
+[source,shell]
+----
+$ ../../create_self_signed_cert.sh
+$ openssl pkcs12 -export -in cert.pem -inkey key.pem -out certificate.p12 -name localhost -password pass:changeit
+$ keytool -importkeystore -srckeystore certificate.p12 -srcstoretype pkcs12 -srcstorepass changeit -destkeystore keystore.jks -deststorepass changeit
+$ KEYSTORE_PATH=keystore.jks KEYSTORE_PASS=changeit java Server.java
+----
+
+=> https://localhost:3000
