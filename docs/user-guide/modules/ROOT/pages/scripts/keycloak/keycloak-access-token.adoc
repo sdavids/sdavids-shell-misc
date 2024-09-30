@@ -44,3 +44,7 @@ eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhSGJ2MFdqT2RsR19wM1BEb0ZvLU1K
 
 * xref:developer-guide::dev-environment/dev-installation.adoc#curl[curl]
 * xref:developer-guide::dev-environment/dev-installation.adoc#jq[jq]
+
+== Related Scripts
+
+* xref:scripts/keycloak/keycloak-decode-access-token.adoc[]
