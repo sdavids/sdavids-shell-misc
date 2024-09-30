@@ -1,0 +1,32 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= loop
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/general/loop.sh
+
+{script_url}[This script^] will invoke the given script repeatedly with a given delay between invocations and an initial delay.
+
+The loop will finish when the given script has an exit code other than `100`.
+
+== Usage
+
+.with-exit-condition.sh
+[,shell]
+----
+#!/usr/bin/env sh
+if [ ... ]; then
+  exit 0 # finish loop
+fi
+----
+
+.infinite.sh
+[,shell]
+----
+#!/usr/bin/env sh
+exit 100 # infinite loop
+----
+
+[,shell]
+----
+$ scripts/general/loop.sh 10 10 some-script.sh
+$ scripts/general/loop.sh 5 0 some-otherscript-with-parameters.sh a 1
+----

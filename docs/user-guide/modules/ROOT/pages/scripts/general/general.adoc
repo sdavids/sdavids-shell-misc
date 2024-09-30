@@ -8,6 +8,7 @@ xref:scripts/general/copy-shell-scripts.adoc[]:: copy `*.sh` files from a source
 xref:scripts/general/create-timestamp-file.adoc[]:: create a file with a timestamp
 xref:scripts/general/fix-permissions.adoc[]:: fix the directory, file, and script permissions in the given directory
 xref:scripts/general/hash-filename.adoc[]:: insert a hash into a filename
+xref:scripts/general/loop.adoc[]:: call a script repeatedly
 xref:scripts/general/shellscript-check.adoc[]:: shellcheck `*.sh` files in the given directory
 xref:scripts/general/shellscript-format.adoc[]:: format the shell script sources in the given directory
 xref:scripts/general/shellscript-format-check.adoc[]:: check the formatting of shell script sources in the given directory
