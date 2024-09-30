@@ -1,0 +1,25 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= ls_extensions
+:function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/ls_extensions
+
+{function_url}[This function^] will display all file extensions (case-insensitive) and their count in the given directory (`$PWD` if not given) and its subdirectories.
+
+== Usage
+
+[,shell]
+----
+$ ls_extensions
+   5 sh
+$ ls_extensions /tmp/example
+   3 txt
+   1 png
+$ tree --noreport -a /tmp/example
+/tmp/example
+├── a.b.txt
+├── a.txt
+├── b.TXT
+└── d
+    ├── .ignored
+    └── e.png
+----
