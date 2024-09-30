@@ -1,0 +1,17 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= minify_webmanifest
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/minify_webmanifest.sh
+
+{script_url}[This script^] will minify the given https://developer.mozilla.org/en-US/docs/Web/Manifest[web application manifest] file.
+
+== Usage
+
+[,shell]
+----
+$ scripts/web/minify_webmanifest.sh dist/site.webmanifest
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#jq[jq]
