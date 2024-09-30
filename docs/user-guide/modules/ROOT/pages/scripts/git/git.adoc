@@ -8,6 +8,7 @@ xref:scripts/git/git-author-date-initial.adoc[]:: displays the initial author da
 xref:scripts/git/git-author-date-last.adoc[]:: displays the last author dates of the committed files
 xref:scripts/git/git-cleanup.adoc[]:: remove untracked files from the working tree and optimize a local repository
 xref:scripts/git/git-delete-branches.adoc[]:: delete all local and remote branches from a given repository
+xref:scripts/git/git-delete-dsstore-files.adoc[]:: delete all `.DS_Store` files from a given repository
 xref:scripts/git/git-get-hash.adoc[]:: return the hash of the HEAD commit
 xref:scripts/git/git-get-short-hash.adoc[]:: return the short hash of the HEAD commit
 xref:scripts/git/git-is-working-tree-clean.adoc[]:: check whether the Git working tree is clean
