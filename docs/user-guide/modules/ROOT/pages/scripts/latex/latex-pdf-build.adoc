@@ -1,0 +1,129 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= latex_pdf_build
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/latex/latex_pdf_build.sh
+:main_tex_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/latex/example/src/main.tex
+:germanarticle_cls_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/latex/example/src/germanarticle.cls
+
+{script_url}[This script^] will typeset a given root document into a PDF.
+
+The following parameter is required:
+
+`r` :: the root document file; relative to the source directory `-s`
+
+The following parameters are optional:
+
+`f` :: delete the output directory before typesetting
+`n` :: turn caching off, i.e. the auxiliary files will not be kept
+`o` :: the output directory (`$PWD/build` if not given)
+`s` :: the source the directory (`$PWD/src` if not given)
+`v` :: show diagnostic messages during typesetting
+
+[NOTE]
+====
+The PDF is generated using the https://tug.org/xetex/[XeTeX] typesetting engine.
+====
+
+== Usage
+
+[,shell]
+----
+$ scripts/latex/latex_pdf_build.sh -r main.tex
+
+$ tree --noreport /tmp/example
+/tmp/example
+└── src
+    └── main.tex
+$ scripts/latex/latex_pdf_build.sh -r main.tex -s /tmp/example/src -o /tmp/example/out
+$ tree --noreport /tmp/example
+/tmp/example
+├── out
+│   ├── aux                                                               <1>
+│   │   ├── main.aux
+│   │   ├── main.fdb_latexmk
+│   │   ├── main.fls
+│   │   ├── main.log
+│   │   └── main.xdv
+│   └── main.pdf                                                          <2>
+└── src
+    └── main.tex
+$ scripts/latex/latex_pdf_build.sh -r main.tex -s /tmp/example/src -o /tmp/example/out -f -n
+$ tree --noreport /tmp/example
+/tmp/example
+├── out                                                                   <3>
+│   └── main.pdf
+└── src
+    └── main.tex
+----
+
+<1> these auxiliary files speed up subsequent PDF generations
+<2> the typeset PDF
+<3> the output directory has been cleaned (`-f`) and no auxiliary files have been created (`-n`)
+
+== Example
+
+{main_tex_url}[main.tex],
+{germanarticle_cls_url}[germanarticle.cls]
+
+[,console]
+----
+$ cd scripts/latex/example
+$ ../latex_pdf_build.sh -r main.tex
+----
+
+=> `build/main.pdf`
+
+Typeset PDF: xref:attachment$latex/main.pdf[main.pdf]
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#docker[Docker]
+
+== Related Scripts
+
+* xref:scripts/pdf/pdf-remove-metadata.adoc[]
++
+[,shell]
+----
+$ exiftool build/main.pdf
+ExifTool Version Number         : 12.76
+File Name                       : main.pdf
+Directory                       : build
+File Size                       : 92 kB
+File Modification Date/Time     : 2024:09:16 02:06:54+02:00
+File Access Date/Time           : 2024:09:16 02:06:56+02:00
+File Inode Change Date/Time     : 2024:09:16 02:06:54+02:00
+File Permissions                : -rw-r--r--
+File Type                       : PDF
+File Type Extension             : pdf
+MIME Type                       : application/pdf
+PDF Version                     : 1.5
+Linearized                      : No
+Page Count                      : 3
+Creator                         :  XeTeX output 2024.09.16:0006
+Producer                        : xdvipdfmx (20240407)
+Create Date                     : 2024:09:16 00:06:53Z
+$ ../../pdf/pdf_remove_metadata.sh build/main.pdf
+$ exiftool build/main.pdf
+ExifTool Version Number         : 12.76
+File Name                       : main.pdf
+Directory                       : build
+File Size                       : 93 kB
+File Modification Date/Time     : 2024:09:16 02:07:09+02:00
+File Access Date/Time           : 2024:09:16 02:07:10+02:00
+File Inode Change Date/Time     : 2024:09:16 02:07:09+02:00
+File Permissions                : -rw-------
+File Type                       : PDF
+File Type Extension             : pdf
+MIME Type                       : application/pdf
+PDF Version                     : 1.5
+Linearized                      : Yes
+Page Count                      : 3
+----
+
+== More Information
+
+* https://github.com/kjarosh/latex-docker[latex-docker]
+* https://ctan.gust.org.pl/tex-archive/support/latexmk/latexmk.pdf[latexmk]
+* https://www.overleaf.com/learn/latex/XeLaTeX[XeLaTeX]
+* https://tug.org/xetex/[XeTeX]
