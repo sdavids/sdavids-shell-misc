@@ -3,3 +3,5 @@
 = Gradle
 
 This section contains functions related to https://gradle.org[Gradle]:
+
+xref:functions/gradle/gradle-new-java-library.adoc[]:: creates a new Gradle Java library project with sensible, modern defaults
