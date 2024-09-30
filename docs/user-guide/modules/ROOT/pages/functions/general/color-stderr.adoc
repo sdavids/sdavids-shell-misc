@@ -1,0 +1,27 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= color_stderr
+:function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/color_stderr
+
+{function_url}[This function^] will display stderr output in red.
+
+== Usage
+
+.with-stderr-output.sh
+[,shell]
+----
+#!/usr/bin/env sh
+echo 'error' >&2
+----
+
+[,shell,subs="quotes"]
+----
+$ ./with-stderr-output.sh
+error
+$ color_stderr ./with-stderr-output.sh
+[red]#error#
+----
+
+== More Information
+
+* https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)[stderr]
