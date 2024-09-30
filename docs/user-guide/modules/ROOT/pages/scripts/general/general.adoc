@@ -5,6 +5,7 @@
 This section contains generally useful scripts:
 
 xref:scripts/general/copy-shell-scripts.adoc[]:: copy `*.sh` files from a source to a destination directory
+xref:scripts/general/fix-permissions.adoc[]:: fix the directory, file, and script permissions in the given directory
 xref:scripts/general/shellscript-check.adoc[]:: shellcheck `*.sh` files in the given directory
 xref:scripts/general/shellscript-format.adoc[]:: format the shell script sources in the given directory
 xref:scripts/general/shellscript-format-check.adoc[]:: check the formatting of shell script sources in the given directory
