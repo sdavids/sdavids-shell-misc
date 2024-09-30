@@ -29,6 +29,7 @@
 *** xref:scripts/gh/gh-delete-workflow-runs.adoc[]
 ** xref:scripts/java/java.adoc[]
 *** xref:scripts/java/java-format.adoc[]
+*** xref:scripts/java/java-format-check.adoc[]
 *** xref:scripts/java/jar-java-versions.adoc[]
 *** xref:scripts/java/jar-min-java-version.adoc[]
 ** xref:scripts/nodejs/nodejs.adoc[]
