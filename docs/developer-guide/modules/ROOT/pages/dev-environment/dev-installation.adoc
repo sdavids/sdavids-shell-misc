@@ -17,6 +17,22 @@ Install {gh-cli-install-url}[GitHub CLI].
 $ brew install gh
 ----
 
+== gzip
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install gzip
+----
+
+=== Mac
+
+[,console]
+----
+$ brew install gzip
+----
+
 == jq
 
 === Linux

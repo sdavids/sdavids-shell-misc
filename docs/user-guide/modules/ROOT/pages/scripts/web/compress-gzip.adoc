@@ -1,0 +1,47 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= compress_gzip
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/compress_gzip.sh
+
+{script_url}[This script^] will compress the given file with https://www.gnu.org/software/gzip/[gzip].
+
+[TIP]
+====
+Here is a fragment to be placed into your `.htaccess` or https://httpd.apache.org/docs/current/configuring.html[Apache HTTPD server configuration file]:
+
+[,text]
+----
+<IfModule mod_headers.c>
+  RewriteCond "%{HTTP:Accept-encoding}" "gzip"
+  RewriteCond "%{REQUEST_FILENAME}.gz" -s
+  RewriteRule "^(.*)\.(css|html|js|mjs|svg)$" "/$1.$2.gz" [QSA]
+
+  RewriteRule "\.css\.gz$" "-" [T=text/css,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.html\.gz$" "-" [T=text/html,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.js\.gz$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.mjs\.gz$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.svg\.gz$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+
+  <FilesMatch "(\.css|\.html|\.js|\.mjs|\.svg)\.gz$">
+    Header append Content-Encoding gzip
+    Header append Vary Accept-Encoding
+  </FilesMatch>
+</IfModule>
+----
+====
+
+== Usage
+
+[,shell]
+----
+$ scripts/web/compress_gzip.sh test.txt
+----
+
+[,console]
+----
+$ find dist \( -type f -name '*.html' -o -name '*.css' \) -exec scripts/web/compress_gzip.sh {} \;
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#gzip[gzip]
