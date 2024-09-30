@@ -6,6 +6,7 @@
 * xref:index.adoc[]
 * xref:scripts/scripts.adoc[]
 ** xref:scripts/general/general.adoc[]
+*** xref:scripts/general/copy-shell-scripts.adoc[]
 *** xref:scripts/general/shellscript-check.adoc[]
 *** xref:scripts/general/shellscript-format.adoc[]
 *** xref:scripts/general/shellscript-format-check.adoc[]
