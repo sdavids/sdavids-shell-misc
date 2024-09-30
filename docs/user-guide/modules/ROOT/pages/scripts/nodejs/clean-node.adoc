@@ -1,0 +1,42 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= clean_node
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/nodejs/clean_node.sh
+
+{script_url}[This script^] will delete both the `node_modules` directory and the `package-lock.json` file in the given directory (`$PWD` if not given).
+
+This is useful to get a clean slate after dependency updates.
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "clean:node": "scripts/clean_node.sh"
+  }
+}
+----
+
+[,console]
+----
+$ npm run clean:node
+$ npm i
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/nodejs/clean_node.sh
+----
+
+[,shell]
+----
+$ scripts/nodejs/clean_node.sh /tmp/nodejs-example-project
+----
