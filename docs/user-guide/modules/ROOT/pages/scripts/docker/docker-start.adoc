@@ -1,0 +1,39 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= docker_start
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_start.sh
+:dockerfile_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/Dockerfile
+
+{script_url}[This script^] will start the `$+{image_name}+` image with the tag `local`, i.e. the project's locally built image.
+
+The container will be named `$+{container_name}+` and labeled with `$+{label_group}+=$+{repository}+`.
+
+[NOTE]
+====
+See the general Docker script xref:scripts/docker/docker.adoc#usage[usage notes].
+====
+
+[IMPORTANT]
+====
+This script is a starting point--modify it to your project's needs in conjunction with its _Dockerfile_.
+====
+
+[TIP]
+====
+The provided {dockerfile_url}[example Dockerfile] will start a simple HTTP server.
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/docker/docker_start.sh
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#docker[Docker]
+
+== Related Scripts
+
+* xref:scripts/docker/docker-build.adoc[]

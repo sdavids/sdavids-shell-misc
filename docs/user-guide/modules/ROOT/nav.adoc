@@ -23,6 +23,7 @@
 ** xref:scripts/docker/docker.adoc[]
 *** xref:scripts/docker/docker-build.adoc[]
 *** xref:scripts/docker/docker-cleanup.adoc[]
+*** xref:scripts/docker/docker-start.adoc[]
 ** xref:scripts/general/general.adoc[]
 *** xref:scripts/general/copy-shell-scripts.adoc[]
 *** xref:scripts/general/counter.adoc[]
