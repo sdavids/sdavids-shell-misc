@@ -25,6 +25,7 @@
 *** xref:scripts/docker/docker-cleanup.adoc[]
 *** xref:scripts/docker/docker-health.adoc[]
 *** xref:scripts/docker/docker-inspect.adoc[]
+*** xref:scripts/docker/docker-logs.adoc[]
 *** xref:scripts/docker/docker-remove.adoc[]
 *** xref:scripts/docker/docker-sh.adoc[]
 *** xref:scripts/docker/docker-start.adoc[]
