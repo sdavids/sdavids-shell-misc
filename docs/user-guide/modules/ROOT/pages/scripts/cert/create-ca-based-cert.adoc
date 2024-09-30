@@ -85,7 +85,7 @@ Certificates with more than 180 days validity will https://support.apple.com/en-
 
 [TIP]
 ====
-Copy this script (and its related xref:scripts/cert/create-ca.adoc[], xref:scripts/cert/delete-ca.adoc[], and xref:scripts/cert/copy-ca-root-cert.adoc[] scripts) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+Copy this script (and its related xref:scripts/cert/create-ca.adoc[], xref:scripts/cert/delete-ca.adoc[], xref:scripts/cert/copy-ca-root-cert.adoc[], and xref:scripts/cert/copy-ca-based-cert.adoc[copy] scripts) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
 
 .package.json
 [,json]
@@ -96,6 +96,7 @@ Copy this script (and its related xref:scripts/cert/create-ca.adoc[], xref:scrip
     "cert:ca:copy-root": "scripts/copy_ca_root_cert.sh",
     "cert:ca:create": "scripts/create_ca.sh",
     "cert:ca:delete": "scripts/delete_ca.sh",
+    "cert:copy": "scripts/copy_ca_based_cert.sh certs",
     "cert:create": "scripts/create_ca_based_cert.sh certs",
 ...
   }
@@ -107,6 +108,7 @@ Copy this script (and its related xref:scripts/cert/create-ca.adoc[], xref:scrip
 $ npm run cert:ca:create
 $ npm run cert:ca:copy-root
 $ npm run cert:create
+$ npm run cert:copy
 $ npm run cert:ca:delete
 ----
 ====
@@ -507,6 +509,7 @@ $ ./gradlew quarkusDev
 
 * xref:scripts/cert/create-ca.adoc[]
 * xref:scripts/cert/copy-ca-root-cert.adoc[]
+* xref:scripts/cert/copy-ca-based-cert.adoc[]
 * xref:scripts/cert/delete-ca.adoc[]
 * xref:scripts/cert/create-self-signed-cert.adoc[]
 * xref:scripts/git/git-cleanup.adoc[]
