@@ -55,3 +55,4 @@ export const buildInfo = {
 == Related Scripts
 
 * xref:scripts/web/create-build-info-ts.adoc[]
+* xref:scripts/web/create-build-info-json.adoc[]
