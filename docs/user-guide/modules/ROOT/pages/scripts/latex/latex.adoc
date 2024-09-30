@@ -3,3 +3,5 @@
 = LaTeX
 
 This section contains scripts related to https://www.latex-project.org[LaTeX]:
+
+xref:scripts/latex/latex-pdf-build.adoc[]:: typeset a given root document into a PDF
