@@ -3,3 +3,5 @@
 = PDF
 
 This section contains scripts related to PDFs:
+
+xref:scripts/pdf/pdf-remove-metadata.adoc[]:: removes metadata from a PDF file
