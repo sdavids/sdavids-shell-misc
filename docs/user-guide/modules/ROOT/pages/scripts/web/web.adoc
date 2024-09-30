@@ -4,4 +4,5 @@
 
 This section contains scripts related to Web development:
 
+xref:scripts/web/compress-brotli.adoc[]:: compress a file with brotli
 xref:scripts/web/compress-gzip.adoc[]:: compress a file with gzip
