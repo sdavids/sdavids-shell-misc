@@ -5,6 +5,7 @@
 This section contains scripts related to https://git-scm.com[Git]:
 
 xref:scripts/git/git-author-date-initial.adoc[]:: displays the initial author dates of the committed files
+xref:scripts/git/git-author-date-last.adoc[]:: displays the last author dates of the committed files
 xref:scripts/git/git-cleanup.adoc[]:: remove untracked files from the working tree and optimize a local repository
 xref:scripts/git/git-delete-branches.adoc[]:: delete all local and remote branches from a given repository
 xref:scripts/git/git-get-hash.adoc[]:: return the hash of the HEAD commit
