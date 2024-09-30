@@ -6,5 +6,6 @@ This section contains scripts related to https://git-scm.com[Git]:
 
 xref:scripts/git/git-cleanup.adoc[]:: remove untracked files from the working tree and optimize a local repository
 xref:scripts/git/git-delete-branches.adoc[]:: delete all local and remote branches from a given repository
+xref:scripts/git/git-is-working-tree-clean.adoc[]:: check whether the Git working tree is clean
 
 Related: xref:functions/git/git.adoc[Git Functions]
