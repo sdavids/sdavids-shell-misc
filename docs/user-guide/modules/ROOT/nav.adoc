@@ -17,6 +17,7 @@
 *** xref:scripts/general/shellscript-format-check.adoc[]
 ** xref:scripts/git/git.adoc[]
 *** xref:scripts/git/git-author-date-initial.adoc[]
+*** xref:scripts/git/git-author-date-last.adoc[]
 *** xref:scripts/git/git-cleanup.adoc[]
 *** xref:scripts/git/git-delete-branches.adoc[]
 *** xref:scripts/git/git-get-hash.adoc[]
