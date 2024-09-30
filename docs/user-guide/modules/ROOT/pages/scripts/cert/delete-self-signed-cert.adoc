@@ -1,0 +1,71 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= delete_self_signed_cert
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/delete_self_signed_cert.sh
+
+{script_url}[This script^] will delete the private key `key.pem` and the self-signed certificate `cert.pem` from the given directory (`$PWD` if not given).
+
+If the given directory is not `$PWD` and is empty after the removal it will be removed as well.
+
+The optional second parameter is the common name (`localhost` if not given) of the certificate to be removed.
+
+On macOS, the certificate will be removed from the "login" keychain also.
+
+[NOTE]
+====
+Chrome and Safari need no further configuration.
+
+For Firefox the old certificate has to be <<delete-self-signed-cert-firefox,deleted manually>>.
+
+Docker needs to be restarted.
+====
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "cert:delete": "scripts/delete_self_signed_cert.sh certs"
+  }
+}
+----
+
+[,console]
+----
+$ npm run cert:delete
+----
+====
+
+== Usage
+
+[,shell]
+----
+$ scripts/cert/delete_self_signed_cert.sh
+Removing 'localhost' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
+$ scripts/cert/delete_self_signed_cert.sh ~/.local/secrets/certs/localhost
+Removing 'localhost' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
+$ scripts/cert/delete_self_signed_cert.sh ~/.local/secrets/certs/https.internal https.internal
+Removing 'https.internal' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
+----
+
+[#delete-self-signed-cert-firefox]
+=== Firefox
+
+You need to delete the certificate via `Firefox > Preferences > Privacy & Security > Certificates`; click "View Certificates...":
+
+image::self-signed-firefox-delete-1.png[]
+
+Click on the "Servers" tab:
+
+image::self-signed-firefox-delete-2.png[]
+
+Select the certificate and click "Delete...".
+
+== Related Scripts
+
+* xref:scripts/cert/create-self-signed-cert.adoc[]
