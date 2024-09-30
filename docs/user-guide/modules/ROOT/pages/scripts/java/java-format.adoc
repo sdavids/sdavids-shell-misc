@@ -1,0 +1,87 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= java_format
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/java/java_format.sh
+
+{script_url}[This script^] will format the `*.java` files in the given directory (`$PWD` if not given) and its subdirectories according to the https://google.github.io/styleguide/javaguide.html[Google Java Style].
+
+[NOTE]
+====
+Both `module-info.java` and `package-info.java` are formatted as well.
+====
+
+[IMPORTANT]
+====
+This script needs internet access if it does not find the cached JAR file.
+
+It will download and cache the https://github.com/google/google-java-format/releases[google-java-format] JAR.
+
+The JAR is cached in the following location (in order of preference):
+
+* `$GOOGLE_JAVA_FORMAT_HOME` if `$GOOGLE_JAVA_FORMAT_HOME` is set
+* `$XDG_CACHE_HOME/googlejavaformat` if `$XDG_CACHE_HOME` is set
+* `$HOME/Library/Application Support/Google/googlejavaformat` on MacOS
+* `$HOME/.m2/repository/com/google/googlejavaformat-all-deps`
+====
+
+[TIP]
+====
+If you are using Gradle or Maven you might want to use https://github.com/diffplug/spotless[Spotless] instead of this script:
+
+https://github.com/diffplug/spotless/tree/main/plugin-gradle#google-java-format[Gradle]::
++
+[,kotlin]
+----
+plugins {
+  id("com.diffplug.spotless") version "..."
+}
+
+spotless {
+  java {
+    googleJavaFormat()
+  }
+}
+
+----
+
+https://github.com/diffplug/spotless/tree/main/plugin-maven#google-java-format[Maven]::
++
+[,xml]
+----
+<plugin>
+  <groupId>com.diffplug.spotless</groupId>
+  <artifactId>spotless-maven-plugin</artifactId>
+  <version>...</version>
+  <configuration>
+...
+    <java>
+      <googleJavaFormat/>
+    </java>
+  </configuration>
+</plugin>
+----
+
+If you are using a JetBrains IDE you might want to use the https://plugins.jetbrains.com/plugin/8527-google-java-format[google-java-format plugin].
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/java/java_format.sh
+----
+
+[,shell]
+----
+$ scripts/java/java_format.sh /tmp/example/src/main/java
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#curl[curl]
+* xref:developer-guide::dev-environment/dev-installation.adoc#jdk[JDK]
+
+== More Information
+
+* https://google.github.io/styleguide/javaguide.html[Google Java Style Guide]
+* https://github.com/google/google-java-format[google-java-format]
