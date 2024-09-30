@@ -1,0 +1,22 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= git_is_working_tree_clean
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_is_working_tree_clean.sh
+
+{script_url}[This script^] will check whether the Git working tree in the given directory (`$PWD` if not given) is https://git-scm.com/docs/git-clean#_description[clean].
+
+== Usage
+
+[,console]
+----
+$ scripts/git/git_is_working_tree_clean.sh
+----
+
+[,shell]
+----
+$ echo $?
+----
+
+0:: the Git working tree of the given directory is clean
+1:: the Git working tree of the given directory is dirty
+2:: the given directory is not a Git repository
