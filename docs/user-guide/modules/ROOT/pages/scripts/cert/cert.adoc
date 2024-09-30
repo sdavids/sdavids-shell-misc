@@ -29,3 +29,4 @@ Standalone certificates are simpler to use than certificate authority based cert
 ====
 
 xref:scripts/cert/create-ca.adoc[]:: create a certificate authority and its root certificate
+xref:scripts/cert/delete-ca.adoc[]:: delete the certificate authority

@@ -1,0 +1,103 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= delete_ca
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/delete_ca.sh
+
+{script_url}[This script^] will delete the certificate authority.
+
+The certificate authority will be deleted from the following location:
+
+Linux::
++
+. `$EASYRSA_PKI` (if set)
+. `$XDG_DATA_HOME/easyrsa/pki` (if `$XDG_DATA_HOME` is set)
+. `$HOME/.easyrsa/pki`
+
+macOS::
++
+. `$EASYRSA_PKI` (if set)
+. `$XDG_DATA_HOME/easyrsa/pki` (if `$XDG_DATA_HOME` is set)
+. `$HOME/Library/Application Support/easyrsa/pki`
+
+[NOTE]
+====
+Chrome, Firefox, and Safari need no further configuration--you should restart your browser though.
+
+Docker needs to be restarted.
+====
+
+[IMPORTANT]
+====
+On CentOS, Debian, Fedora, Mint, Red Hat, and Ubuntu you need to remove the CA root certificate from your trust store manually.
+
+On macOS, you need to remove the CA root certificate from your "System" keychain in _Keychain Access_ manually.
+====
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "cert:ca:delete": "scripts/delete_ca.sh"
+  }
+}
+----
+
+[,console]
+----
+$ npm run cert:ca:delete
+----
+====
+
+== Usage
+
+[,shell]
+----
+$ ./delete_ca.sh
+
+WARNING: You are about to delete the CA 'Easy-RSA CA (2024-08-05, example-host)':
+
+/Users/example/.local/secrets/easyrsa/pki/
+ca.crt
+certs_by_serial/
+index.txt
+index.txt.attr
+inline/
+issued/
+openssl-easyrsa.cnf
+private/
+reqs/
+revoked/
+serial
+vars
+
+All existing certificates based on this CA will become invalid.
+
+Do you really want to irreversibly delete the CA (Y/N)? y
+
+Please delete the 'Easy-RSA CA (2024-08-05, example-host)' certificate from your System keychain.
+
+Also, please consult your browser's documentation on how to remove the CA certificate.
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#easyrsa[EasyRSA]
+* xref:developer-guide::dev-environment/dev-installation.adoc#openssl[OpenSSL]
+
+== Related Scripts
+
+* xref:scripts/cert/create-ca.adoc[]
+
+== More Information
+
+* https://easy-rsa.readthedocs.io/en/latest/[Easy-RSA 3]
+* https://www.digitalocean.com/community/tutorial-collections/how-to-set-up-and-configure-a-certificate-authority-ca[How To Set Up and Configure a Certificate Authority (CA)]
+* https://www.redhat.com/sysadmin/ca-certificates-cli[Red Hat - Making CA certificates available to Linux command-line tools]
+* https://ubuntu.com/server/docs/install-a-root-ca-certificate-in-the-trust-store[Ubuntu - Install a root CA certificate in the trust store]
+* https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox[Setting Up Certificate Authorities (CAs) in Firefox]

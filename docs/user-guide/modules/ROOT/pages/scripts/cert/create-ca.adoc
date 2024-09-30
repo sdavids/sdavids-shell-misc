@@ -47,7 +47,7 @@ The following environment variables affect the creation of the root certificate:
 ====
 When the CA root certificate <<create-ca-expire,expires>>, the entire CA, copied root certificates, and all created and copied certificates become invalid.
 
-It is https://github.com/OpenVPN/easy-rsa/issues/936[not possible] to renew the CA root certificate--therefore you need to delete the CA and xref:scripts/cert/create-ca.adoc[create a new one].
+It is https://github.com/OpenVPN/easy-rsa/issues/936[not possible] to renew the CA root certificate--therefore you need to xref:scripts/cert/delete-ca.adoc[delete] the CA and xref:scripts/cert/create-ca.adoc[create a new one].
 
 If you have copied the root certificate to other locations you need to copy it again; if you have copied it into a Docker image you need to rebuild that image with the new certificate.
 
@@ -112,6 +112,10 @@ image::ca-macos.png[]
 == Prerequisites
 
 * xref:developer-guide::dev-environment/dev-installation.adoc#easyrsa[EasyRSA]
+
+== Related Scripts
+
+* xref:scripts/cert/delete-ca.adoc[]
 
 == More Information
 
