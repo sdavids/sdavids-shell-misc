@@ -1,0 +1,62 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= git_author_date_initial
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_author_date_initial.sh
+
+{script_url}[This script^] will display the initial https://git-scm.com/book/en/v2/Distributed-Git-Maintaining-a-Project#_git_am[author dates] of the files of the given Git repository directory (`$PWD` if not given).
+
+If you use the optional second parameter then only the author date of the given file path will be displayed.
+
+[NOTE]
+====
+The initial author date is the date the original author added and committed the file to the Git repository.
+====
+
+[TIP]
+====
+You can use this script to verify the initial publication year of your https://reuse.software/faq/#years-copyright[copyright statements].
+====
+
+== Usage
+
+[,shell]
+----
+$ scripts/git/git_author_date_initial.sh /tmp/example
+2022-04-16T15:59:50+02:00 a.txt
+2022-04-16T15:59:50+02:00 b.txt
+2022-04-16T16:00:14+02:00 c/d.txt
+2023-04-16T16:00:41+02:00 e.txt
+$ scripts/git/git_author_date_initial.sh /tmp/example | cut -c 1-4,26-
+2022 a.txt
+2022 b.txt
+2022 c/d.txt
+2023 e.txt
+$ tree --noreport -a -I .git /tmp/example
+/tmp/example
+├── a.txt
+├── b.txt
+├── c
+│   └── d.txt
+└── e.txt
+$ (cd /tmp/example && git --no-pager log --format=%aI --name-status)
+2024-04-16T16:01:19+02:00
+
+M       a.txt
+2023-04-16T16:00:41+02:00
+
+A       e.txt
+2022-04-16T16:00:14+02:00
+
+A       c/d.txt
+2022-04-16T15:59:50+02:00
+
+A       a.txt
+A       b.txt
+$ (cd /tmp/example && git --no-pager log --format=%aI --name-status a.txt)
+2024-04-16T16:01:19+02:00
+
+M       a.txt
+2022-04-16T15:59:50+02:00
+
+A       a.txt
+----
