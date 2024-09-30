@@ -25,3 +25,6 @@ max_line_length = 80
 
 [*.yaml]
 max_line_length = 80
+
+[*.mjs]
+max_line_length = 80
