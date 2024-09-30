@@ -6,6 +6,7 @@
 This section contains scripts related to https://docs.docker.com[Docker]:
 
 xref:scripts/docker/docker-build.adoc[]:: build the image
+xref:scripts/docker/docker-cleanup.adoc[]:: remove all project-related containers, images, networks, and volumes
 
 == Usage
 
@@ -56,5 +57,10 @@ You can try the scripts with the {dockerfile_url}[example Dockerfile]:
 [,shell]
 ----
 $ scripts/docker/docker_build.sh -d scripts/docker/Dockerfile
+----
+
+[,shell]
+----
+$ scripts/docker/docker_cleanup.sh
 ----
 ====
