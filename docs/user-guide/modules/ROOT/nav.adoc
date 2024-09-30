@@ -66,6 +66,7 @@
 *** xref:functions/gh/repo-new-local.adoc[]
 *** xref:functions/gh/repo-publish-to-gh.adoc[]
 ** xref:functions/gradle/gradle.adoc[]
+*** xref:functions/gradle/gradle-new-java-library.adoc[]
 ** xref:functions/java/java.adoc[]
 *** xref:functions/java/jar-is-multi-release.adoc[]
 *** xref:functions/java/jar-manifest.adoc[]

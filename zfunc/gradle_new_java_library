@@ -1,0 +1,199 @@
+# vim:ft=zsh
+
+# shellcheck shell=bash
+
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# this function needs to be placed in a $FPATH directory
+#
+# add the following to your $ZDOTDIR/.zshrc:
+#
+# autoload -Uz "gradle_new_java_library"
+#
+
+# gradle needs to be in $PATH:
+#
+# https://gradle.org/install/
+#
+
+gradle_new_java_library() {
+  if [ -z "$*" ]; then
+    echo "Usage: $0 PROJECT_NAME [DIRECTORY]"
+  else
+    project_name="$1"
+    directory="${2:-$PWD}"
+
+    mkdir -p "${directory}/${project_name}"
+    cd "$_" || return
+
+    unset directory
+
+    # https://docs.gradle.org/current/userguide/build_init_plugin.html#header
+    gradle init \
+      --type java-library \
+      --java-version 21 \
+      --dsl kotlin \
+      --test-framework junit-jupiter \
+      --no-comments \
+      --incubating \
+      --quiet \
+      --project-name "${project_name}"
+
+    unset project_name
+
+    cat << 'EOF' >gradle.properties
+# https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_configuration_properties
+
+# https://docs.gradle.org/current/userguide/build_cache.html#sec:build_cache_enable
+org.gradle.caching=true
+
+# https://docs.gradle.org/current/userguide/configuration_cache.html#config_cache:usage:enable
+org.gradle.configuration-cache=true
+
+# https://docs.gradle.org/current/userguide/configuration_cache.html#config_cache:usage:parallel
+org.gradle.configuration-cache.parallel=true
+
+# https://docs.gradle.org/current/userguide/multi_project_configuration_and_execution.html#sec:configuration_on_demand
+org.gradle.configureondemand=true
+
+# https://docs.gradle.org/current/userguide/performance.html#parallel_execution
+org.gradle.parallel=true
+
+# https://docs.gradle.org/current/userguide/toolchains.html#sub:disable_auto_provision
+org.gradle.java.installations.auto-download=false
+EOF
+
+    cat << 'EOF' >.gitignore
+# https://git-scm.com/docs/gitignore
+
+### Temporary ###
+*~
+
+### vim ###
+*.sw[a-p]
+
+### Git ###
+*.orig
+
+### Mac ###
+.DS_Store
+
+### Windows ###
+desktop.ini
+Thumbs.db
+
+### Jetbrains ###
+.fleet/
+.idea/
+jffi*.dylib
+
+### Visual Studio Code ###
+.vscode/
+
+### Eclipse ###
+.settings/
+bin/
+.classpath
+.project
+
+### Gradle ###
+.checksums/
+.gradle/
+build/
+EOF
+
+    cat << 'EOF' >.gitattributes
+# https://git-scm.com/docs/gitattributes
+
+# https://git-scm.com/docs/gitattributes#__code_text_code
+* text=auto eol=lf
+
+# https://git-scm.com/docs/gitattributes#__code_whitespace_code
+* whitespace=tab-in-indent,trailing-space,tabwidth=2
+
+*.adoc linguist-documentation
+*.bat eol=crlf
+*.java diff=java
+*.jar binary -eol -whitespace
+*.kt diff=kotlin
+*.kts diff=kotlin
+*.md whitespace=tab-in-indent,tabwidth=2 diff=markdown linguist-documentation
+*.sh diff=bash
+EOF
+
+    cat << 'EOF' >.editorconfig
+# http://EditorConfig.org
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.sh]
+max_line_length = 80
+
+[*.adoc]
+max_line_length = off
+
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = 80
+
+[*.properties]
+max_line_length = off
+
+[*.{java,kt,kts}]
+max_line_length = 100
+
+[*.toml]
+max_line_length = 80
+EOF
+
+    cat << 'EOF' >.git-blame-ignore-revs
+# https://git-scm.com/docs/git-blame#Documentation/git-blame.txt---ignore-revs-fileltfilegt
+EOF
+
+    mkdir .githooks
+
+    cat << 'EOF' >.githooks/pre-commit
+#!/usr/bin/env sh
+
+set -eu
+
+if [ -z "${GIT_REFLOG_ACTION+x}" ]; then
+  git stash --quiet --include-untracked --keep-index
+
+  trap 'git stash pop --quiet 2>/dev/null' EXIT INT QUIT TSTP
+fi
+
+./gradlew check
+EOF
+
+    chmod u+x .githooks/pre-commit
+
+    if command -v git >/dev/null 2>&1; then
+      # https://git-scm.com/docs/git-init
+      # https://git-scm.com/docs/git-config#Documentation/git-config.txt-initdefaultBranch
+      git -c 'init.defaultBranch=main' init --quiet
+      # https://git-scm.com/docs/git-add
+      git add --all
+      # https://git-scm.com/docs/git-commit
+      git commit \
+      --quiet \
+      --gpg-sign \
+      --signoff \
+      --message 'chore: initial'
+      # https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile
+      git config blame.ignoreRevsFile .git-blame-ignore-revs
+      # https://git-scm.com/docs/git-config#Documentation/git-config.txt-corehooksPath
+      git config core.hooksPath .githooks
+      .githooks/pre-commit >/dev/null
+    fi
+  fi
+}
