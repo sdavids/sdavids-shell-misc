@@ -37,7 +37,7 @@ If you want to use custom fonts, this script assumes that the `woff2` fonts are 
 
 [TIP]
 ====
-Depending on your use case, you might want to use https://docs.antora.org/antora/latest/[Antora] instead of this script.
+Depending on your use case, you might want to use xref:scripts/asciidoc/antora-build.adoc[] instead of this script.
 ====
 
 == Usage
@@ -199,6 +199,7 @@ $ ../asciidoc_html_build.sh
 
 == Related Scripts
 
+* xref:scripts/asciidoc/antora-build.adoc[]
 * xref:scripts/asciidoc/asciidoc-pdf-build.adoc[]
 
 == More Information
