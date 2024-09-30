@@ -1,0 +1,100 @@
+# vim:ft=zsh
+
+# shellcheck shell=sh
+
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# this function needs to be placed in a $FPATH directory
+#
+# add the following to your $ZDOTDIR/.zshrc:
+#
+# autoload -Uz "repo_publish_to_gh"
+#
+
+# gh needs to be in $PATH:
+#
+# https://github.com/cli/cli#installation
+#
+
+repo_publish_to_gh() {
+  # GitHub is slow; increase if you have bad latency or get 'failed to run git' errors
+  wait_for_github=10
+
+  base_dir="${1:-$PWD}"
+
+  if [ -n "$(command -v realpath)" ]; then
+    base_dir="$(realpath "${base_dir}")"
+  else
+    if [ -h "${base_dir}" ]; then
+      # shellcheck disable=SC2012
+      base_dir="$(ls -ld "${base_dir}" | awk '{ print $11 }')"
+    else
+      # shellcheck disable=SC2164
+      base_dir="$(cd "$(dirname -- "${base_dir}")" >/dev/null; pwd -P)/$(basename -- "${base_dir}")"
+    fi
+  fi
+
+  if [ ! -d "${base_dir}" ]; then
+    echo "'${base_dir}' does not exist" >&2
+    return
+  fi
+
+  cd "${base_dir}" || return
+
+  if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != 'true' ]; then
+    echo "'${base_dir}' is not a git repository" >&2
+    return
+  fi
+
+  default_branch="$(git config get init.defaultBranch)"
+  # shellcheck disable=SC2181
+  if [ $? -ne 0 ]; then
+    default_branch='main'
+  fi
+
+  git checkout "${default_branch}"
+
+  unset default_branch
+
+  git rev-parse HEAD 1>/dev/null 2>/dev/null
+  has_commit=$?
+
+  if [ $has_commit -ne 0 ]; then
+    git status 1>&2
+    printf '\nnothing to publish\n' >&2
+    return
+  fi
+
+  repo_name="${2:-$(basename "${base_dir}")}"
+
+  # https://cli.github.com/manual/gh_repo_create
+  gh repo create "${repo_name}" \
+    --source="${base_dir}" \
+    --push \
+    --private
+
+  created=$?
+
+  if [ $created -ne 0 ]; then
+    return
+  fi
+
+  unset base_dir repo_name
+
+  sleep "${wait_for_github}"
+
+  # https://cli.github.com/manual/gh_repo_edit
+  gh repo edit \
+    --allow-update-branch \
+    --default-branch main \
+    --delete-branch-on-merge \
+    --enable-auto-merge=false \
+    --enable-discussions=false \
+    --enable-issues=false \
+    --enable-merge-commit=false \
+    --enable-projects=false \
+    --enable-rebase-merge=true \
+    --enable-squash-merge=false \
+    --enable-wiki=false
+}
