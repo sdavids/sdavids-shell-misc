@@ -1,0 +1,71 @@
+# vim:ft=zsh
+
+# shellcheck shell=sh
+
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# this function needs to be placed in a $FPATH directory
+#
+# add the following to your $ZDOTDIR/.zshrc:
+#
+# autoload -Uz "repo_new_gh"
+#
+
+# gh needs to be in $PATH:
+#
+# https://github.com/cli/cli#installation
+#
+
+repo_new_gh() {
+  # GitHub is slow; increase if you have bad latency or get 'failed to run git' errors
+  wait_for_github=10
+
+  if [ -z "$*" ]; then
+    echo "Usage: $0 REPO_NAME"
+  else
+    repo_name="$1"
+
+    template='sdavids/sdavids-project-template'
+
+    # https://cli.github.com/manual/gh_repo_create
+    gh repo create "${repo_name}" \
+      --clone \
+      --template="${template}" \
+      --private \
+      --include-all-branches
+
+    cd "${repo_name}" || return
+
+    unset repo_name template
+
+    sleep "${wait_for_github}"
+
+    # https://cli.github.com/manual/gh_repo_edit
+    gh repo edit \
+      --allow-update-branch \
+      --default-branch main \
+      --delete-branch-on-merge \
+      --enable-auto-merge=false \
+      --enable-discussions=false \
+      --enable-issues=false \
+      --enable-merge-commit=false \
+      --enable-projects=false \
+      --enable-rebase-merge=true \
+      --enable-squash-merge=false \
+      --enable-wiki=false
+
+    sleep "${wait_for_github}"
+
+    # https://git-scm.com/docs/git-commit
+    git commit \
+      --quiet \
+      --gpg-sign \
+      --signoff \
+      --amend \
+      --reset-author \
+      --message 'chore: initial'
+
+    git push --quiet --force
+  fi
+}
