@@ -1,0 +1,80 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= git_cleanup
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_cleanup.sh
+
+{script_url}[This script^] will do the following:
+
+* remove untracked files from the working tree
+* remove any remote-tracking references that no longer exist on the remote
+* cleanup remote branches
+* cleanup unnecessary files and optimize the local repository
+
+The following parameters are supported:
+
+`d` :: the directory (`$PWD` if not given) containing the Git repository to clean
+`e` :: https://git-scm.com/docs/git-reflog#Documentation/git-reflog.txt---expirelttimegt[prune] entries older than the argument; default: `1.month.ago`
+`n` :: Do not actually clean anything, just show what would be done.
+
+[WARNING]
+====
+This script will remove all untracked files.
+
+[#git-cleanup-untracked-exclusions]
+Sometimes you have untracked files which you do not want to be cleaned up.
+
+For example:
+
+* `.env` or `.envrc` files
+* `\*.crt`, `*.pem` or `*.key` self-signed certificate files
+* IDE metadata
+
+Add them to the https://+git-scm.com/docs/git-clean#Documentation/git-clean.txt--eltpatterngt+[exclusions] to ensure that they will not be removed:
+
+.scripts/git-cleanup.sh
+[,shell,highlight=2,9]
+----
+  git clean -qfdx \
++  -e .env \
+  -e .fleet \
+  -e .idea \
+  -e .classpath \
+  -e .project \
+  -e .settings \
+  -e .vscode \
++  -e *.pem \
+   .
+----
+====
+
+[NOTE]
+====
+By default, the metadata files of https://eclipseide.org[Eclipse], https://www.jetbrains.com/products/#type=ide[JetBrains IDEs], and https://code.visualstudio.com[Visual Studio Code] are not removed.
+====
+
+[TIP]
+====
+Copy this script into your project:
+
+[,shell]
+----
+<project root directory>
+└── scripts
+    ├── git_cleanup.sh
+    ├── ...
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/git/git_cleanup.sh
+----
+
+[,shell]
+----
+$ scripts/git/git_cleanup.sh -d /tmp/example
+$ scripts/git/git_cleanup.sh -n
+$ scripts/git/git_cleanup.sh -e now
+----

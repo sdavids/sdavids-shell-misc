@@ -4,4 +4,6 @@
 
 This section contains scripts related to https://git-scm.com[Git]:
 
+xref:scripts/git/git-cleanup.adoc[]:: remove untracked files from the working tree and optimize a local repository
+
 Related: xref:functions/git/git.adoc[Git Functions]
