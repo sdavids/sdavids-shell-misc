@@ -1,0 +1,17 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= minify_robots
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/minify_robots.sh
+
+{script_url}[This script^] will minify the `robots.txt` file in the given directory (`$PWD` if not given).
+
+== Usage
+
+[,shell]
+----
+$ scripts/web/minify_robots.sh dist
+----
+
+== More Information
+
+* https://yoast.com/ultimate-guide-robots-txt/[The ultimate guide to robots.txt]
