@@ -28,5 +28,6 @@ Certificate authority based certificates are useful if you want to use mutual TL
 Standalone certificates are simpler to use than certificate authority based certificates.
 ====
 
+xref:scripts/cert/copy-ca-root-cert.adoc[]:: copies the root certificate of the certificate authority to a given directory
 xref:scripts/cert/create-ca.adoc[]:: create a certificate authority and its root certificate
 xref:scripts/cert/delete-ca.adoc[]:: delete the certificate authority
