@@ -1,0 +1,211 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= asciidoc_html_build
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/asciidoc/asciidoc_html_build.sh
+:main_adoc_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/asciidoc/example-html/src/main.adoc
+:docinfo_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/asciidoc/example-html/src/docinfo/docinfo.html
+
+{script_url}[This script^] will typeset the documents of a given source directory into HTML.
+
+The following parameters are optional:
+
+`f` :: delete the output directory before typesetting
+`n` :: turn caching off
+`o` :: the output directory (`$PWD/build` if not given)
+`s` :: the source directory (`$PWD/src` if not given)
+
+[NOTE]
+====
+`*.adoc` files inside directories named `_includes` will not be typeset.
+
+This is useful for https://docs.asciidoctor.org/asciidoc/latest/directives/include/#when-is-an-include-directive-useful[AsciiDoc includes].
+====
+
+[NOTE]
+====
+This scripts configures Asciidoctor
+to not use https://docs.asciidoctor.org/asciidoctor/latest/html-backend/default-stylesheet/#disable-or-modify-the-web-fonts[webfonts],
+use https://docs.asciidoctor.org/asciidoctor/latest/html-backend/local-font-awesome/#switch-to-your-local-font-awesome-assets[local FontAwesome assets],
+https://docs.asciidoctor.org/asciidoctor/latest/html-backend/manage-images/#embed-images-with-the-data-uri-attribute[embed images], and
+https://docs.asciidoctor.org/asciidoctor/latest/html-backend/custom-stylesheet/#stylesdir-and-linkcss[inline CSS].
+====
+
+[NOTE]
+====
+If you want to use custom fonts, this script assumes that the `woff2` fonts are found in the `<source directory>/fonts` directory.
+====
+
+[TIP]
+====
+Depending on your use case, you might want to use https://docs.antora.org/antora/latest/[Antora] instead of this script.
+====
+
+== Usage
+
+[,shell]
+----
+$ tree --noreport -I scripts
+.
+└── src
+    └── index.adoc
+$ scripts/asciidoc/asciidoc_html_build.sh
+$ tree --noreport -I scripts
+.
+├── build
+│   └── index.html                                                        <1>
+└── src
+    └── index.adoc
+
+$ tree --noreport -a /tmp/example
+/tmp/example
+└── src
+    ├── _includes
+    │   └── footer.adoc
+    ├── a
+    │   ├── b
+    │   │   └── sub.adoc
+    │   └── dir.adoc
+    ├── css
+    │   └── font-awesome.css                                              <2>
+    ├── docinfo
+    │   └── docinfo.html                                                  <3>
+    ├── fonts
+    │   └── fontawesome-webfont-4.7.0.woff2                               <2>
+    └── index.adoc
+$ cat /tmp/example/src/docinfo/docinfo.html                               <3>
+<style>
+  pre.rouge .hll {                                                        <4>
+    background-color: #ffffe0;
+    display: block;
+  }
+  pre.rouge .hll * {                                                      <4>
+    background-color: initial;
+  }
+</style>
+$ cat /tmp/example/src/a/b/sub.adoc
+= 1. sub
+:source-highlighter: rouge                                                <4>
+:rouge-style: github
+:docinfo: shared                                                          <3>
+:docinfodir: ../../docinfo                                                <3>
+
+[NOTE]                                                                    <2>
+====
+Test
+====
+
+[plantuml]                                                                <5>
+....
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(p, "Support")
+
+System(s, "Test System")
+
+Rel(p, s, "Uses", "https")
+
+@enduml
+....
+
+[,shell,highlight=2..3;5]                                                 <4>
+....
+A
+B
+C
+D
+E
+F
+G
+....
+
+includes::../../_includes/footer.adoc[]
+$ scripts/asciidoc/asciidoc_html_build.sh -s /tmp/example/src -o /tmp/example/out
+$ tree --noreport -a /tmp/example -I src
+/tmp/example
+└── out                                                                   <6>
+    ├── a
+    │   ├── b
+    │   │   ├── .asciidoctor                                              <8>
+    │   │   │   └── diagram
+    │   │   │       └── diag-plantuml-md5-757a0ec403d52693302a4f18fd7ec102.png.cache
+    │   │   ├── css
+    │   │   │   └── font-awesome.css                                      <7>
+    │   │   ├── diag-plantuml-md5-757a0ec403d52693302a4f18fd7ec102.png    <8>
+    │   │   ├── fonts
+    │   │   │   └── fontawesome-webfont-4.7.0.woff2                       <7>
+    │   │   └── sub.html
+    │   ├── css
+    │   │   └── font-awesome.css                                          <7>
+    │   ├── dir.html
+    │   └── fonts
+    │       └── fontawesome-webfont-4.7.0.woff2                           <7>
+    ├── css
+    │   └── font-awesome.css                                              <7>
+    ├── fonts
+    │   └── fontawesome-webfont-4.7.0.woff2                               <7>
+    └── index.html
+$ scripts/asciidoc/asciidoc_html_build.sh -s /tmp/example/src -o /tmp/example/out -f -n
+$ tree --noreport -a /tmp/example -I src
+/tmp/example
+└── out                                                                   <9>
+    ├── a
+    │   ├── b
+    │   │   ├── css
+    │   │   │   └── font-awesome.css
+    │   │   ├── fonts
+    │   │   │   └── fontawesome-webfont-4.7.0.woff2
+    │   │   └── sub.html
+    │   ├── css
+    │   │   └── font-awesome.css
+    │   ├── dir.html
+    │   └── fonts
+    │       └── fontawesome-webfont-4.7.0.woff2
+    ├── css
+    │   └── font-awesome.css
+    ├── fonts
+    │   └── fontawesome-webfont-4.7.0.woff2
+    └── index.html
+----
+
+<1> the typeset HTML
+<2> https://docs.asciidoctor.org/asciidoc/latest/blocks/admonitions/[admonitions] need https://docs.asciidoctor.org/asciidoctor/latest/html-backend/local-font-awesome/[Font Awesome]
+<3> https://docs.asciidoctor.org/asciidoc/latest/docinfo[custom styles]
+<4> use https://docs.asciidoctor.org/asciidoc/latest/verbatim/highlight-lines/#rouge[Rogue source highlighter]
+<5> a document with an https://docs.asciidoctor.org/diagram-extension/latest/diagram_types/plantuml/[PlantUML diagram]
+<6> notice there is no `footer.html` in an `_includes` directory
+<7> Asciidoctor currently https://github.com/asciidoctor/asciidoctor/issues/4622[does not support a nested set of documents] well
+<8> the files of the https://docs.asciidoctor.org/diagram-extension/latest/generate/#diagram_caching[diagram cache]
+<9> the output directory has been cleaned (`-f`) and no files for the cache have been created (`-n`)
+
+[#asciidoc-html-build-example]
+== Example
+
+{main_adoc_url}[main.adoc],
+{docinfo_url}[docinfo.html]
+
+[,console]
+----
+$ cd scripts/asciidoc/example-html
+$ ../asciidoc_html_build.sh
+----
+
+=> `build/main.html`
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#docker[Docker]
+
+== Related Scripts
+
+* xref:scripts/asciidoc/asciidoc-pdf-build.adoc[]
+
+== More Information
+
+* https://github.com/asciidoctor/docker-asciidoctor[docker-asciidoctor]
+* https://asciidoctor.org[Asciidoctor]
+* https://docs.asciidoctor.org/asciidoc/latest/[AsciiDoc]
+* https://docs.asciidoctor.org/asciidoc/latest/docinfo[Docinfo Files]
+* https://docs.asciidoctor.org/asciidoctor/latest/html-backend/default-stylesheet/#disable-or-modify-the-web-fonts[Disable or modify the web fonts]
+* https://docs.asciidoctor.org/asciidoctor/latest/html-backend/local-font-awesome/[Use Local Font Awesome]
