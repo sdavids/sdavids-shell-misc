@@ -1,0 +1,65 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= verify_self_signed_cert
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/verify_self_signed_cert.sh
+
+{script_url}[This script^] will verify the self-signed certificate `cert.pem` in the given directory (`$PWD` if not given).
+
+On macOS, the certificate will be verified in the "login" keychain also.
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "cert:verify": "scripts/verify_self_signed_cert.sh certs"
+  }
+}
+----
+
+[,console]
+----
+$ npm run cert:verify
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/cert/verify_self_signed_cert.sh
+----
+
+[,shell]
+----
+$ scripts/cert/verify_self_signed_cert.sh ~/.local/secrets/certs/localhost
+keychain: "/Users/example/Library/Keychains/login.keychain-db"
+...
+    "labl"<blob>="localhost"
+...
+/Users/example/.local/secrets/certs/localhost/cert.pem
+Certificate:
+...
+        Issuer: CN=localhost
+        Validity
+            Not Before: Feb 28 11:54:32 2024 GMT
+            Not After : Mar 29 11:54:32 2024 GMT
+        Subject: CN=localhost
+...
+            X509v3 Subject Alternative Name:
+                DNS:localhost
+...
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#openssl[OpenSSL]
+
+== Related Scripts
+
+* xref:scripts/cert/create-self-signed-cert.adoc[]
