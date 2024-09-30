@@ -33,6 +33,7 @@
 *** xref:scripts/web/compress-zstd.adoc[]
 *** xref:scripts/web/minify-css.adoc[]
 *** xref:scripts/web/minify-html.adoc[]
+*** xref:scripts/web/minify-robots.adoc[]
 * xref:functions/functions.adoc[]
 ** xref:functions/general/general.adoc[]
 *** xref:functions/general/color-stderr.adoc[]
