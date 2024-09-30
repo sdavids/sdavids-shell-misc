@@ -1,0 +1,33 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= shellscript_check
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/general/shellscript_check.sh
+
+{script_url}[This script^] will invoke https://www.shellcheck.net[ShellCheck] on `*.sh` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+[TIP]
+====
+If you copy this script into a Node.js-based project you should exclude the `node_modules` directory:
+
+`find … -name '*.sh' -not -path '*/node_modules/*' -print0 …`
+
+If you use https://typicode.github.io/husky/[Husky]:
+
+`find … -name '*.sh' -not -path '*/node_modules/*' -not -path '*/.husky/*' -print0 …``
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/general/shellscript_check.sh
+----
+
+[,shell]
+----
+$ scripts/general/shellscript_check.sh /tmp
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#shellcheck[ShellCheck]
