@@ -17,3 +17,15 @@ $ touch a
 $ scripts/git/git_get_hash.sh
 844881d148be35d7c0a9bcbf5ba23ab79cf14c6e-dirty
 ----
+
+== Related Scripts
+
+* xref:scripts/git/git-get-short-hash.adoc[]
++
+[,shell]
+----
+$ scripts/git/git_get_hash.sh
+844881d148be35d7c0a9bcbf5ba23ab79cf14c6e
+$ scripts/git/git_get_short_hash.sh
+844881d
+----
