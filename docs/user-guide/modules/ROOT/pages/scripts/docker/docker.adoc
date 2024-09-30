@@ -5,6 +5,8 @@
 
 This section contains scripts related to https://docs.docker.com[Docker]:
 
+xref:scripts/docker/docker-build.adoc[]:: build the image
+
 == Usage
 
 The scripts should be copied into a project, e.g.:
@@ -14,6 +16,7 @@ The scripts should be copied into a project, e.g.:
 <project root directory>
 ├── Dockerfile
 └── scripts
+    ├── docker_build.sh
     ├── ...
 ----
 
@@ -21,6 +24,7 @@ And then invoked from the directory containing the `Dockerfile`:
 
 [,console]
 ----
+$ scripts/docker_build.sh
 ----
 
 [NOTE]

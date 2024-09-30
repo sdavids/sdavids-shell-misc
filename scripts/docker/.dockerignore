@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# https://docs.docker.com/build/building/context/#dockerignore-files
+
+*.sh
+*.swp
+.DS_Store
+.dockerignore
+Dockerfile
+Thumbs.db

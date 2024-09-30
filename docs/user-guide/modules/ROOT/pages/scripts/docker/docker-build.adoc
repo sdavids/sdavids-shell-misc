@@ -1,0 +1,69 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= docker_build
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_build.sh
+
+{script_url}[This script^] will build the `$+{namespace}+/$+{repository}+` image, i.e. the project's image.
+
+The following parameters are supported:
+
+`d` :: the path to the https://docs.docker.com/reference/cli/docker/image/build/#file[Dockerfile] (`$PWD/Dockerfile` if not given) to be used
+`n` :: do not use the cache when building the image
+`t` :: one of the two image's https://docs.docker.com/engine/reference/commandline/image_build/#tag[tags] (`local` if not given);
+the image will always be tagged with `latest`
+
+This script will add the `org.opencontainers.image.revision` label to the image; its value is set via:
+
+. the value of a specific CI environment variable (e.g. `GITHUB_SHA` or `CI_COMMIT_SHA`)
+. the hash of the HEAD commit of the checked out branch; the suffix `-next` will be appended if the working tree is dirty.
+
+This script will add the `org.opencontainers.image.created` label to the image with the creation timestamp of the HEAD commit of the checked out branch as its value; the current time will be used if the working tree is dirty.
+Alternatively, you can use the https://reproducible-builds.org/docs/source-date-epoch/[SOURCE_DATE_EPOCH] environment variable to pass in the timestamp.
+
+[NOTE]
+====
+See the general Docker script xref:scripts/docker/docker.adoc#usage[usage notes].
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/docker/docker_build.sh
+----
+
+[,shell]
+----
+$ scripts/docker/docker_build.sh -n
+
+$ scripts/docker/docker_build.sh -d scripts/docker/Dockerfile
+...
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:latest
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:local
+...
+
+$ scripts/docker/docker_build.sh -d scripts/docker/Dockerfile -t example
+...
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:latest
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:example
+...
+"org.opencontainers.image.created":"2024-05-05T11:05:50Z"
+...
+"org.opencontainers.image.revision":"46cca5eff61eabb008ed43e81988e6a9099aa469"
+...
+
+$ touch dirty-repo
+$ SOURCE_DATE_EPOCH=0 scripts/docker/docker_build.sh -d scripts/docker/Dockerfile -t 1.2.3
+...
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:latest
+ => => naming to docker.io/sdavids-shell-misc/sdavids-shell-misc-docker:1.2.3
+...
+"org.opencontainers.image.created":"1970-01-01T00:00:00Z"
+...
+"org.opencontainers.image.revision":"46cca5eff61eabb008ed43e81988e6a9099aa469-next"
+...
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#docker[Docker]
