@@ -1,0 +1,62 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= git_get_short_hash
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_get_short_hash.sh
+
+{script_url}[This script^] will return the https://git-scm.com/docs/git-rev-parse#Documentation/git-rev-parse.txt---shortltlengthgt[short hash] of the HEAD commit of the checked out branch of the given Git repository directory (`$PWD` if not given).
+
+The suffix `-dirty` will be appended if the working tree is dirty.
+
+The length of the hash can be configured via the optional second parameter (range: [4, 40] for https://git-scm.com/docs/gitrevisions#Documentation/gitrevisions.txt-emltsha1gtemegemdae86e1950b1277e545cee180551750029cfe735ememdae86eem[SHA-1 object names] or [4, 64] for https://git-scm.com/docs/hash-function-transition/#_object_names[SHA-256 object names]); the default is determined by the `core.abbrev` https://git-scm.com/docs/git-config#Documentation/git-config.txt-coreabbrev[Git configuration variable].
+
+[TIP]
+====
+To get a consistent hash length across systems you should either
+
+[loweralpha]
+. ensure that `core.abbrev` is set on the repository after initialization:
++
+[,shell]
+----
+$ git config --local core.abbrev 20
+----
++
+Unfortunately, these settings are https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_git_config[not under version control].
+
+. explicitly set the length when invoking the script:
++
+[,shell]
+----
+$ scripts/git/git_get_short_hash.sh . 20
+----
+====
+
+== Usage
+
+[,shell]
+----
+$ scripts/git/git_get_short_hash.sh
+844881d
+$ scripts/git/git_get_short_hash.sh path/to/git/repository
+dbd0ffb
+$ scripts/git/git_get_short_hash.sh . 10
+844881d148
+$ git config --local core.abbrev 20
+$ scripts/git/git_get_short_hash.sh
+844881d148be35d7c0a9
+$ touch a
+$ scripts/git/git_get_short_hash.sh
+844881d-dirty
+----
+
+== Related Scripts
+
+* xref:scripts/git/git-get-hash.adoc[]
++
+[,shell]
+----
+$ scripts/git/git_get_short_hash.sh
+844881d
+$ scripts/git/git_get_hash.sh
+844881d148be35d7c0a9bcbf5ba23ab79cf14c6e
+----
