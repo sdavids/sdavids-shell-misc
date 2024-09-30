@@ -1,0 +1,46 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= keycloak_decode_access_token
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/keycloak/keycloak_decode_access_token.sh
+
+{script_url}[This script^] will decode the given Keycloak JWT access token.
+
+[TIP]
+====
+Online https://jwt.io/#debugger-io[JWT Decoder]
+====
+
+== Usage
+
+[,shell]
+----
+$ scripts/keycloak/keycloak_decode_access_token.sh eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhSGJ2MFdqT2RsR19wM1BEb0ZvLU1KQ3NuWEk0Ny0xOGdhTjcycndkTnlBIn0.eyJleHAiOjE3MDY0NzI0MTIsImlhdCI6MTcwNjQ3MjExMiwianRpIjoiY2FhZGZhNjUtNWQ5NC00YTk2LWE3YmYtNGI3ODFlY2NjZjlkIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9teS1yZWFsbSIsInN1YiI6ImMxYmYwOTRmLWIzOTctNGYxMy05Y2VhLTUyYTdjYmNlNjRkMCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im15LXJlYWxtLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI0NWYyMzE2YS01ZjNiLTRkYzMtYmRiYy0yZmRjYThjODA1NGQiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwic2NvcGUiOiJteS1yZWFsbS1zY29wZSIsInNpZCI6IjQ1ZjIzMTZhLTVmM2ItNGRjMy1iZGJjLTJmZGNhOGM4MDU0ZCJ9.TDGa-i6ipWmxnfFMOehc2j86p3oa5laNlytBc5PFcJeyfgNOYc7SLJZo5OCV7pVyz4VHiv8BKkG2JI56Usg_1fmP-GtFjPojWjf7gQ5FgtncL7RxTKzPtzDQiYRvqS6agHzfd_Q2zP91NVxhU7_-rKnqV3O5Ka8x5qxEaqwvwsT1aZP5KhNDS8haRlOLLSRmTB5Nx2OZSkms6Aok4NGr461xEXu_bxFzbnlLOndG7frbQyY272Oyo6ahtClxbj414tlEsdUMzE8MApPdsWVtW7afMgKBOXyn25RJck7yoHoLgT9pfe9j32aR6syYUaSfSU-ODdCUhxFMZ7lfaFvREA
+{
+  "alg": "RS256",
+  "typ": "JWT",
+  "kid": "aHbv0WjOdlG_p3PDoFo-MJCsnXI47-18gaN72rwdNyA"
+}
+{
+  "exp": 1706472412,
+  "iat": 1706472112,
+  "jti": "caadfa65-5d94-4a96-a7bf-4b781ecccf9d",
+  "iss": "http://localhost:8080/realms/my-realm",
+  "sub": "c1bf094f-b397-4f13-9cea-52a7cbce64d0",
+  "typ": "Bearer",
+  "azp": "my-realm-client",
+  "session_state": "45f2316a-5f3b-4dc3-bdbc-2fdca8c8054d",
+  "allowed-origins": [
+    "/*"
+  ],
+  "scope": "my-realm-scope",
+  "sid": "45f2316a-5f3b-4dc3-bdbc-2fdca8c8054d"
+}
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#jq[jq]
+
+== Related Scripts
+
+* xref:scripts/keycloak/keycloak-access-token.adoc[]
