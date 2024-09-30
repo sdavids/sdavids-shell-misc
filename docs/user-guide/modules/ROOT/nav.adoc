@@ -28,6 +28,7 @@
 ** xref:scripts/gh/gh.adoc[]
 *** xref:scripts/gh/gh-delete-workflow-runs.adoc[]
 ** xref:scripts/gradle/gradle.adoc[]
+*** xref:scripts/gradle/check-reproducible-build-gradle.adoc[]
 ** xref:scripts/java/java.adoc[]
 *** xref:scripts/java/java-format.adoc[]
 *** xref:scripts/java/java-format-check.adoc[]
