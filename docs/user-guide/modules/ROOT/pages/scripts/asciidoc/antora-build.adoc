@@ -1,0 +1,184 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= antora_build
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/asciidoc/antora_build.sh
+
+{script_url}[This script^] will create a documentation site with https://docs.antora.org/antora/latest/[Antora] from a given source directory.
+
+The following parameters are optional:
+
+`f` :: delete the output directory before site creation
+`o` :: the output directory (`$PWD/build` if not given)
+`p` :: path to the Antora playbook (`docs/antora-playbook.yml` if not given); relative to the source directory `-s`
+`s` :: the source directory (`$PWD` if not given)
++
+[IMPORTANT]
+====
+The source directory https://docs.antora.org/antora/latest/content-source-repositories/#git-and-content-sources[needs to be a Git repository root] with at least one commit.
+====
+
+[TIP]
+====
+Copy this script into your project:
+
+[,shell]
+----
+<project root directory>
+└── scripts
+    ├── antora_build.sh
+    ├── ...
+----
+
+See: <<antora-build-example>>
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/asciidoc/antora_build.sh
+----
+
+[,shell]
+----
+$ tree --noreport -I .git /tmp/example
+/tmp/example
+└── docs
+    ├── antora-playbook.yml
+    ├── antora.yml
+    └── modules
+        └── ROOT
+            ├── nav.adoc
+            └── pages
+                └── index.adoc
+$ scripts/asciidoc/antora_build.sh -s /tmp/example -o /tmp/example/build
+$ tree --noreport -I .git -L 2 /tmp/example
+/tmp/example
+├── build
+│   ├── _
+│   └── example
+└── docs
+    ├── antora-playbook.yml
+    ├── antora.yml
+    └── modules
+
+$ tree --noreport -I .git /tmp/example2
+/tmp/example2
+├── antora
+│   └── antora-playbook.yml
+└── docs
+    ├── antora.yml
+    └── modules
+        └── ROOT
+            ├── nav.adoc
+            └── pages
+                └── index.adoc
+$ scripts/asciidoc/antora_build.sh -s /tmp/example2 -o /tmp/example2/build -p antora/antora-playbook.yml
+$ tree --noreport -I .git -L 2 /tmp/example2/
+/tmp/example2/
+├── antora
+│   └── antora-playbook.yml
+├── build
+│   ├── _
+│   └── example
+└── docs
+    ├── antora.yml
+    └── modules
+----
+
+[#antora-build-example]
+== Example
+
+[,shell]
+----
+$ mkdir -p /tmp/example/scripts
+$ cp scripts/asciidoc/antora_build.sh /tmp/example/scripts
+$ cd /tmp/example
+$ echo 'build' >.gitignore
+$ git init -q
+$ git commit --allow-empty -q -m initial                                  <1>
+$ mkdir -p docs/modules/ROOT/pages
+$ echo '= Example' >docs/modules/ROOT/pages/index.adoc
+$ echo '* xref:index.adoc[]' >docs/modules/ROOT/nav.adoc
+$ cat << 'EOF' >docs/antora.yml
+---
+name: example
+version: ~                                                                <2>
+nav:
+  - modules/ROOT/nav.adoc
+EOF
+$ cat << 'EOF' >docs/antora-playbook.yml
+---
+content:
+  sources:
+    - url: ./..                                                           <3>
+      start_path: docs                                                    <4>
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+EOF
+$ tree --noreport -I .git /tmp/example
+/tmp/example
+├── docs
+│   ├── antora-playbook.yml
+│   ├── antora.yml
+│   └── modules
+│       └── ROOT
+│           ├── nav.adoc
+│           └── pages
+│               └── index.adoc
+└── scripts
+    └── antora_build.sh
+$ scripts/antora_build.sh
+$ tree --noreport -I .git -I '*.svg' -I '*.woff' -I '*.woff2' /tmp/example/
+/tmp/example/
+├── build
+│ ├── _
+│ │ ├── css
+│ │ │ └── site.css
+│ │ ├── font
+│ │ ├── img
+│ │ └── js
+│ │     ├── site.js
+│ │     └── vendor
+│ │         └── highlight.js
+│ └── example
+│     └── index.html
+├── docs
+│ ├── antora-playbook.yml
+│ ├── antora.yml
+│ └── modules
+│     └── ROOT
+│         ├── nav.adoc
+│         └── pages
+│             └── index.adoc
+└── scripts
+    └── antora_build.sh
+----
+
+⇒ `build/example/index.html`
+
+<1> a https://docs.antora.org/antora/latest/playbook/content-source-url/#local-urls[local content source root] needs at least one commit
+<2> an https://docs.antora.org/antora/latest/component-with-no-version/[unversioned] component
+<3> `url` needs to point to the Git repository root, i.e. the directory with the `.git` subdirectory; this is relative to `antora-playbook.yml`
+<4> `start_path` points to where the component (`antora.yml`) can be found; relative to `url`
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#docker[Docker]
+
+== Related Scripts
+
+* xref:scripts/asciidoc/asciidoc-html-build.adoc[]
+
+== More Information
+
+* https://docs.antora.org/antora/latest/[Antora]
+* https://docs.antora.org/antora/latest/standard-directories/[Antora - Standard File and Directory Set]
+* https://docs.antora.org/antora/latest/content-source-repositories/[Antora - Repositories and Content Source Roots]
+* https://docs.antora.org/antora/latest/playbook/content-source-url/#local-urls[Antora - Use local content repositories]
+* https://docs.antora.org/antora/latest/component-version-descriptor/[Antora - What’s antora.yml?]
+* https://docs.antora.org/antora/latest/component-with-no-version/[Antora - Define a Component with No Version]
+* https://docs.antora.org/antora/latest/playbook/[Antora - Playbook]
+* https://docs.antora.org/antora/latest/playbook/#relative-paths-in-a-playbook[Antora - Playbook - Relative paths in a playbook]

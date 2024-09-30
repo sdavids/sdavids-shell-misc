@@ -4,5 +4,6 @@
 
 This section contains scripts related to https://docs.asciidoctor.org/asciidoc/latest/[AsciiDoc]:
 
+xref:scripts/asciidoc/antora-build.adoc[]:: create a documentation site with Antora from a given directory
 xref:scripts/asciidoc/asciidoc-html-build.adoc[]:: typeset the documents of a given directory into HTML
 xref:scripts/asciidoc/asciidoc-pdf-build.adoc[]:: typeset the documents of a given directory into PDFs
