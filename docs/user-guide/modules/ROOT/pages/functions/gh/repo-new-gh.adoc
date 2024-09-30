@@ -1,0 +1,67 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= repo_new_gh
+:function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/repo_new_gh
+
+{function_url}[This function^] will create and checkout a new private GitHub repository from a https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository[GitHub template repository] with the given name.
+
+[IMPORTANT]
+====
+You should change the template being used:
+
+.zfunc/repo_new_gh
+[,shell]
+----
+- readonly template='sdavids/sdavids-project-template'
++ readonly template='my-github-user/my-template'
+----
+====
+
+[NOTE]
+====
+This script uses https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[Git commit signing]; you need to:
+
+* configure your https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key#telling-git-about-your-gpg-key[local git
+config]
+* https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-gpg-key-to-your-github-account#adding-a-gpg-key[add your public GPG key] to GitHub
+
+Alternatively, you can remove `--gpg-sign`:
+
+.zfunc/repo_new_gh
+[,shell,highlight=3]
+----
+  git commit \
+    --quiet \
+-   --gpg-sign \
+    --signoff \
+----
+====
+
+[NOTE]
+====
+Sometimes GitHub is slow or you have bad latency.
+In that case you need to increase the time used to wait between GitHub interactions:
+
+.zfunc/repo_new_gh
+[,shell]
+----
+wait_for_github=10
+----
+====
+
+== Usage
+
+[,console]
+----
+$ repo_new_gh my-new-repo
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#gh-cli[GitHub CLI]
+
+== More Information
+
+* https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository[GitHub template repository]
+* https://cli.github.com/manual/gh_repo_create[gh repo create]
+* https://cli.github.com/manual/gh_repo_edit[gh repo edit]
