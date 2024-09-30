@@ -26,6 +26,7 @@
 *** xref:scripts/git/git-ignore-all.adoc[]
 *** xref:scripts/git/git-is-working-tree-clean.adoc[]
 ** xref:scripts/gh/gh.adoc[]
+*** xref:scripts/gh/gh-delete-workflow-runs.adoc[]
 * xref:functions/functions.adoc[]
 ** xref:functions/general/general.adoc[]
 *** xref:functions/general/color-stderr.adoc[]
