@@ -5,4 +5,5 @@
 This section contains scripts related to https://www.keycloak.org[Keycloak]:
 
 xref:scripts/keycloak/keycloak-access-token.adoc[]:: retrieve a Keycloak JWT access token
+xref:scripts/keycloak/keycloak-access-token-decoded.adoc[]:: retrieve and decode a Keycloak JWT access token
 xref:scripts/keycloak/keycloak-decode-access-token.adoc[]:: decode a Keycloak JWT access token
