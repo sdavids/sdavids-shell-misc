@@ -6,5 +6,6 @@ This section contains functions related to https://docs.github.com/en/rest?apiVe
 
 xref:functions/gh/repo-new-gh.adoc[]:: create and checkout a private GitHub repository
 xref:functions/gh/repo-new-local.adoc[]:: create a new local repository based on a GitHub template repository
+xref:functions/gh/repo-publish-to-gh.adoc[]:: publish an existing local repository to GitHub
 
 Related: xref:scripts/gh/gh.adoc[GitHub Scripts]
