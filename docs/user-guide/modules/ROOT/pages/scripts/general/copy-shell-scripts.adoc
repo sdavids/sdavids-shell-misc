@@ -1,0 +1,113 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= copy_shell_scripts
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/general/copy_shell_scripts.sh
+
+{script_url}[This script^] will copy the `*.sh` files in the given directory (`$PWD` if not given) and its subdirectories to the destination directory.
+
+You are prompted to overwrite existing files.
+
+The copied files will have their permissions set to `700`.
+
+On macOS, all https://ss64.com/mac/xattr.html[extended attributes] of the copied files will be cleared.
+
+The following parameter is required:
+
+`d` :: the destination directory; the given directory will be created if it does not exit yet
+
+The following parameters are optional:
+
+`f` :: overwrite existing files without prompt
+`g` :: add _group_ read and execute permissions; can be combined with `-o`
+`o` :: add _other_ read and execute permissions; can be combined with `-g`
+
+[NOTE]
+====
+This script will error out when two or more scripts with the same name are found in the given source directory (`-s`).
+
+[,shell]
+----
+a.sh
+  /tmp/src/sub/a.sh
+  /tmp/src/a.sh
+----
+
+In that case, you need to rename or delete one of the scripts before executing this script again.
+====
+
+[TIP]
+====
+Copy the scripts to a https://docstore.mik.ua/orelly/unix3/upt/ch35_06.htm[$PATH directory].
+
+Example zsh setup:
+
+[,shell]
+----
+$ mkdir ~/.local/scripts
+----
+
+.~/.zshrc
+[,shell]
+----
+export PATH="${HOME}/.local/scripts${PATH:+:${PATH}}"
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/general/copy_shell_scripts.sh -d ~/.local/scripts
+----
+
+[,shell]
+----
+$ scripts/general/copy_shell_scripts.sh -d ~/.local/scripts
+$ scripts/general/copy_shell_scripts.sh -d /tmp/dst -s /tmp/src
+The following script names are not unique:
+
+a.sh
+	/tmp/src/sub/a.sh
+	/tmp/src/a.sh
+
+Make the file names unique and execute this script again.
+$ tree --noreport -p /tmp/src
+[drwxrwxrwx]  /tmp/src
+├── [-rwxrwxrwx]  a.sh
+└── [drwxrwxrwx]  sub
+    ├── [-rw-r--r--]  a.sh
+    └── [-rwxrwxrwx]  b.sh
+$ rm /tmp/src/sub/a.sh                                                    <1>
+
+$ scripts/general/copy_shell_scripts.sh -d /tmp/dst -s /tmp/src
+$ tree --noreport -p /tmp/dst
+[drwx------]  /tmp/dst
+├── [-rwx------]  a.sh
+└── [-rwx------]  b.sh
+$ scripts/general/copy_shell_scripts.sh -d /tmp/dst -s /tmp/src -g
+The following files will be overwritten:
+
+a.sh
+b.sh
+
+Do you really want to irreversibly overwrite them (Y/N)? Y
+$ tree --noreport -p /tmp/dst
+[drwxr-x---]  /tmp/dst
+├── [-rwxr-x---]  a.sh
+└── [-rwxr-x---]  b.sh
+
+$ scripts/general/copy_shell_scripts.sh -d /tmp/dst -s /tmp/src -o -f     <2>
+$ tree --noreport -p /tmp/dst
+[drwx---r-x]  /tmp/dst
+├── [-rwx---r-x]  a.sh
+└── [-rwx---r-x]  b.sh
+
+$ scripts/general/copy_shell_scripts.sh -d /tmp/dst -s /tmp/src -g -o -f
+$ tree --noreport -p /tmp/dst
+[drwxr-xr-x]  /tmp/dst
+├── [-rwxr-xr-x]  a.sh
+└── [-rwxr-xr-x]  b.sh
+----
+
+<1> resolve the situation by deleting one of the scripts
+<2> also add `-f` so we do not get asked if we want to overwrite the files
