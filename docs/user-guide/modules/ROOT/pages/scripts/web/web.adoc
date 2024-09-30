@@ -12,5 +12,6 @@ xref:scripts/web/minify-html.adoc[]:: minify HTML files
 xref:scripts/web/minify-json.adoc[]:: minify JSON files
 xref:scripts/web/minify-robots.adoc[]:: minify the robots.txt file
 xref:scripts/web/minify-svg.adoc[]:: minify SVG files
+xref:scripts/web/minify-traffic-advice.adoc[]:: minify the private prefetch proxy traffic control file
 xref:scripts/web/minify-webmanifest.adoc[]:: minify the web application manifest
 xref:scripts/web/minify-xml.adoc[]:: minify XML files
