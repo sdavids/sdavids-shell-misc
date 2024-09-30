@@ -1,0 +1,141 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= check_reproducible_build_gradle
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/gradle/check_reproducible_build_gradle.sh
+
+{script_url}[This script^] will check whether the https://docs.gradle.org/current/userguide/working_with_files.html#sec:reproducible_archives[Gradle build] in the given directory (`$PWD` if not given) produces https://reproducible-builds.org/[reproducible] JARs.
+
+In case of a non-reproducible build, the output of this script will show the affected JARs:
+
+[,text]
+----
+--- .checksums/build-1  2024-03-11 03:40:49
++++ .checksums/build-2  2024-03-11 03:40:50
+@@ -1,2 +1,2 @@
+-62f0ce3946967ff3be58d74b68d40fd438a4cb56d9ec9d3a434b1943db92ca55  ./lib/build/libs/lib-sources.jar
+-8cf6cb254443141ca847ec73c6402581e8d37bab59ceefd88926c521812c4390  ./lib/build/libs/lib.jar
++099cebb5a0d6faa8700782877f0c09ef3891bdc861636a81839dd3e7024963f5  ./lib/build/libs/lib-sources.jar
++e2d5ad0d51a030fe23f94b039e3572b54af5a35c4943eaad4e340b91edc3ab2c  ./lib/build/libs/lib.jar
+----
+
+[TIP]
+====
+Copy the script into your Gradle project:
+
+[,text]
+----
+.
+├── scripts
+│   └── check_reproducible_build_gradle.sh
+└── gradlew
+----
+
+[,console]
+----
+$ scripts/check_reproducible_build_gradle.sh
+----
+====
+
+[TIP]
+====
+Here are snippets for a reproducible Gradle build:
+
+.build.gradle.kts
+[,kotlin]
+----
+import java.time.Instant
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
+import java.time.format.DateTimeFormatter.ISO_OFFSET_TIME
+import java.time.temporal.ChronoUnit.SECONDS
+
+// https://reproducible-builds.org/docs/source-date-epoch/
+val buildTimeAndDate: OffsetDateTime = OffsetDateTime.ofInstant(
+  (System.getenv("SOURCE_DATE_EPOCH") ?: "").toLongOrNull()?.let {
+    Instant.ofEpochSecond(it)
+  } ?: Instant.now().truncatedTo(SECONDS),
+  ZoneOffset.UTC,
+)
+
+tasks.withType<AbstractArchiveTask>().configureEach {
+  isPreserveFileTimestamps = false
+  isReproducibleFileOrder = true
+  filePermissions {
+    unix("rw-r--r--")
+  }
+  dirPermissions {
+    unix("rwxr-xr-x")
+  }
+}
+
+tasks.withType<Jar>().configureEach {
+  manifest {
+    attributes(
+      "Build-Date" to ISO_LOCAL_DATE.format(buildTimeAndDate),
+      "Build-Time" to ISO_OFFSET_TIME.format(buildTimeAndDate),
+    )
+  }
+}
+----
+
+.build.sh
+[,shell]
+----
+#!/usr/bin/env sh
+set -eu
+
+# https://reproducible-builds.org/docs/source-date-epoch/#git
+SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-$(git log --max-count=1 --pretty=format:%ct)}"
+export SOURCE_DATE_EPOCH
+
+./gradlew \
+  --configuration-cache \
+  --no-build-cache \
+  clean \
+  build
+----
+
+[,console]
+----
+$ env SOURCE_DATE_EPOCH="$(git log --max-count=1 --pretty=format:%ct)" ./gradlew --configuration-cache --no-build-cache clean build
+----
+
+..github/workflows/ci.yaml
+[,yaml]
+----
+# ...
+jobs:
+  build:
+# ...
+    steps:
+# ...
+      - name: Set SOURCE_DATE_EPOCH
+        run: |
+          echo "SOURCE_DATE_EPOCH=$(git log --max-count=1 --pretty=format:%ct)" >> "$GITHUB_ENV"
+      - name: Run build
+        run: ./gradlew build
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/gradle/check_reproducible_build_gradle.sh
+----
+
+[,shell]
+----
+$ scripts/gradle/check_reproducible_build_gradle.sh /tmp/example
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#gradle[Gradle]
+
+== More Information
+
+* https://docs.gradle.org/current/userguide/gradle_wrapper.html[Gradle Wrapper]
+* https://reproducible-builds.org[Reproducible builds]
+* https://reproducible-builds.org/docs/jvm/[Reproducible builds - JVM]
