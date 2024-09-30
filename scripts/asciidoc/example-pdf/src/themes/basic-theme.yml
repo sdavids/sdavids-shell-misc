@@ -1,0 +1,62 @@
+---
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# https://github.com/asciidoctor/asciidoctor-pdf/blob/main/docs/theming-guide.adoc
+
+extends: default
+page:
+  margin: [2cm, 2.5cm, 1.5cm, 2cm] # DIN 5008
+footer:
+  border_width: 0
+font:
+  catalog:
+    MPlus1mn: # needed for circled numbers (callouts)
+      normal: MPlus1mn-Regular.ttf
+      italic: MPlus1mn-Italic.ttf
+      bold: MPlus1mn-Bold.ttf
+      bold_italic: MPlus1mn-BoldItalic.ttf
+    SourceCodePro:
+      normal: SourceCodePro-Regular.ttf
+      italic: SourceCodePro-Italic.ttf
+      bold: SourceCodePro-Bold.ttf
+      bold_italic: SourceCodePro-BoldItalic.ttf
+    SourceSans3:
+      normal: SourceSans3-Regular.ttf
+      italic: SourceSans3-Italic.ttf
+      bold: SourceSans3-Bold.ttf
+      bold_italic: SourceSans3-BoldItalic.ttf
+    SourceSerif4:
+      normal: SourceSerif4-Regular.ttf
+      italic: SourceSerif4-Italic.ttf
+      bold: SourceSerif4-Bold.ttf
+      bold_italic: SourceSerif4-BoldItalic.ttf
+    NotoEmoji: NotoEmoji-Regular.ttf
+  fallbacks: [NotoEmoji]
+base:
+  font-family: SourceSerif4
+codespan:
+  font-family: SourceCodePro
+  font-color: '#000000'
+code:
+  font-family: SourceCodePro
+conum:
+  font-family: MPlus1mn
+heading:
+  font-family: SourceSans3
+kbd:
+  font-family: SourceCodePro
+title-page:
+  font-family: SourceSans3
+admonition:
+  icon:
+    caution:
+      name: fas-exclamation
+      stroke-color: '#bf6900'
+    tip:
+      stroke-color: '#ffd300'
+role:
+  red:
+    font_color: '#ff0000'
+  green:
+    font_color: '#00aa00'

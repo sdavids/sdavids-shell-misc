@@ -1,0 +1,229 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= asciidoc_pdf_build
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/asciidoc/asciidoc_pdf_build.sh
+:main_adoc_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/asciidoc/example-pdf/src/main.adoc
+:basic_theme_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/asciidoc/example-pdf/src/themes/basic-theme.yml
+
+{script_url}[This script^] will typeset the documents of a given source directory into PDFs.
+
+The following parameters are optional:
+
+`f` :: delete the output directory before typesetting
+`n` :: turn caching off
+`o` :: the output directory (`$PWD/build` if not given)
+`s` :: the source the directory (`$PWD/src` if not given)
+
+[NOTE]
+====
+`*.adoc` files inside directories named `_includes` will not be typeset.
+
+This is useful for https://docs.asciidoctor.org/asciidoc/latest/directives/include/#when-is-an-include-directive-useful[AsciiDoc includes].
+====
+
+[NOTE]
+====
+If you want to use a https://docs.asciidoctor.org/pdf-converter/latest/theme/[custom theme], this script assumes that the theme is called `basic` and in the file `<source directory>/themes/basic-theme.yml`.
+
+If you want to use custom fonts, this script assumes that the `ttf`-fonts are found in the `<source directory>/fonts` directory.
+
+You can configure the https://docs.asciidoctor.org/pdf-converter/latest/image-paths-and-formats/#svg[font used by PlantUML] with the `<source directory>/themes/basic-plantuml.cfg` file.
+====
+
+== Usage
+
+[,shell]
+----
+$ tree --noreport -I scripts
+.
+└── src
+    └── index.adoc
+$ scripts/asciidoc/asciidoc_pdf_build.sh
+$ tree --noreport -I scripts
+.
+├── build
+│   └── index.pdf                                                         <1>
+└── src
+    └── index.adoc
+
+$ tree --noreport -a /tmp/example
+/tmp/example
+└── src
+    ├── _includes
+    │   └── footer.adoc
+    ├── a
+    │   ├── b
+    │   │   └── sub.adoc
+    │   └── dir.adoc
+    ├── fonts                                                             <2>
+    │   ├── JetBrainsMono-Bold.ttf
+    │   ├── JetBrainsMono-BoldItalic.ttf
+    │   ├── JetBrainsMono-Italic.ttf
+    │   ├── JetBrainsMono-Regular.ttf
+    │   ├── Lora-Bold.ttf
+    │   ├── Lora-BoldItalic.ttf
+    │   ├── Lora-Italic.ttf
+    │   ├── Lora-Regular.ttf
+    │   └── NotoEmoji-Regular.ttf
+    ├── index.adoc
+    └── themes
+        ├── basic-theme.yml                                               <3>
+        └── basic-plantuml.cfg                                            <4>
+$ cat /tmp/example/src/themes/basic-theme.yml
+---
+# https://github.com/asciidoctor/asciidoctor-pdf/blob/main/docs/theming-guide.adoc
+
+extends: default
+font:
+  catalog:
+    JetBrainsMono:
+      normal: JetBrainsMono-Regular.ttf                                   <5>
+      italic: JetBrainsMono-Italic.ttf
+      bold: JetBrainsMono-Bold.ttf
+      bold_italic: JetBrainsMono-BoldItalic.ttf
+    Lora:
+      normal: Lora-Regular.ttf
+      italic: Lora-Italic.ttf
+      bold: Lora-Bold.ttf
+      bold_italic: Lora-BoldItalic.ttf
+    NotoEmoji: NotoEmoji-Regular.ttf
+  fallbacks: [NotoEmoji]
+base:
+  font-family: Lora
+codespan:
+  font-family: JetBrainsMono
+code:
+  font-family: JetBrainsMono
+kbd:
+  font-family: JetBrainsMono
+$ cat /tmp/example/src/themes/basic-plantuml.cfg
+skinparam defaultFontName Lora                                            <6>
+$ cat /tmp/example/src/a/b/sub.adoc
+= Sub
+
+[plantuml]                                                                <7>
+....
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(p, "Support")
+
+System(s, "Test System")
+
+Rel(p, s, "Uses", "https")
+
+@enduml
+....
+
+includes::../../_includes/footer.adoc[]
+$ scripts/asciidoc/asciidoc_pdf_build.sh -s /tmp/example/src -o /tmp/example/out
+$ tree --noreport -a /tmp/example -I src
+/tmp/example
+└── out                                                                   <8>
+    ├── a
+    │   ├── b
+    │   │   ├── .asciidoctor                                              <9>
+    │   │   │   └── diagram
+    │   │   │       └── diag-plantuml-md5-647767ca39d0b7ada6e2164960017d01.png.cache
+    │   │   ├── diag-plantuml-md5-647767ca39d0b7ada6e2164960017d01.png    <9>
+    │   │   └── sub.pdf
+    │   └── dir.pdf
+    ├── diag-plantuml-md5-647767ca39d0b7ada6e2164960017d01.png            <9>
+    └── index.pdf
+$ scripts/asciidoc/asciidoc_pdf_build.sh -s /tmp/example/src -o /tmp/example/out -f -n
+$ tree --noreport -a /tmp/example -I src
+/tmp/example
+└── out                                                                   <10>
+    ├── a
+    │   ├── b
+    │   │   └── sub.pdf
+    │   └── dir.pdf
+    └── index.pdf
+----
+
+<1> the typeset PDF
+<2> custom fonts
+<3> custom theme
+<4> PlantUML customization
+<5> the custom theme uses the custom fonts
+<6> PlantUML uses a custom font
+<7> a document with an https://docs.asciidoctor.org/diagram-extension/latest/diagram_types/plantuml/[PlantUML diagram]
+<8> notice there is no `footer.pdf` in an `_includes` directory
+<9> the files of the https://docs.asciidoctor.org/diagram-extension/latest/generate/#diagram_caching[diagram cache]
+<10> the output directory has been cleaned (`-f`) and no files for the cache have been created (`-n`)
+
+== Example
+
+{main_adoc_url}[main.adoc],
+{basic_theme_url}[basic-theme.yml]
+
+[,console]
+----
+$ cd scripts/asciidoc/example-pdf
+$ ../asciidoc_pdf_build.sh
+----
+
+=> `build/main.pdf`
+
+Typeset PDF: xref:attachment$asciidoc/main.pdf[main.pdf]
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#docker[Docker]
+
+== Related Scripts
+
+* xref:scripts/pdf/pdf-remove-metadata.adoc[]
++
+[,shell]
+----
+$ exiftool build/main.pdf
+ExifTool Version Number         : 12.76
+File Name                       : main.pdf
+Directory                       : build
+File Size                       : 132 kB
+File Modification Date/Time     : 2024:09:16 02:02:49+02:00
+File Access Date/Time           : 2024:09:16 02:02:51+02:00
+File Inode Change Date/Time     : 2024:09:16 02:02:49+02:00
+File Permissions                : -rw-r--r--
+File Type                       : PDF
+File Type Extension             : pdf
+MIME Type                       : application/pdf
+PDF Version                     : 1.4
+Linearized                      : No
+Page Count                      : 10
+Page Mode                       : UseOutlines
+Title                           : AsciiDoc Showcase
+Author                          : Sebastian Davids
+Creator                         : Sebastian Davids
+Producer                        : Asciidoctor PDF 2.3.18, based on Prawn 2.4.0
+Modify Date                     : 2024:09:15 23:58:24+00:00
+Create Date                     : 2024:09:16 00:02:45+00:00
+$ ../../pdf/pdf_remove_metadata.sh build/main.pdf
+$ exiftool build/main.pdf
+ExifTool Version Number         : 12.76
+File Name                       : main.pdf
+Directory                       : build
+File Size                       : 132 kB
+File Modification Date/Time     : 2024:09:16 02:03:43+02:00
+File Access Date/Time           : 2024:09:16 02:03:45+02:00
+File Inode Change Date/Time     : 2024:09:16 02:03:43+02:00
+File Permissions                : -rw-------
+File Type                       : PDF
+File Type Extension             : pdf
+MIME Type                       : application/pdf
+PDF Version                     : 1.4
+Linearized                      : Yes
+Page Mode                       : UseOutlines
+Page Count                      : 10
+----
+
+== More Information
+
+* https://github.com/asciidoctor/docker-asciidoctor[docker-asciidoctor]
+* https://asciidoctor.org[Asciidoctor]
+* https://docs.asciidoctor.org/asciidoc/latest/[AsciiDoc]
+* https://docs.asciidoctor.org/pdf-converter/latest/[Asciidoctor PDF]
+* https://docs.asciidoctor.org/pdf-converter/latest/theme/[Asciidoctor PDF - Theming]
+* https://docs.asciidoctor.org/pdf-converter/latest/features/#limitations[Asciidoctor PDF - Known limitations]

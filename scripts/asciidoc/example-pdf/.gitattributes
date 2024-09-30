@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# https://git-scm.com/docs/gitattributes
+
+*.java diff=java
+
+*.jpg binary -eol -whitespace
+*.pdf binary -eol -whitespace
+*.ttf binary -eol -whitespace
