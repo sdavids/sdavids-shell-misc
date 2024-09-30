@@ -1,0 +1,88 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= counter
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/general/counter.sh
+
+{script_url}[This script^] will create a counter with the given name.
+
+The optional second positive integer parameter will stop the counter when the current count is equal or larger than the given argument.
+
+Invoking this script will print the current count to stdout unless the counter has been removed.
+
+The exit code of the script will be `100` when the count has been increased or `0` when the counter has been removed.
+
+The count is persisted in a file in a temporary directory or `COUNTER_DIR` if set in the environment.
+
+== Usage
+
+.toggle.sh
+[,shell]
+----
+#!/usr/bin/env sh
+scripts/general/counter.sh toggle 1 1>/dev/null
+if [ $? -eq 100 ]; then
+  echo 'on'
+else
+  echo 'off'
+fi
+----
+
+.retry.sh
+[,shell]
+----
+#!/usr/bin/env sh
+COUNTER_DIR="${XDG_STATE_HOME:=${HOME}}/retry" scripts/general/counter.sh retry 3 1>/dev/null
+if [ $? -ne 100 ]; then
+  echo 'tried enough times' >&2
+  exit 50
+fi
+----
+
+[,shell]
+----
+$ scripts/general/counter.sh my-counter 2
+1
+$ echo $?
+100
+$ scripts/general/counter.sh my-counter 2
+2
+$ echo $?
+100
+$ scripts/general/counter.sh my-counter 2
+$ echo $?
+0
+
+$ ./toggle.sh
+on
+$ ./toggle.sh
+off
+$ ./toggle.sh
+on
+
+$ mkdir -p "${XDG_STATE_HOME:=${HOME}}/retry"
+$ ./retry.sh
+$ ls "${XDG_STATE_HOME:=${HOME}}/retry"
+counter-retry
+$ cat /home/example/.local/state/retry/counter-retry
+1
+$ ./retry.sh
+$ cat /home/example/.local/state/retry/counter-retry
+2
+$ ./retry.sh
+$ cat /home/example/.local/state/retry/counter-retry
+3
+$ ./retry.sh
+tried enough times
+$ ls "${XDG_STATE_HOME:=${HOME}}/retry"
+$ rm -rf "${XDG_STATE_HOME:=${HOME}}/retry"
+----
+
+== Related Scripts
+
+* xref:scripts/general/loop.adoc[]
++
+[,shell]
+----
+$ scripts/general/loop.sh 1 0 scripts/general/counter.sh my-counter 5
+12345
+----
