@@ -1,0 +1,79 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= renew_self_signed_cert
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/renew_self_signed_cert.sh
+
+{script_url}[This script^] will renew the private key `key.pem` and the self-signed certificate `cert.pem` in the given directory (`$PWD` if not given).
+
+The optional second positive integer parameter (range: [1, 24855]) specifies the number of days the certificate is valid for; the default is 30 days.
+
+The optional third parameter is the common name (`localhost` if not given) of the certificate to be renewed.
+
+On macOS, the certificate will be renewed in the "login" keychain also.
+
+[NOTE]
+====
+Chrome and Safari need no further configuration.
+
+For Firefox the old certificate has to be xref:scripts/cert/delete-self-signed-cert.adoc#delete-self-signed-cert-firefox[deleted manually], and the renewed one has to be xref:scripts/cert/create-self-signed-cert.adoc#create-self-signed-cert-firefox[added manually].
+
+Docker needs to be restarted.
+====
+
+[WARNING]
+====
+Certificates with more than 180 days validity will https://support.apple.com/en-us/103214[not be accepted by the Apple platform] or Safari.
+====
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "cert:renew": "scripts/renew_self_signed_cert.sh certs"
+  }
+}
+----
+
+[,console]
+----
+$ npm run cert:renew
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/cert/renew_self_signed_cert.sh
+----
+
+[,shell]
+----
+$ scripts/cert/renew_self_signed_cert.sh dist/etc/nginx
+
+$ scripts/cert/renew_self_signed_cert.sh . 30
+$ openssl x509 -enddate -noout -in ~/.local/secrets/certs/https.internal/cert.pem
+notAfter=Aug  8 11:18:36 2024 GMT
+
+$ scripts/cert/renew_self_signed_cert.sh ~/.local/secrets/certs/https.internal 10 https.internal
+Removing 'https.internal' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
+Adding 'https.internal' certificate (expires on: 2024-09-17) to keychain /Users/example/Library/Keychains/login.keychain-db ...
+$ date -Idate
+2024-08-07
+$ openssl x509 -startdate -noout -in ~/.local/secrets/certs/https.internal/cert.pem
+notBefore=Aug  7 16:53:53 2024 GMT
+$ openssl x509 -enddate -noout -in ~/.local/secrets/certs/https.internal/cert.pem
+notAfter=Aug 17 16:53:53 2024 GMT
+----
+
+== Related Scripts
+
+* xref:scripts/cert/create-self-signed-cert.adoc[]
+* xref:scripts/cert/delete-self-signed-cert.adoc[]
+* xref:scripts/cert/renew-self-signed-cert.adoc[]
