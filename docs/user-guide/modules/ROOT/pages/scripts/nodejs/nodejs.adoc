@@ -5,4 +5,5 @@
 This section contains scripts related to https://nodejs.org[Node.js]:
 
 xref:scripts/nodejs/clean-node.adoc[]:: delete `node_modules` and `package-lock.json`
+xref:scripts/nodejs/dependency-check-node.adoc[]:: check for dependency updates
 xref:scripts/nodejs/macos-node-modules-fix.adoc[]:: exclude `node_modules` from Time Machine backups and Spotlight indexing

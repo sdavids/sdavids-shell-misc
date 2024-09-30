@@ -29,6 +29,7 @@
 *** xref:scripts/gh/gh-delete-workflow-runs.adoc[]
 ** xref:scripts/nodejs/nodejs.adoc[]
 *** xref:scripts/nodejs/clean-node.adoc[]
+*** xref:scripts/nodejs/dependency-check-node.adoc[]
 *** xref:scripts/nodejs/macos-node-modules-fix.adoc[]
 ** xref:scripts/web/web.adoc[]
 *** xref:scripts/web/compress-brotli.adoc[]
