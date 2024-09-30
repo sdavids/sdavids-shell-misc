@@ -36,6 +36,7 @@
 *** xref:scripts/java/jar-min-java-version.adoc[]
 ** xref:scripts/keycloak/keycloak.adoc[]
 *** xref:scripts/keycloak/keycloak-access-token.adoc[]
+*** xref:scripts/keycloak/keycloak-access-token-decoded.adoc[]
 *** xref:scripts/keycloak/keycloak-decode-access-token.adoc[]
 ** xref:scripts/nodejs/nodejs.adoc[]
 *** xref:scripts/nodejs/clean-node.adoc[]

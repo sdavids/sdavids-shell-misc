@@ -44,3 +44,4 @@ $ scripts/keycloak/keycloak_decode_access_token.sh eyJhbGciOiJSUzI1NiIsInR5cCIgO
 == Related Scripts
 
 * xref:scripts/keycloak/keycloak-access-token.adoc[]
+* xref:scripts/keycloak/keycloak-access-token-decoded.adoc[]

@@ -47,4 +47,5 @@ eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhSGJ2MFdqT2RsR19wM1BEb0ZvLU1K
 
 == Related Scripts
 
+* xref:scripts/keycloak/keycloak-access-token-decoded.adoc[]
 * xref:scripts/keycloak/keycloak-decode-access-token.adoc[]

@@ -1,0 +1,52 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= keycloak_access_token_decoded
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/keycloak/keycloak_access_token_decoded.sh
+
+{script_url}[This script^] will retrieve a https://www.keycloak.org/docs/latest/authorization_services/#_service_obtaining_permissions[Keycloak JWT access token] for the given user and decode it.
+
+[NOTE]
+====
+This script combines xref:scripts/keycloak/keycloak-access-token.adoc[] and xref:scripts/keycloak/keycloak-decode-access-token.adoc[].
+====
+
+== Usage
+
+[,shell]
+----
+$ scripts/keycloak/keycloak_access_token_decoded.sh my-user
+
+Password:
+
+eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhSGJ2MFdqT2RsR19wM1BEb0ZvLU1KQ3NuWEk0Ny0xOGdhTjcycndkTnlBIn0.eyJleHAiOjE3MDY0NzIzNDksImlhdCI6MTcwNjQ3MjA0OSwianRpIjoiNDgyMTAxM2MtYjQ0NC00MjM2LWFkOTUtOWM2MmQyNzc4OGFlIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9teS1yZWFsbSIsInN1YiI6ImMxYmYwOTRmLWIzOTctNGYxMy05Y2VhLTUyYTdjYmNlNjRkMCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im15LXJlYWxtLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI0MGM2YjdlZi02MjBlLTQ0MGYtOTQ0Mi05Nzc0MWYyYjhkMjMiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwic2NvcGUiOiJteS1yZWFsbS1zY29wZSIsInNpZCI6IjQwYzZiN2VmLTYyMGUtNDQwZi05NDQyLTk3NzQxZjJiOGQyMyJ9.EOEaOq_HFsQ8_yAPu-zszw2dOM0gS7cUNRhXmKdnGlD1TFVA33rT2cUiXnVVGNGtXXcIbghp3uCSZLUwYrGwDPUnYJbrNycPsPy6iah07oUaakEhsTnYqGmdYgXVw9T7Q2xoGhwtD5_hpgwwvkHCMBbJ8tZBefDXzy1nCS2rzJCgVsZylvfGMPwHO5gAQr5RYrD1o_9TTPLTjDPNtCvYXp1MaVat7fqibiH_ioXFAm2NxIIOrwVGRZH5jW1rdX6gURjoyfYXi9w56SVbzIh4lgZI48rnnxHjRLop8ZuWFcmtx6ykY45MtMFUCE6gNTZFgJmTlYLGQIe9tYmO6Kngow
+{
+  "alg": "RS256",
+  "typ": "JWT",
+  "kid": "aHbv0WjOdlG_p3PDoFo-MJCsnXI47-18gaN72rwdNyA"
+}
+{
+  "exp": 1706472349,
+  "iat": 1706472049,
+  "jti": "4821013c-b444-4236-ad95-9c62d27788ae",
+  "iss": "http://localhost:8080/realms/my-realm",
+  "sub": "c1bf094f-b397-4f13-9cea-52a7cbce64d0",
+  "typ": "Bearer",
+  "azp": "my-realm-client",
+  "session_state": "40c6b7ef-620e-440f-9442-97741f2b8d23",
+  "allowed-origins": [
+    "/*"
+  ],
+  "scope": "my-realm-scope",
+  "sid": "40c6b7ef-620e-440f-9442-97741f2b8d23"
+}
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#curl[curl]
+* xref:developer-guide::dev-environment/dev-installation.adoc#jq[jq]
+
+== Related Scripts
+
+* xref:scripts/keycloak/keycloak-access-token.adoc[]
+* xref:scripts/keycloak/keycloak-decode-access-token.adoc[]
