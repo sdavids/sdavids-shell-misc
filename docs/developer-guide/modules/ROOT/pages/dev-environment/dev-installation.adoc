@@ -4,6 +4,7 @@
 :fnm-install-url: https://github.com/Schniz/fnm#installation
 :gh-cli-install-url: https://github.com/cli/cli#linux--bsd
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
+:oxipng-install-url: https://github.com/shssoichiro/oxipng/issues/69
 
 == brotli
 
@@ -143,6 +144,35 @@ if command -v nvm >/dev/null 2>&1; then
   add-zsh-hook chpwd load-nvmrc
   load-nvmrc
 fi
+----
+
+== optipng
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install optipng
+----
+
+=== Mac
+
+[,console]
+----
+$ brew install optipng
+----
+
+== oxipng
+
+=== Linux
+
+Install {oxipng-install-url}[oxipng].
+
+=== Mac
+
+[,console]
+----
+$ brew install oxipng
 ----
 
 == ShellCheck

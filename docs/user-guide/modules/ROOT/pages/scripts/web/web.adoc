@@ -13,6 +13,7 @@ xref:scripts/web/minify-html.adoc[]:: minify HTML files
 xref:scripts/web/minify-jpeg.adoc[]:: minify JPEG files
 xref:scripts/web/minify-json.adoc[]:: minify JSON files
 xref:scripts/web/minify-json-tags.adoc[]:: minify JSON-structured script tags
+xref:scripts/web/minify-png.adoc[]:: minify PNG files
 xref:scripts/web/minify-robots.adoc[]:: minify the robots.txt file
 xref:scripts/web/minify-svg.adoc[]:: minify SVG files
 xref:scripts/web/minify-traffic-advice.adoc[]:: minify the private prefetch proxy traffic control file
