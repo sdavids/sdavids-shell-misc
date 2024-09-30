@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
-= create_build_info_ts
-:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/create_build_info_ts.sh
+= create_build_info_js
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/create_build_info_js.sh
 
-{script_url}[This script^] will create a file with the given name containing build information accessible by https://www.typescriptlang.org[TypeScript] code.
+{script_url}[This script^] will create a file with the given name containing build information accessible by JavaScript code.
 
 [NOTE]
 ====
@@ -29,28 +29,24 @@ The value of `build.time` is either the value of the `SOURCE_DATE_EPOCH` https:/
 
 [,shell]
 ----
-$ scripts/web/create_build_info_ts.sh src/build-info.ts
+$ scripts/web/create_build_info_js.sh src/build-info.mjs
 ----
 
 ⇓
 
-.src/build-info.ts
+.src/build-info.mjs
 [,typescript]
 ----
-export type BuildInfo = {
-// ...
-};
-
-export const buildInfo: BuildInfo = {
+export const buildInfo = {
   build: {
-    id: '1710116078',
-    time: '2024-03-11T00:14:38Z',
+    id: '1710116787',
+    time: '2024-03-11T00:26:27Z',
   },
   git: {
     branch: 'main',
     commit: {
-      id: '95189bb08fa918576f10339eb15303d152ade2aa',
-      time: '2024-03-10T23:52:54Z',
+      id: '4768a3cf26cecc00a23be6acdf430809e4bb67a7',
+      time: '2024-03-11T00:25:48Z',
     },
   },
 };
@@ -58,4 +54,4 @@ export const buildInfo: BuildInfo = {
 
 == Related Scripts
 
-* xref:scripts/web/create-build-info-js.adoc[]
+* xref:scripts/web/create-build-info-ts.adoc[]
