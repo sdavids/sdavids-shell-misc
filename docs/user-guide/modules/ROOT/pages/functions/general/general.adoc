@@ -5,3 +5,4 @@
 This section contains generally useful functions:
 
 xref:functions/general/color-stderr.adoc[]:: color errors red
+xref:functions/general/ls-extensions.adoc[]:: displays all file extensions
