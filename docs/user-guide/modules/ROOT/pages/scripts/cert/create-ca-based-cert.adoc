@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
-= create_self_signed_cert
-:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/create_self_signed_cert.sh
+= create_ca_based_cert
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/create_ca_based_cert.sh
 
-{script_url}[This script^] will create a private key `key.pem` and a self-signed certificate `cert.pem` in the given directory (`$PWD` if not given).
+{script_url}[This script^] will create a private key `key.pem` and a certificate `cert.pem` in the given directory (`$PWD` if not given) based on a certificate authority.
 
 The given directory will be created if it does not exit yet.
 
@@ -11,27 +11,31 @@ The optional second positive integer parameter (range: [1, 24855]) specifies the
 
 The optional third parameter is the common name (`localhost` if not given) of the certificate to be added.
 
-On macOS, the certificate will be added to the "login" keychain also.
-
 [NOTE]
 ====
-The certificate created by this script is useful if you do not use mutual TLS, the HTTP-client can be configured to ignore self-signed certificates, the server’s certificate verifier supports using a trust anchor as both a CA certificate and an end-entity certificate, or if you can add the certificate to your trust store.
-
-[,shell]
-----
-$ curl --insecure ...
-$ wget --no-check-certificate ...
-$ http --verify=no ...
-----
+The certificate created by this script is useful if you want to use mutual TLS or if the server's certificate verifier does not support using a trust anchor as both a CA certificate and an end-entity certificate (e.g. https://docs.rs/craftls/latest/rustls/#non-features[rusttls]).
 ====
 
 [NOTE]
 ====
-Chrome and Safari need no further configuration--you should restart your browser though.
+Chrome, Docker, Firefox, and Safari need no further configuration.
 
-For Firefox the created certificate has to be <<create-self-signed-cert-firefox,accepted manually>>.
+Safari::
++
+image::ca-cert-safari.png[]
 
-Docker needs to be restarted.
+Chrome::
++
+image::ca-cert-chrome.png[]
+
+Firefox::
++
+image::ca-cert-firefox.png[]
+====
+
+[IMPORTANT]
+====
+Ensure that the certificate authority has been xref:scripts/cert/create-ca.adoc[created] before executing this script.
 ====
 
 [IMPORTANT]
@@ -81,7 +85,7 @@ Certificates with more than 180 days validity will https://support.apple.com/en-
 
 [TIP]
 ====
-Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc[delete], xref:scripts/cert/renew-self-signed-cert.adoc[renew], and xref:scripts/cert/verify-self-signed-cert.adoc[verify] scripts) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+Copy this script (and its related xref:scripts/cert/create-ca.adoc[], xref:scripts/cert/delete-ca.adoc[], and xref:scripts/cert/copy-ca-root-cert.adoc[] scripts) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
 
 .package.json
 [,json]
@@ -89,10 +93,10 @@ Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc
 {
 ...
   "scripts": {
-    "cert:create": "scripts/create_self_signed_cert.sh certs",
-    "cert:delete": "scripts/delete_self_signed_cert.sh certs",
-    "cert:renew": "scripts/renew_self_signed_cert.sh certs",
-    "cert:verify": "scripts/verify_self_signed_cert.sh certs",
+    "cert:ca:copy-root": "scripts/copy_ca_root_cert.sh",
+    "cert:ca:create": "scripts/create_ca.sh",
+    "cert:ca:delete": "scripts/delete_ca.sh",
+    "cert:create": "scripts/create_ca_based_cert.sh certs",
 ...
   }
 }
@@ -100,10 +104,10 @@ Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc
 
 [,shell]
 ----
+$ npm run cert:ca:create
+$ npm run cert:ca:copy-root
 $ npm run cert:create
-$ npm run cert:delete
-$ npm run cert:renew
-$ npm run cert:verify
+$ npm run cert:ca:delete
 ----
 ====
 
@@ -111,10 +115,9 @@ $ npm run cert:verify
 
 [,shell]
 ----
-$ scripts/cert/create_self_signed_cert.sh
-Adding 'localhost' certificate (expires on: 2024-02-29) to keychain /Users/example/Library/Keychains/login.keychain-db ...
+$ scripts/cert/create_ca_based_cert.sh
 $ date -Idate
-2024-01-30
+2024-08-05
 $ stat -f '%A %N' *.pem
 600 cert.pem
 600 key.pem
@@ -122,42 +125,36 @@ $ openssl x509 -ext subjectAltName -noout -in cert.pem
 X509v3 Subject Alternative Name:
     DNS:localhost
 $ openssl x509 -startdate -noout -in cert.pem
-notBefore=Jan 30 16:25:43 2024 GMT
+notBefore=Aug  5 14:48:36 2024 GMT
 $ openssl x509 -enddate -noout -in cert.pem
-notAfter=Feb 29 16:25:43 2024 GMT
+notAfter=Sep  4 14:48:36 2024 GMT
 
-$ scripts/cert/create_self_signed_cert.sh dist/etc/nginx
-Adding 'localhost' certificate (expires on: 2024-02-29) to keychain /Users/example/Library/Keychains/login.keychain-db ...
-
-$ scripts/cert/create_self_signed_cert.sh . 10
-Adding 'localhost' certificate (expires on: 2024-02-09) to keychain /Users/example/Library/Keychains/login.keychain-db ...
-
-$ scripts/cert/create_self_signed_cert.sh ~/.local/secrets/certs/https.internal 20 https.internal
-Adding 'https.internal' certificate (expires on: 2024-02-19) to keychain /Users/example/Library/Keychains/login.keychain-db ...
+$ scripts/cert/create_ca_based_cert.sh certs
+$ scripts/cert/create_ca_based_cert.sh . 10
+$ scripts/cert/create_ca_based_cert.sh ~/.local/secrets/certs/https.internal 30 https.internal
 ----
 
 === macOS
 
-Check your "login" keychain in _Keychain Access_; _Secure Sockets Layer (SSL)_ should be set to "Always Trust":
+. xref:scripts/cert/create-ca.adoc#create-ca-mac[Check] the trust settings of the CA root certificate in _Keychain Access_.
+. https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox#w_using-built-in-windows-and-macos-support[Check] that the `security.enterprise_roots.enabled` preference is set to `true` on the `about:config` page.
 
-image::self-signed-macos.png[]
+=== Firefox (SEC_ERROR_UNKNOWN_ISSUER)
 
-[#create-self-signed-cert-firefox]
-=== Firefox (MOZILLA_PKIX_ERROR_SELF_SIGNED_CERT)
+image::ca-firefox.png[]
 
-You need to bypass the https://support.mozilla.org/en-US/kb/error-codes-secure-websites#w_self-signed-certificate[self-signed certificate warning] by clicking on "Advanced" and then "Accept the Risk and Continue":
+Restart Firefox to refresh its CA root certificates from the system's trust store.
 
-image::self-signed-firefox.png[]
-
-[#create-self-signed-cert-examples]
+[#create-ca-based-cert-examples]
 == Examples
 
-[#create-self-signed-cert-https-apache]
+[#create-ca-based-cert-https-apache]
 === Apache HTTP Server
 
 [,console]
 ----
-$ scripts/cert/create_self_signed_cert.sh ~/.local/secrets/certs/localhost
+$ scripts/cert/create_ca.sh
+$ scripts/cert/create_ca_based_cert.sh ~/.local/secrets/certs/localhost
 $ docker run --rm httpd:2.4.62-alpine3.20 cat /usr/local/apache2/conf/httpd.conf > httpd.conf.orig
 $ sed -e 's/^#\(Include .*httpd-ssl.conf\)/\1/' \
       -e 's/^#\(LoadModule .*mod_ssl.so\)/\1/' \
@@ -175,12 +172,13 @@ $ docker run -i -t --rm -p 3000:443 \
 
 => https://localhost:3000
 
-[#create-self-signed-cert-https-nginx]
+[#create-ca-based-cert-https-nginx]
 === nginx
 
 [,console]
 ----
-$ scripts/cert/create_self_signed_cert.sh ~/.local/secrets/certs/localhost
+$ scripts/cert/create_ca.sh
+$ scripts/cert/create_ca_based_cert.sh ~/.local/secrets/certs/localhost
 $ printf 'server {
   listen 443 ssl;
   listen [::]:443 ssl;
@@ -203,7 +201,7 @@ $ docker run -i -t --rm -p 3000:443 \
 
 => https://localhost:3000
 
-[#create-self-signed-cert-https-go]
+[#create-ca-based-cert-https-go]
 === Go
 
 .link:scripts/cert/go/stdlib/server.go[server.go]
@@ -243,7 +241,8 @@ func main() {
 [,console]
 ----
 $ cd scripts/cert/go/stdlib
-$ ../create_self_signed_cert.sh
+$ ../create_ca.sh
+$ ../create_ca_based_cert.sh
 $ go run server.go
 ----
 
@@ -254,7 +253,7 @@ $ go run server.go
 * https://pkg.go.dev/net/http#hdr-Servers[HTTP Servers]
 * https://www.man7.org/linux/man-pages/man3/sysexits.h.3head.html[Exit Codes for Programs]
 
-[#create-self-signed-cert-https-nodejs]
+[#create-ca-based-cert-https-nodejs]
 === NodeJS
 
 .link:scripts/cert/js/nodejs/server.mjs[server.mjs]
@@ -298,7 +297,8 @@ console.log(`Listen local: https://localhost:${port}`);
 [,console]
 ----
 $ cd scripts/cert/js/nodejs
-$ ../create_self_signed_cert.sh
+$ ../create_ca.sh
+$ ../create_ca_based_cert.sh
 $ node server.mjs
 ----
 
@@ -311,7 +311,7 @@ $ node server.mjs
 * https://marketsplash.com/tutorials/node-js/node-js-uncaught-exception/[How To Handle Node.js Uncaught Exception Properly]
 * https://www.man7.org/linux/man-pages/man3/sysexits.h.3head.html[Exit Codes for Programs]
 
-[#create-self-signed-cert-https-java]
+[#create-ca-based-cert-https-java]
 === Java
 
 .link:scripts/cert/java/stdlib/Server.java[Server.java]
@@ -378,7 +378,8 @@ public final class Server {
 [,console]
 ----
 $ cd scripts/cert/java/stdlib
-$ ../create_self_signed_cert.sh
+$ ../create_ca.sh
+$ ../create_ca_based_cert.sh
 $ openssl pkcs12 -export -in cert.pem -inkey key.pem -out certificate.p12 -name localhost -password pass:changeit
 $ keytool -importkeystore -srckeystore certificate.p12 -srcstoretype pkcs12 -srcstorepass changeit -destkeystore keystore.jks -deststorepass changeit
 $ KEYSTORE_PATH=keystore.jks KEYSTORE_PASS=changeit java Server.java
@@ -393,7 +394,7 @@ $ KEYSTORE_PATH=keystore.jks KEYSTORE_PASS=changeit java Server.java
 * https://docs.oracle.com/en/java/javase/21/docs/specs/man/keytool.html#commands-for-importing-contents-from-another-keystore[keytool - Commands for Importing Contents from Another Keystore]
 * https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html[Virtual Threads]
 
-[#create-self-signed-cert-https-spring-boot]
+[#create-ca-based-cert-https-spring-boot]
 === Spring Boot
 
 .link:scripts/cert/java/spring-boot/src/main/java/de/sdavids/example/spring/https/Server.java[Server.java]
@@ -431,7 +432,8 @@ spring.ssl.bundle.pem.https.keystore.private-key=key.pem
 [,console]
 ----
 $ cd scripts/cert/java/spring-boot
-$ ../create_self_signed_cert.sh
+$ ../create_ca.sh
+$ ../create_ca_based_cert.sh
 $ ./gradlew bootRun
 ----
 
@@ -445,7 +447,7 @@ $ ./gradlew bootRun
 * https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.ssl.reloading[Reloading SSL bundles]
 * https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.spring-application.virtual-threads[Virtual threads]
 
-[#create-self-signed-cert-https-quarkus]
+[#create-ca-based-cert-https-quarkus]
 === Quarkus
 
 [NOTE]
@@ -482,7 +484,8 @@ quarkus.http.ssl.certificate.key-files=key.pem
 [,console]
 ----
 $ cd scripts/cert/java/quarkus
-$ ../create_self_signed_cert.sh
+$ ../create_ca.sh
+$ ../create_ca_based_cert.sh
 $ ./gradlew quarkusDev
 ----
 
@@ -497,17 +500,19 @@ $ ./gradlew quarkusDev
 
 == Prerequisites
 
-* xref:developer-guide::dev-environment/dev-installation.adoc#openssl[OpenSSL]
+* xref:developer-guide::dev-environment/dev-installation.adoc#easyrsa[EasyRSA]
 
-[#create-self-signed-cert-related-scripts]
+[#create-ca-based-cert-related-scripts]
 == Related Scripts
 
-* xref:scripts/cert/delete-self-signed-cert.adoc[]
-* xref:scripts/cert/renew-self-signed-cert.adoc[]
-* xref:scripts/cert/verify-self-signed-cert.adoc[]
-* xref:scripts/cert/create-ca-based-cert.adoc[]
+* xref:scripts/cert/create-ca.adoc[]
+* xref:scripts/cert/copy-ca-root-cert.adoc[]
+* xref:scripts/cert/delete-ca.adoc[]
+* xref:scripts/cert/create-self-signed-cert.adoc[]
 * xref:scripts/git/git-cleanup.adoc[]
 
 == More Information
 
+* https://easy-rsa.readthedocs.io/en/latest/[Easy-RSA 3]
+* https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox[Setting Up Certificate Authorities (CAs) in Firefox]
 * https://support.apple.com/en-us/103214[Apple's Certificate Transparency policy]

@@ -14,6 +14,7 @@
 *** Certificate Authority Based
 **** xref:scripts/cert/copy-ca-root-cert.adoc[]
 **** xref:scripts/cert/create-ca.adoc[]
+**** xref:scripts/cert/create-ca-based-cert.adoc[]
 **** xref:scripts/cert/delete-ca.adoc[]
 ** xref:scripts/general/general.adoc[]
 *** xref:scripts/general/copy-shell-scripts.adoc[]
