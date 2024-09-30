@@ -67,5 +67,6 @@ $ scripts/cert/delete_ca_based_cert.sh ~/.local/secrets/certs/https.internal htt
 
 * xref:scripts/cert/create-ca-based-cert.adoc[]
 * xref:scripts/cert/copy-ca-based-cert.adoc[]
+* xref:scripts/cert/renew-ca-based-cert.adoc[]
 * xref:scripts/cert/create-ca.adoc[]
 * xref:scripts/cert/delete-ca.adoc[]

@@ -1,0 +1,74 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= renew_ca_based_cert
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/renew_ca_based_cert.sh
+
+{script_url}[This script^] will renew the certificate authority based certificate `cert.pem` in the given directory (`$PWD` if not given).
+
+The optional second positive integer parameter (range: [1, 24855]) specifies the number of days the generated certificate is valid for; the default is 30 days.
+
+The optional third parameter is the common name (`localhost` if not given) of the certificate to be added.
+
+[NOTE]
+====
+Chrome, Docker, Firefox, and Safari need no further configuration.
+====
+
+[IMPORTANT]
+====
+Ensure that the xref:scripts/cert/create-ca.adoc[certificate authority has been created] and a xref:scripts/cert/create-ca-based-cert.adoc[private key and certificate have been created] before executing this script.
+====
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "cert:renew": "scripts/renew_ca_based_cert.sh certs"
+  }
+}
+----
+
+[,console]
+----
+$ npm run cert:renew
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/cert/renew_ca_based_cert.sh
+----
+
+[,shell]
+----
+$ scripts/cert/renew_ca_based_cert.sh dist/etc/nginx
+
+$ scripts/cert/renew_ca_based_cert.sh . 30
+$ openssl x509 -enddate -noout -in ~/.local/secrets/certs/https.internal/cert.pem
+notAfter=Sep 16 11:54:50 2024 GMT
+
+$ scripts/cert/renew_ca_based_cert.sh ~/.local/secrets/certs/https.internal 10 https.internal
+$ date -Idate
+2024-08-17
+$ openssl x509 -startdate -noout -in ~/.local/secrets/certs/https.internal/cert.pem
+notBefore=Aug 17 11:55:22 2024 GMT
+$ openssl x509 -enddate -noout -in ~/.local/secrets/certs/https.internal/cert.pem
+notAfter=Aug 27 11:55:22 2024 GMT
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#easyrsa[EasyRSA]
+
+== Related Scripts
+
+* xref:scripts/cert/create-ca-based-cert.adoc[]
+* xref:scripts/cert/delete-ca-based-cert.adoc[]
