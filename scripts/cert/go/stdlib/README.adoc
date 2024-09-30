@@ -1,0 +1,19 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Go TLS Example
+Sebastian Davids <sdavids@gmx.de>
+// Metadata:
+:description: Go TLS Example
+// Settings:
+:source-highlighter: rouge
+:rouge-style: github
+
+== With standalone certificates
+
+[source,shell]
+----
+$ ../../create_self_signed_cert.sh
+$ go run server.go
+----
+
+=> https://localhost:3000

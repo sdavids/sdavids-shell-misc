@@ -1,0 +1,19 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Spring Boot TLS Example
+Sebastian Davids <sdavids@gmx.de>
+// Metadata:
+:description: Spring Boot TLS Example
+// Settings:
+:source-highlighter: rouge
+:rouge-style: github
+
+== With standalone certificates
+
+[source,shell]
+----
+$ ../../create_self_signed_cert.sh
+$ ./gradlew bootRun
+----
+
+=> https://localhost:3000
