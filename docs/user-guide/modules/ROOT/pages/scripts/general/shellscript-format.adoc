@@ -1,0 +1,27 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= shellscript_format
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/general/shellscript_format.sh
+
+{script_url}[This script^] will format the shell script files in the given directory (`$PWD` if not given) and its subdirectories according to https://google.github.io/styleguide/shellguide.html[Google Shell Style].
+
+== Usage
+
+[,console]
+----
+$ scripts/general/shellscript_format.sh
+----
+
+[,shell]
+----
+$ scripts/general/shellscript_format.sh /tmp/example
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#shfmt[shfmt]
+
+== More Information
+
+* https://google.github.io/styleguide/shellguide.html[Google Shell Style Guide]
+* https://github.com/mvdan/sh[shfmt]
