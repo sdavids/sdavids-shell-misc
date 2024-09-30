@@ -1,0 +1,57 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= create_build_info_ts
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/create_build_info_ts.sh
+
+{script_url}[This script^] will create a file with the given name containing build information accessible by https://www.typescriptlang.org[TypeScript] code.
+
+[NOTE]
+====
+The value of `build.id` is depending on where this script is run:
+
+locally:: the current timestamp
+AppVeyor:: the value of the `APPVEYOR_BUILD_ID` https://www.appveyor.com/docs/environment-variables/[environment variable]
+Bitbucket:: the value of the `BITBUCKET_BUILD_NUMBER` https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/#Default-variables[environment variable]
+CircleCI:: the value of the `CIRCLE_WORKFLOW_ID` https://circleci.com/docs/variables/#built-in-environment-variables[environment variable]
+GitHub:: the value of the `GITHUB_RUN_ID` https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables[environment variable]
+GitLab:: the value of the `CI_PIPELINE_ID` https://docs.gitlab.com/ee/ci/variables/predefined_variables.html[environment variable]
+Jenkins:: the value of the `BUILD_ID` https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables[environment variable]
+TeamCity:: the value of the `BUILD_NUMBER` https://www.jetbrains.com/help/teamcity/predefined-build-parameters.html#1c215e8e[environment variable]
+Travis:: the value of the `TRAVIS_BUILD_ID` https://docs.travis-ci.com/user/environment-variables/#default-environment-variables[environment variable]
+====
+
+[NOTE]
+====
+The value of `build.time` is either the value of the `SOURCE_DATE_EPOCH` https://reproducible-builds.org/specs/source-date-epoch/[environment variable] or the current timestamp.
+====
+
+== Usage
+
+[,shell]
+----
+$ scripts/web/create_build_info_ts.sh src/build-info.ts
+----
+
+⇓
+
+.src/build-info.ts
+[,typescript]
+----
+export type BuildInfo = {
+// ...
+};
+
+export const buildInfo: BuildInfo = {
+  build: {
+    id: '1710116078',
+    time: '2024-03-11T00:14:38Z',
+  },
+  git: {
+    branch: 'main',
+    commit: {
+      id: '95189bb08fa918576f10339eb15303d152ade2aa',
+      time: '2024-03-10T23:52:54Z',
+    },
+  },
+};
+----
