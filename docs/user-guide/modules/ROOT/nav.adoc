@@ -35,3 +35,4 @@
 *** xref:functions/git/ls-extensions-git.adoc[]
 ** xref:functions/gh/gh.adoc[]
 *** xref:functions/gh/repo-new-gh.adoc[]
+*** xref:functions/gh/repo-new-local.adoc[]
