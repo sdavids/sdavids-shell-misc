@@ -71,4 +71,5 @@ $ SOURCE_DATE_EPOCH=0 scripts/docker/docker_build.sh -d scripts/docker/Dockerfil
 == Related Scripts
 
 * xref:scripts/docker/docker-start.adoc[]
+* xref:scripts/docker/docker-remove.adoc[]
 * xref:scripts/docker/docker-cleanup.adoc[]

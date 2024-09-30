@@ -24,6 +24,7 @@ $ scripts/docker/docker_stop.sh
 == Related Scripts
 
 * xref:scripts/docker/docker-start.adoc[]
+* xref:scripts/docker/docker-remove.adoc[]
 
 == More Information
 

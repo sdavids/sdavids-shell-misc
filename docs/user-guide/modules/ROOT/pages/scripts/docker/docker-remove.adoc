@@ -1,0 +1,36 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= docker_remove
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_remove.sh
+
+{script_url}[This script^] will remove the `$+{container_name}+` container and any unnamed volumes associated with it, i.e. the project's container and volumes.
+
+The container will be stopped before removal.
+
+[NOTE]
+====
+See the general Docker script xref:scripts/docker/docker.adoc#usage[usage notes].
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/docker/docker_remove.sh
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#docker[Docker]
+
+== Related Scripts
+
+* xref:scripts/docker/docker-start.adoc[]
+* xref:scripts/docker/docker-stop.adoc[]
+* xref:scripts/docker/docker-cleanup.adoc[]
+
+
+== More Information
+
+* https://docs.docker.com/reference/cli/docker/container/stop/[docker container stop]
+* https://docs.docker.com/reference/cli/docker/container/rm/[docker container remove]
