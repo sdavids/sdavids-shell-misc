@@ -1,0 +1,30 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= git_delete_branches
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_delete_branches.sh
+
+{script_url}[This script^] will delete all local and remote branches from the Git repository in the given directory (`$PWD` if not given).
+
+The optional second parameter is the name of the branch to keep (defaults to the value of the `init.defaultBranch` Git configuration parameter or `main` if not set).
+
+[WARNING]
+====
+The branches will be irreversibly deleted--be careful, you have been warned!
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/git/git_delete_branches.sh
+----
+
+[,shell]
+----
+$ scripts/git/git_delete_branches.sh /tmp/example
+$ scripts/git/git_delete_branches.sh /tmp/example master
+----
+
+== More Information
+
+* https://git-scm.com/docs/git-init#Documentation/git-init.txt-code\--initial-branchcodeemltbranch-namegtem[init.defaultBranch]
