@@ -9,3 +9,4 @@ xref:scripts/web/compress-gzip.adoc[]:: compress a file with gzip
 xref:scripts/web/compress-zstd.adoc[]:: compress a file with zstd
 xref:scripts/web/minify-css.adoc[]:: minify CSS files
 xref:scripts/web/minify-html.adoc[]:: minify HTML files
+xref:scripts/web/minify-robots.adoc[]:: minify the robots.txt file
