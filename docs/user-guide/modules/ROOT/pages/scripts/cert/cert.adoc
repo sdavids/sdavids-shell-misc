@@ -27,3 +27,5 @@ Certificate authority based certificates are useful if you want to use mutual TL
 ====
 Standalone certificates are simpler to use than certificate authority based certificates.
 ====
+
+xref:scripts/cert/create-ca.adoc[]:: create a certificate authority and its root certificate
