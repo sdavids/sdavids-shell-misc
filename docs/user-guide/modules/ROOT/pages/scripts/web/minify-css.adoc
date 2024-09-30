@@ -1,0 +1,37 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= minify_css
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/minify_css.sh
+
+{script_url}[This script^] will minify and transpile the `*.css` files in the given directory (`$PWD` if not given) and its subdirectories.
+
+This script uses https://github.com/browserslist/browserslist[browserslist] to determine the transpilation targets.
+
+[TIP]
+====
+If you do not want the https://browserslist.dev/?q=ZGVmYXVsdHM%3D[defaults] you have https://lightningcss.dev/transpilation.html#cli[several options] to change them.
+
+For example via the following file:
+
+..browserslistrc
+[,text]
+----
+last 2 versions
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/web/minify_css.sh
+----
+
+[,shell]
+----
+$ scripts/web/minify_css.sh dist
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#node-version-manager[npx]
