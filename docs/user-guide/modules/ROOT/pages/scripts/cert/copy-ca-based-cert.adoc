@@ -1,0 +1,82 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= copy_ca_based_cert
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/copy_ca_based_cert.sh
+
+{script_url}[This script^] will copy the private key `key.pem` and the certificate `cert.pem` from the certificate authority to the given directory (`$PWD` if not given).
+
+The given directory will be created if it does not exit yet.
+
+The optional second parameter is the common name (`localhost` if not given) of the certificate to be copied.
+
+[IMPORTANT]
+====
+Ensure that the xref:scripts/cert/create-ca.adoc[certificate authority has been created] and a xref:scripts/cert/create-ca-based-cert.adoc[private key and certificate have been created] before executing this script.
+====
+
+[WARNING]
+====
+Both `key.pem` and `cert.pem` https://owasp.org/www-project-devsecops-guideline/latest/01a-Secrets-Management[should not be checked into version control]!
+
+If the given directory is inside a Git working tree the script will offer to modify the https://git-scm.com/docs/gitignore[.gitignore] file:
+
+[,shell]
+----
+WARNING: key.pem and/or cert.pem is not ignored in '/Users/example/tmp/.gitignore'
+
+Do you want me to modify your .gitignore file (Y/N)?
+----
+
+Related Script: xref:scripts/git/git-cleanup.adoc#git-cleanup-untracked-exclusions[git-cleanup]
+====
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "cert:copy": "scripts/copy_ca_based_cert.sh certs"
+  }
+}
+----
+
+[,console]
+----
+$ npm run cert:copy
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/cert/copy_ca_based_cert.sh
+----
+
+[,shell]
+----
+$ scripts/cert/copy_ca_based_cert.sh ~/.local/secrets/certs/localhost
+
+$ scripts/cert/copy_ca_based_cert.sh ~/.local/secrets/certs/https.internal https.internal
+$ stat -f '%A %N' ~/.local/secrets/certs/https.internal/*.pem
+600 /Users/example/.local/secrets/certs/https.internal/cert.pem
+600 /Users/example/.local/secrets/certs/https.internal/key.pem
+$ openssl x509 -ext subjectAltName -noout -in ~/.local/secrets/certs/https.internal/cert.pem
+X509v3 Subject Alternative Name:
+    DNS:https.internal
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#easyrsa[EasyRSA]
+
+== Related Scripts
+
+* xref:scripts/cert/create-ca-based-cert.adoc[]
+* xref:scripts/cert/create-ca.adoc[]
+* xref:scripts/cert/delete-ca.adoc[]
