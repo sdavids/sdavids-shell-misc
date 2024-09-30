@@ -1,0 +1,96 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= gh_delete_workflow_runs
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/gh/gh_delete_workflow_runs.sh
+
+{script_url}[This script^] will the delete the https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-workflow-runs[GitHub Action workflow runs] of a given repository.
+
+The following parameters are required:
+
+`k` :: the number of workflow runs to keep (range: [0, n]); older workflow runs will be deleted first
++
+[NOTE]
+====
+`-k 0`:: will delete all workflow runs.
+
+`-k n`:: if `n` is greater than the number of existing workflow runs then no runs will be deleted
+====
+
+`r` :: the name of the repository (without the `.git` extension) for which the workflow runs should be deleted; the name is not case-sensitive
+
+The following environment variable is required:
+
+`GH_DELETE_WORKFLOW_RUNS_TOKEN_FILE` :: the path to the file containing the https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28#authenticating-with-a-personal-access-token[GitHub access token] having the https://docs.github.com/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens?apiVersion=2022-11-28#repository-permissions-for-actions[`actions:rw` permission]
++
+[NOTE]
+====
+Information on how to create an GitHub access token can be found at: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token[GitHub - Creating a fine-grained personal access token]
+====
+
+[NOTE]
+====
+The GitHub API https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#list-workflow-runs-for-a-repository[only returns 1000 results]—so you might have to execute this script several times if you have more than 1000 workflow runs.
+====
+
+[IMPORTANT]
+====
+This script does not handle concurrent changes to the workflow runs, i.e. this script might fail if someone else adds or deletes workflow runs while this script is running.
+====
+
+[WARNING]
+====
+The workflow runs will be irreversibly deleted by this script--be careful, you have been warned!
+====
+
+== Usage
+
+[,shell]
+----
+$ GH_DELETE_WORKFLOW_RUNS_TOKEN_FILE=~/.local/secrets/gh/gh-actions-rw scripts/gh/gh_delete_workflow_runs.sh -r sdavids-shell-misc -k 0
+
+WARNING: The following 2 workflow run(s) will be deleted:
+
+[
+  {
+    "display_title": "feat: 2",
+    "created_at": "2024-08-06T13:24:56Z",
+    "run_started_at": "2024-08-06T13:24:56Z",
+    "html_url": "https://github.com/sdavids/sdavids-shell-misc/actions/runs/90267441015"
+  },
+  {
+    "display_title": "feat: 1",
+    "created_at": "2024-08-06T11:52:16Z",
+    "run_started_at": "2024-08-06T11:52:16Z",
+    "html_url": "https://github.com/sdavids/sdavids-shell-misc/actions/runs/90265969659"
+  }
+]
+
+Do you really want to irreversibly delete the 2 workflow run(s) (Y/N)? n
+
+$ GH_DELETE_WORKFLOW_RUNS_TOKEN_FILE=~/.local/secrets/gh/gh-actions-rw scripts/gh/gh_delete_workflow_runs.sh -r sdavids-shell-misc -k 1
+
+WARNING: The following 1 workflow run(s) will be deleted:
+
+[
+  {
+    "display_title": "feat: 1",
+    "created_at": "2024-08-06T11:52:16Z",
+    "run_started_at": "2024-08-06T11:52:16Z",
+    "html_url": "https://github.com/sdavids/sdavids-shell-misc/actions/runs/90265969659"
+  }
+]
+
+Do you really want to irreversibly delete the 1 workflow run(s) (Y/N)? y
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#jq[jq]
+
+== More Information
+
+* https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#list-workflow-runs-for-a-repository[GitHub REST API - List workflow runs for a repository]
+* https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#delete-a-workflow-run[GitHub REST API - Delete a workflow run]
+* https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28#authenticating-with-a-personal-access-token[GitHub - Authenticating with a personal access token]
+* https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token[GitHub - Creating a fine-grained personal access token]
+* https://docs.github.com/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens?apiVersion=2022-11-28#repository-permissions-for-actions[GitHub - Repository permissions for "Actions"]

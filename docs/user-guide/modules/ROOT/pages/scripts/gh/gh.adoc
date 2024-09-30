@@ -3,3 +3,5 @@
 = GitHub
 
 This section contains scripts related to https://docs.github.com/en/rest?apiVersion=2022-11-28[GitHub] and https://cli.github.com[GitHub CLI]:
+
+xref:scripts/gh/gh-delete-workflow-runs.adoc[]:: delete the GitHub Action workflow runs of a given repository
