@@ -10,6 +10,7 @@ xref:scripts/web/compress-zstd.adoc[]:: compress a file with zstd
 xref:scripts/web/minify-css.adoc[]:: minify CSS files
 xref:scripts/web/minify-html.adoc[]:: minify HTML files
 xref:scripts/web/minify-json.adoc[]:: minify JSON files
+xref:scripts/web/minify-json-tags.adoc[]:: minify JSON-structured script tags
 xref:scripts/web/minify-robots.adoc[]:: minify the robots.txt file
 xref:scripts/web/minify-svg.adoc[]:: minify SVG files
 xref:scripts/web/minify-traffic-advice.adoc[]:: minify the private prefetch proxy traffic control file
