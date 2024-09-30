@@ -4,4 +4,6 @@
 
 This section contains functions related to https://docs.github.com/en/rest?apiVersion=2022-11-28[GitHub] and https://cli.github.com[GitHub CLI]:
 
+xref:functions/gh/repo-new-gh.adoc[]:: create and checkout a private GitHub repository
+
 Related: xref:scripts/gh/gh.adoc[GitHub Scripts]
