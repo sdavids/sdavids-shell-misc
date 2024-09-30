@@ -1,15 +1,16 @@
 // SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
-= jar_java_versions
-:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/java/jar_java_versions.sh
+= jar_min_java_version
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/java/jar_min_java_version.sh
 
-{script_url}[This script^] will display the Java and https://javaalmanac.io/bytecode/versions/[class file versions] used by the classes within the given JAR file.
+{script_url}[This script^] will display the minimum Java runtime version necessary for the given JAR file.
 
-If you use the optional second positive integer parameter (range: [5, n)) only non-matching versions will be displayed and if there is at least one mismatch the exit code will be `100` instead of `0`.
+The minimum Java runtime version is the determined by evaluating the classes contained in the JAR file:
+The class with the highest Java (class file) version determines version displayed by this script.
 
-[TIP]
+[WARNING]
 ====
-This script is useful to verify that you have not inadvertently forgotten the https://docs.oracle.com/en/java/javase/21/docs/specs/man/javac.html#option-release[release] option while building your classes if you want to target a specific Java version.
+For a https://docs.oracle.com/en/java/javase/21/docs/specs/jar/jar.html#multi-release-jar-files[multi-release JAR] this script will not necessarily report the correct version.
 ====
 
 == Usage
@@ -17,30 +18,22 @@ This script is useful to verify that you have not inadvertently forgotten the ht
 [,shell]
 ----
 $ curl -L -O -s https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.11.0/junit-jupiter-api-5.11.0.jar
-$ jar_is_multi_release junit-jupiter-api-5.11.0.jar
-0
 $ scripts/java/jar_java_versions.sh junit-jupiter-api-5.11.0.jar
 Java Version:  8; Class File Version: 52
-$ scripts/java/jar_java_versions.sh junit-jupiter-api-5.11.0.jar 8
-$ echo $?
+$ jar_is_multi_release junit-jupiter-api-5.11.0.jar
 0
-$ scripts/java/jar_java_versions.sh junit-jupiter-api-5.11.0.jar 11
-Java Version:  8; Class File Version: 52
-$ echo $?
-100
+$ scripts/java/jar_min_java_version.sh junit-jupiter-api-5.11.0.jar
+8
 
 $ curl -L -O -s https://github.com/adoble/adr-j/releases/download/v3.3.1/adr-j.jar
-$ jar_is_multi_release adr-j.jar
-0
 $ scripts/java/jar_java_versions.sh adr-j.jar
 Java Version:  5; Class File Version: 49
 Java Version:  8; Class File Version: 52
 Java Version: 21; Class File Version: 65
-$ echo $?
+$ jar_is_multi_release adr-j.jar
 0
-$ scripts/java/jar_java_versions.sh adr-j.jar 5
-Java Version:  8; Class File Version: 52
-Java Version: 21; Class File Version: 65
+$ scripts/java/jar_min_java_version.sh adr-j.jar
+21
 $ echo $?
 100
 $ scripts/java/jar_java_versions.sh adr-j.jar 8
@@ -61,15 +54,16 @@ $ echo $?
 100
 
 $ curl -L -O -s https://repo1.maven.org/maven2/net/bytebuddy/byte-buddy/1.14.19/byte-buddy-1.14.19.jar
+$ scripts/java/jar_java_versions.sh byte-buddy-1.14.19.jar
+Java Version:  5; Class File Version: 49
+Java Version:  6; Class File Version: 50
 $ jar_is_multi_release byte-buddy-1.14.19.jar
 1
 $ scripts/java/jar_java_versions.sh byte-buddy-1.14.19.jar
 Java Version:  5; Class File Version: 49
 Java Version:  6; Class File Version: 50
-$ scripts/java/jar_java_versions.sh byte-buddy-1.14.19.jar 5
-Java Version:  6; Class File Version: 50
-$ echo $?
-100
+$ scripts/java/jar_min_java_version.sh byte-buddy-1.14.19.jar
+6
 ----
 
 == Prerequisites
@@ -82,4 +76,4 @@ $ echo $?
 
 == Related Scripts
 
-* xref:scripts/java/jar-min-java-version.adoc[]
+* xref:scripts/java/jar-java-versions.adoc[]
