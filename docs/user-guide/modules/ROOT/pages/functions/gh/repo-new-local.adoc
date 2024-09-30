@@ -74,6 +74,7 @@ $ repo_new_local my-new-local-repo
 
 == Related Functions
 
+* xref:functions/gh/repo-publish-to-gh.adoc[]
 * xref:functions/gh/repo-new-gh.adoc[]
 
 == More Information

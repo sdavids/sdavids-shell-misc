@@ -1,0 +1,60 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= repo_publish_to_gh
+:function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/repo_publish_to_gh
+
+{function_url}[This function^] will publish the existing local Git repository in the given directory (`$PWD` if not given) to GitHub as a private repository.
+
+The optional second parameter is the remote name for the repository (defaults to the directory name if not given).
+
+[IMPORTANT]
+====
+Only the https://git-scm.com/docs/git-config#Documentation/git-config.txt-codeinitdefaultBranchcode[default branch] (default: `main`) will be published.
+====
+
+[NOTE]
+====
+Sometimes GitHub is slow or you have bad latency.
+In that case you need to increase the time used to wait between GitHub interactions:
+
+.zfunc/repo_publish_to_gh
+[,shell]
+----
+wait_for_github=10
+----
+====
+
+== Usage
+
+[,shell]
+----
+$ pwd
+/tmp/first
+$ repo_publish_to_gh
+✓ Created repository sdavids/first on GitHub
+  https://github.com/sdavids/first
+...
+
+$ repo_publish_to_gh /tmp/second
+✓ Created repository sdavids/second on GitHub
+  https://github.com/sdavids/second
+...
+
+$ repo_publish_to_gh /tmp/third different
+✓ Created repository sdavids/different on GitHub
+  https://github.com/sdavids/different
+...
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#gh-cli[GitHub CLI]
+
+== Related Functions
+
+* xref:functions/gh/repo-new-gh.adoc[]
+
+== More Information
+
+* https://cli.github.com/manual/gh_repo_create[gh repo create]
+* https://cli.github.com/manual/gh_repo_edit[gh repo edit]

@@ -36,3 +36,4 @@
 ** xref:functions/gh/gh.adoc[]
 *** xref:functions/gh/repo-new-gh.adoc[]
 *** xref:functions/gh/repo-new-local.adoc[]
+*** xref:functions/gh/repo-publish-to-gh.adoc[]
