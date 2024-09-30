@@ -1,0 +1,80 @@
+# vim:ft=zsh
+
+# shellcheck shell=sh
+
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# this function needs to be placed in a $FPATH directory
+#
+# add the following to your $ZDOTDIR/.zshrc:
+#
+# autoload -Uz 'repo_new_local'
+#
+
+# gh needs to be in $PATH:
+#
+# https://github.com/cli/cli#installation
+#
+
+# this function needs the delete_repo permission:
+#
+#   gh auth refresh -h github.com -s delete_repo
+
+repo_new_local() {
+  # GitHub is slow; increase if you have bad latency or get 'failed to run git' errors
+  wait_for_github=10
+
+  if [ -z "$*" ]; then
+    echo "Usage: $0 REPO_NAME"
+  else
+    repo_name="$1"
+    template='sdavids/sdavids-project-template'
+    gh_user_id='sdavids'
+    gh_repo_name="tmp_${repo_name}"
+
+    # https://cli.github.com/manual/gh_repo_create
+    gh repo create "${gh_repo_name}" \
+      --template="${template}" \
+      --private \
+      --include-all-branches
+
+    unset template
+
+    sleep "${wait_for_github}"
+
+    git clone --quiet --mirror "git@github.com:${gh_user_id}/${gh_repo_name}.git" "${gh_repo_name}/.git"
+
+    unset gh_user_id
+
+    (
+      cd "${gh_repo_name}" || return
+
+      git config --bool core.bare false
+
+      git reset --hard HEAD >/dev/null
+
+      gh repo delete --yes
+
+      # GitHub is slow so let's wait a bit
+      sleep 5
+
+      git remote remove origin 1> /dev/null
+    )
+
+    mv "${gh_repo_name}" "${repo_name}"
+
+    cd "${repo_name}" || return
+
+    unset repo_name gh_repo_name
+
+    # https://git-scm.com/docs/git-commit
+    git commit \
+      --quiet \
+      --gpg-sign \
+      --signoff \
+      --amend \
+      --reset-author \
+      --message 'chore: initial'
+  fi
+}
