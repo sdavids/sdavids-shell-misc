@@ -18,6 +18,7 @@
 ** xref:scripts/git/git.adoc[]
 *** xref:scripts/git/git-cleanup.adoc[]
 *** xref:scripts/git/git-delete-branches.adoc[]
+*** xref:scripts/git/git-get-hash.adoc[]
 *** xref:scripts/git/git-is-working-tree-clean.adoc[]
 * xref:functions/functions.adoc[]
 ** xref:functions/general/general.adoc[]
