@@ -1,0 +1,5 @@
+// keep this blank line for the ID to work
+
+//
+[id=contact-{contact_id}]
+{name} <{email}>
