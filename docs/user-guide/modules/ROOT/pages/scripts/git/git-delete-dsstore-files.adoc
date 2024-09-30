@@ -1,0 +1,68 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= git_delete_dsstore_files
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_delete_dsstore_files.sh
+
+{script_url}[This script^] will delete all `.DS_Store` files from the Git repository in the given directory (`$PWD` if not given).
+
+[IMPORTANT]
+====
+This script will remove all `.DS_Store` files from the working tree, from the index, and from the file system.
+
+You need to commit the changes afterward (if any `.DS_Store` files have previously been committed to the repository).
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/git/git_delete_dsstore_files.sh
+----
+
+[,shell]
+----
+$ tree --noreport -a -I .git /tmp/example
+/tmp/example
+├── .DS_Store
+├── a
+│   └── .DS_Store
+├── b
+│   └── .DS_Store
+└── c
+    └── .DS_Store
+$ cd /tmp/example
+$ git ls-tree --full-tree -r --name-only HEAD
+.DS_Store
+a/.DS_Store
+$ git diff --staged --name-only
+b/.DS_Store
+$ cd -
+$ scripts/git/git_delete_dsstore_files.sh /tmp/example
+
+The repository at '/private/tmp/example' does not ignore '.DS_Store' files.
+
+You should add '.DS_Store' to your global exclusion file:
+
+  git config --global core.excludesfile
+
+And to your project's exclusion file:
+
+  /private/tmp/example/.gitignore
+
+---
+
+D  .DS_Store
+D  a/.DS_Store
+$ git commit -s -S -m 'chore: removed .DS_Store files'
+$ tree --noreport -a -I .git /tmp/example
+/tmp/example
+├── a
+├── b
+└── c
+----
+
+== More Information
+
+* https://en.wikipedia.org/wiki/.DS_Store[.DS_Store]
+* https://git-scm.com/docs/gitignore[.gitignore]
+* https://git-scm.com/docs/git-rm[git rm]
