@@ -35,3 +35,4 @@ xref:scripts/cert/create-ca-based-cert.adoc[]:: create a private key and certifi
 xref:scripts/cert/delete-ca.adoc[]:: delete the certificate authority
 xref:scripts/cert/delete-ca-based-cert.adoc[]:: delete the certificate authority based private key and certificate
 xref:scripts/cert/renew-ca-based-cert.adoc[]:: renew the certificate authority based certificate
+xref:scripts/cert/verify-ca-based-cert.adoc[]:: verify the certificate authority based certificate
