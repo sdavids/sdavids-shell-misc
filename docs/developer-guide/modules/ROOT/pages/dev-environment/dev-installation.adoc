@@ -21,6 +21,22 @@ $ sudo apt-get install brotli
 $ brew install brotli
 ----
 
+== gifsicle
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install gifsicle
+----
+
+=== Mac
+
+[,console]
+----
+$ brew install gifsicle
+----
+
 [#gh-cli]
 == GitHub CLI
 
