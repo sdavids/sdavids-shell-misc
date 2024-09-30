@@ -1,0 +1,18 @@
+# vim:ft=zsh
+
+# shellcheck shell=bash
+
+# SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+# SPDX-License-Identifier: Apache-2.0
+
+# this function needs to be placed in a $FPATH directory
+#
+# add the following to your $ZDOTDIR/.zshrc:
+#
+# autoload -Uz "color_stderr"
+#
+
+color_stderr() {
+  set -o pipefail
+  "$@" 2> >(sed $'s,.*,\e[31m&\e[m,' >&2)
+}
