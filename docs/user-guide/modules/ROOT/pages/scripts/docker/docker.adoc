@@ -8,6 +8,7 @@ This section contains scripts related to https://docs.docker.com[Docker]:
 xref:scripts/docker/docker-build.adoc[]:: build the image
 xref:scripts/docker/docker-cleanup.adoc[]:: remove all project-related containers, images, networks, and volumes
 xref:scripts/docker/docker-start.adoc[]:: start the image
+xref:scripts/docker/docker-stop.adoc[]:: stop the container
 
 == Usage
 
@@ -65,6 +66,7 @@ $ scripts/docker/docker_start.sh
 
 [,shell]
 ----
+$ scripts/docker/docker_stop.sh
 $ scripts/docker/docker_cleanup.sh
 ----
 ====

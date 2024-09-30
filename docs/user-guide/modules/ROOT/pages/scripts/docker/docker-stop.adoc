@@ -1,0 +1,30 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= docker_stop
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_stop.sh
+
+{script_url}[This script^] will stop the `$+{container_name}+` container, i.e. the project's container.
+
+[NOTE]
+====
+See the general Docker script xref:scripts/docker/docker.adoc#usage[usage notes].
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/docker/docker_stop.sh
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#docker[Docker]
+
+== Related Scripts
+
+* xref:scripts/docker/docker-start.adoc[]
+
+== More Information
+
+* https://docs.docker.com/reference/cli/docker/container/stop/[docker container stop]
