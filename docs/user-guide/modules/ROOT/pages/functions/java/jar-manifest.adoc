@@ -1,0 +1,46 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= jar_manifest
+:function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/jar_manifest
+
+{function_url}[This function^] will display the https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html[manifest] of the given https://docs.oracle.com/en/java/javase/21/docs/specs/man/jar.html[JAR] file.
+
+== Usage
+
+[,shell]
+----
+$ jar_manifest apiguardian-api-1.1.2.jar
+Manifest-Version: 1.0
+Bnd-LastModified: 1624798392241
+Build-Date: 2021-06-27
+Build-Revision: aa952a1b9d5b4e9cc0af853e2c140c2455b397be
+Build-Time: 14:53:10.089+0200
+Built-By: @API Guardian Team
+Bundle-Description: @API Guardian
+Bundle-DocURL: https://github.com/apiguardian-team/apiguardian
+Bundle-ManifestVersion: 2
+Bundle-Name: apiguardian-api
+Bundle-SymbolicName: org.apiguardian.api
+Bundle-Vendor: apiguardian.org
+Bundle-Version: 1.1.2
+Created-By: 11.0.11 (AdoptOpenJDK)
+Export-Package: org.apiguardian.api;version="1.1.2"
+Implementation-Title: apiguardian-api
+Implementation-Vendor: apiguardian.org
+Implementation-Version: 1.1.2
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.6))"
+Specification-Title: apiguardian-api
+Specification-Vendor: apiguardian.org
+Specification-Version: 1.1.2
+Tool: Bnd-5.3.0.202102221516
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#unzip[unzip]
+
+== More Information
+
+* https://docs.oracle.com/en/java/javase/21/docs/specs/man/jar.html[the jar command]
+* https://docs.oracle.com/javase/tutorial/deployment/jar/basicsindex.html[The Java™ Tutorials - Using JAR Files: The Basics]
+* https://docs.oracle.com/javase/tutorial/deployment/jar/defman.html[The Java™ Tutorials - Understanding the Default Manifest]

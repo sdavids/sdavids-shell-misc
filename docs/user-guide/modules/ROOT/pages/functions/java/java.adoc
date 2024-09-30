@@ -3,3 +3,5 @@
 = Java
 
 This section contains functions related to https://dev.java[Java]:
+
+xref:functions/java/jar-manifest.adoc[]:: display the manifest of a JAR
