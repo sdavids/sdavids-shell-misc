@@ -1,0 +1,71 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= delete_ca_based_cert
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/delete_ca_based_cert.sh
+
+{script_url}[This script^] will remove the private key and the certificate from the certificate authority; and delete the key `key.pem` and the certificate `cert.pem` from the given directory (`$PWD` if not given).
+
+If the given directory is not `$PWD` and is empty after the deletion it will be deleted as well.
+
+The optional second parameter is the common name (`localhost` if not given) of the certificate to be removed.
+
+[NOTE]
+====
+Chrome, Docker, Firefox, and Safari need no further configuration.
+====
+
+[IMPORTANT]
+====
+Ensure that the xref:scripts/cert/create-ca.adoc[certificate authority has been created] and a xref:scripts/cert/create-ca-based-cert.adoc[private key and certificate have been created] before executing this script.
+====
+
+[IMPORTANT]
+====
+Additional xref:scripts/cert/copy-ca-based-cert.adoc[copies] will not be deleted by this script, i.e. only the private key and certificate in the given directory and the CA will be removed.
+====
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "cert:delete": "scripts/delete_ca_based_cert.sh certs"
+  }
+}
+----
+
+[,console]
+----
+$ npm run cert:delete
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/cert/delete_ca_based_cert.sh
+----
+
+[,shell]
+----
+$ scripts/cert/delete_ca_based_cert.sh ~/.local/secrets/certs/localhost
+$ scripts/cert/delete_ca_based_cert.sh ~/.local/secrets/certs/https.internal https.internal
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#easyrsa[EasyRSA]
+* xref:developer-guide::dev-environment/dev-installation.adoc#openssl[OpenSSL]
+
+== Related Scripts
+
+* xref:scripts/cert/create-ca-based-cert.adoc[]
+* xref:scripts/cert/copy-ca-based-cert.adoc[]
+* xref:scripts/cert/create-ca.adoc[]
+* xref:scripts/cert/delete-ca.adoc[]
