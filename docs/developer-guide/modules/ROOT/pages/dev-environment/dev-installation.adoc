@@ -112,3 +112,19 @@ $ sudo apt-get install yamllint
 ----
 $ brew install yamllint
 ----
+
+== zstd
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install zstd
+----
+
+=== Mac
+
+[,console]
+----
+$ brew install zstd
+----
