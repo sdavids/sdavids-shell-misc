@@ -61,3 +61,4 @@
 *** xref:functions/gh/repo-new-local.adoc[]
 *** xref:functions/gh/repo-publish-to-gh.adoc[]
 ** xref:functions/java/java.adoc[]
+*** xref:functions/java/jar-manifest.adoc[]
