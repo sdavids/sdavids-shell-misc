@@ -34,6 +34,7 @@
 *** xref:scripts/web/minify-css.adoc[]
 *** xref:scripts/web/minify-html.adoc[]
 *** xref:scripts/web/minify-json.adoc[]
+*** xref:scripts/web/minify-json-tags.adoc[]
 *** xref:scripts/web/minify-robots.adoc[]
 *** xref:scripts/web/minify-svg.adoc[]
 *** xref:scripts/web/minify-traffic-advice.adoc[]
