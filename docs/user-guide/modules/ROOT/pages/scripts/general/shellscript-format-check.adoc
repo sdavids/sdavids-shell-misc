@@ -1,0 +1,47 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= shellscript_format_check
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/general/shellscript_format_check.sh
+
+{script_url}[This script^] will check if the formatting of the shell script files in the given directory (`$PWD` if not given) and its subdirectories adhere to the https://google.github.io/styleguide/shellguide.html[Google Shell Style].
+
+This script's exit code is `0` if all shell script files adhere to Google Shell Style or `1` if not.
+
+The following parameters are optional:
+
+`v` :: display the paths of the files whose formatting does not adhere to Google Shell Style
+
+== Usage
+
+[,console]
+----
+$ scripts/general/shellscript_format_check.sh
+----
+
+[,shell]
+----
+$ scripts/general/shellscript_format_check.sh /tmp/example
+$ echo $?
+1
+$ scripts/general/shellscript_format_check.sh -v /tmp/example
+/tmp/example/example.sh
+$ echo $?
+1
+$ scripts/general/shellscript_format.sh /tmp/example
+$ scripts/general/shellscript_format_check.sh /tmp/example
+$ echo $?
+0
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#shfmt[shfmt]
+
+== Related Scripts
+
+* xref:scripts/general/shellscript-format.adoc[]
+
+== More Information
+
+* https://google.github.io/styleguide/shellguide.html[Google Shell Style Guide]
+* https://github.com/mvdan/sh[shfmt]

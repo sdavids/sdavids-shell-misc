@@ -21,6 +21,10 @@ $ scripts/general/shellscript_format.sh /tmp/example
 
 * xref:developer-guide::dev-environment/dev-installation.adoc#shfmt[shfmt]
 
+== Related Scripts
+
+* xref:scripts/general/shellscript-format-check.adoc[]
+
 == More Information
 
 * https://google.github.io/styleguide/shellguide.html[Google Shell Style Guide]
