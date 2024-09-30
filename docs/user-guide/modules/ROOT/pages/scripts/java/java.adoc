@@ -5,6 +5,7 @@
 This section contains scripts related to https://dev.java[Java]:
 
 xref:scripts/java/java-format.adoc[]:: format the Java sources in the given directory
+xref:scripts/java/java-format-check.adoc[]:: check the formatting of Java sources in the given directory
 xref:scripts/java/jar-java-versions.adoc[]:: display the Java and class file versions contained in a JAR
 xref:scripts/java/jar-min-java-version.adoc[]:: display the minimum Java runtime version for a JAR
 

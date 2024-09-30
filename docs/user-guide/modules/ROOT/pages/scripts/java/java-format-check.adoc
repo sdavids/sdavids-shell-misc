@@ -1,13 +1,19 @@
 // SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
-= java_format
-:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/java/java_format.sh
+= java_format_check
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/java/java_format_check.sh
 
-{script_url}[This script^] will format the `*.java` files in the given directory (`$PWD` if not given) and its subdirectories according to the https://google.github.io/styleguide/javaguide.html[Google Java Style].
+{script_url}[This script^] will check if the formatting of the `*.java` files in the given directory (`$PWD` if not given) and its subdirectories adhere to the https://google.github.io/styleguide/javaguide.html[Google Java Style].
+
+This script's exit code is `0` if all `*.java` files adhere to Google Java Style or `1` if not.
+
+The following parameters are optional:
+
+`v` :: display the paths of the files whose formatting does not adhere to Google Java Style
 
 [NOTE]
 ====
-Both `module-info.java` and `package-info.java` are formatted as well.
+Both `module-info.java` and `package-info.java` are checked as well.
 ====
 
 [IMPORTANT]
@@ -68,12 +74,22 @@ If you are using a JetBrains IDE you might want to use the https://plugins.jetbr
 
 [,console]
 ----
-$ scripts/java/java_format.sh
+$ scripts/java/java_format_check.sh
 ----
 
 [,shell]
 ----
+$ scripts/java/java_format_check.sh /tmp/example/src/main/java
+$ echo $?
+1
+$ scripts/java/java_format_check.sh -v /tmp/example/src/main/java
+/tmp/example/src/main/java/Example.java
+$ echo $?
+1
 $ scripts/java/java_format.sh /tmp/example/src/main/java
+$ scripts/java/java_format_check.sh /tmp/example/src/main/java
+$ echo $?
+0
 ----
 
 == Prerequisites
@@ -83,7 +99,7 @@ $ scripts/java/java_format.sh /tmp/example/src/main/java
 
 == Related Scripts
 
-* xref:scripts/java/java-format-check.adoc[]
+* xref:scripts/java/java-format.adoc[]
 
 == More Information
 
