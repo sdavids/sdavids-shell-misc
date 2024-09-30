@@ -7,6 +7,7 @@
 * xref:scripts/scripts.adoc[]
 ** xref:scripts/general/general.adoc[]
 *** xref:scripts/general/copy-shell-scripts.adoc[]
+*** xref:scripts/general/create-timestamp-file.adoc[]
 *** xref:scripts/general/fix-permissions.adoc[]
 *** xref:scripts/general/hash-filename.adoc[]
 *** xref:scripts/general/shellscript-check.adoc[]
