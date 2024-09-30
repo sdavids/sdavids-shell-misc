@@ -4,4 +4,5 @@
 
 This section contains functions related to https://dev.java[Java]:
 
+xref:functions/java/jar-is-multi-release.adoc[]:: display whether a JAR is a multi-release JAR
 xref:functions/java/jar-manifest.adoc[]:: display the manifest of a JAR

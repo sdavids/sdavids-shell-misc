@@ -1,0 +1,38 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= jar_is_multi_release
+:function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/jar_is_multi_release
+
+{function_url}[This function^] will display whether the given JAR file is a https://docs.oracle.com/en/java/javase/21/docs/specs/jar/jar.html#multi-release-jar-files[multi-release JAR] file (`1`) or not (`0`).
+
+[NOTE]
+====
+The exit code of this function is the inverse of the displayed value.
+====
+
+== Usage
+
+[,shell]
+----
+$ curl -L -O -s https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.11.0/junit-jupiter-api-5.11.0.jar
+$ jar_is_multi_release junit-jupiter-api-5.11.0.jar
+0
+$ echo $?
+1
+
+$ curl -L -O -s https://repo1.maven.org/maven2/net/bytebuddy/byte-buddy/1.15.0/byte-buddy-1.15.0.jar
+$ jar_is_multi_release byte-buddy-1.15.0.jar
+1
+$ echo $?
+0
+$ jar_manifest byte-buddy-1.15.0.jar | grep Multi
+Multi-Release: true
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#unzip[unzip]
+
+== Related Functions
+
+* xref:functions/java/jar-manifest.adoc[]
