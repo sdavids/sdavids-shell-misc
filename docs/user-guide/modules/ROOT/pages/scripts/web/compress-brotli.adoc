@@ -1,0 +1,47 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= compress_brotli
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/compress_brotli.sh
+
+{script_url}[This script^] will compress the given file with https://github.com/google/brotli[brotli].
+
+[TIP]
+====
+Here is a fragment to be placed into your `.htaccess` or https://httpd.apache.org/docs/current/configuring.html[Apache HTTPD server configuration file]:
+
+[,text]
+----
+<IfModule mod_headers.c>
+  RewriteCond "%{HTTP:Accept-encoding}" "br"
+  RewriteCond "%{REQUEST_FILENAME}.br" -s
+  RewriteRule "^(.*)\.(css|html|js|mjs|svg)$" "/$1.$2.br" [QSA]
+
+  RewriteRule "\.css\.br$" "-" [T=text/css,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.html\.br$" "-" [T=text/html,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.js\.br$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.mjs\.br$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+  RewriteRule "\.svg\.br$" "-" [T=text/javascript,E=no-brotli:1,E=no-gzip:1,E=no-zstd:1]
+
+  <FilesMatch "(\.css|\.html|\.js|\.mjs|\.svg)\.br$">
+    Header append Content-Encoding br
+    Header append Vary Accept-Encoding
+  </FilesMatch>
+</IfModule>
+----
+====
+
+== Usage
+
+[,shell]
+----
+$ scripts/web/compress_brotli.sh test.txt
+----
+
+[,console]
+----
+$ find dist \( -type f -name '*.html' -o -name '*.css' \) -exec scripts/web/compress_brotli.sh {} \;
+----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#brotli[brotli]

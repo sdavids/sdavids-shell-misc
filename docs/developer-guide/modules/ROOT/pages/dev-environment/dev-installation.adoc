@@ -3,6 +3,22 @@
 = Installation
 :gh-cli-install-url: https://github.com/cli/cli#linux--bsd
 
+== brotli
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install brotli
+----
+
+=== Mac
+
+[,console]
+----
+$ brew install brotli
+----
+
 [#gh-cli]
 == GitHub CLI
 
