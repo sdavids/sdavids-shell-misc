@@ -1,0 +1,78 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= git_ignore_all
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_ignore_all.sh
+
+{script_url}[This script^] will create a `.gitignore` file ignoring everything for a given Git directory (`$PWD` if not given).
+
+The following parameters are optional:
+
+`f` :: overwrite an existing `.gitignore` file
+
+[NOTE]
+====
+The generated file contains three sections:
+
+. generally useful ignores
+. https://git-scm.com/docs/gitignore#_pattern_format[patterns] for all file extensions within the given given Git directory and its subdirectories
+. all top-level directories and files
+
+It should be used as a starting point, i.e. you should remove entries which should not be ignored.
+====
+
+[TIP]
+====
+link:https://gitignore.io[gitignore.io] can be used to add fine-grained ignores.
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/git/git_ignore_all.sh
+----
+
+[,shell]
+----
+$ tree --noreport -a -I .git /tmp/example1
+/tmp/example1
+$ scripts/git/git_ignore_all.sh /tmp/example1
+$ cat /tmp/example1/.gitignore
+# https://git-scm.com/docs/gitignore
+*~
+*.tmp
+*.sw[a-p]
+*.orig
+.DS_Store
+[Dd]esktop.ini
+Thumbs.db
+
+$ tree --noreport -a -I .git /tmp/example2
+/tmp/example2
+├── a
+├── b.txt
+└── c
+    └── d.out
+$ scripts/git/git_ignore_all.sh /tmp/example2
+$ cat /tmp/example2/.gitignore
+# https://git-scm.com/docs/gitignore
+*~
+*.tmp
+*.sw[a-p]
+*.orig
+.DS_Store
+[Dd]esktop.ini
+Thumbs.db
+
+*.out
+*.txt
+
+a
+b.txt
+c/
+----
+
+== Related Functions
+
+* xref:functions/general/ls-extensions.adoc[]
+* xref:functions/git/ls-extensions-git.adoc[]

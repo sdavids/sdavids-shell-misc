@@ -88,3 +88,7 @@ d/e.png
 == Related Functions
 
 * xref:functions/general/ls-extensions.adoc[]
+
+== Related Scripts
+
+* xref:scripts/git/git-ignore-all.adoc[]
