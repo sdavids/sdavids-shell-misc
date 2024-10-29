@@ -1,0 +1,48 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= docker_ignore_all
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_ignore_all.sh
+
+{script_url}[This script^] will create a `.dockerignore` file ignoring everything for a given directory (`$PWD` if not given).
+
+The following parameters are optional:
+
+`f` :: overwrite an existing `.dockerignore` file
+
+[NOTE]
+====
+The generated file contains two sections:
+
+. generally useful ignores
+. all top-level directories and files
+
+It should be used as a starting point, i.e. you should remove entries which should not be ignored.
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/docker/docker_ignore_all.sh
+----
+
+[,shell]
+----
+$ tree --noreport -a -I .git /tmp/example
+/tmp/example
+├── .dockerignore
+└── Dockerfile
+$ scripts/docker/docker_ignore_all.sh -f /tmp/example
+$ cat /tmp/example/.dockerignore
+# https://docs.docker.com/build/building/context/#dockerignore-files
+*~
+*.orig
+*.sw[a-p]
+*.tmp
+.DS_Store
+[Dd]esktop.ini
+Thumbs.db
+
+.dockerignore
+Dockerfile
+----
