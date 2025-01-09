@@ -5,7 +5,7 @@
 
 [plugins]
 # https://plugins.gradle.org/plugin/io.spring.dependency-management
-springDependencyManagement = "io.spring.dependency-management:1.1.6"
+springDependencyManagement = "io.spring.dependency-management:1.1.7"
 # https://github.com/spring-projects/spring-boot/releases
 # https://plugins.gradle.org/plugin/org.springframework.boot
-springBoot = "org.springframework.boot:3.4.0"
+springBoot = "org.springframework.boot:3.4.1"
