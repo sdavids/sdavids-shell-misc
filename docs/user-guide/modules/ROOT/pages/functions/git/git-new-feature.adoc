@@ -1,0 +1,84 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= git_new_feature
+:function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/git_new_feature
+
+{function_url}[This function^] will create and switch to a new https://martinfowler.com/bliki/FeatureBranch.html[feature branch] with the given name.
+
+The optional second parameter is the https://git-scm.com/docs/git-branch#Documentation/git-branch.txt-ltstart-pointgt[start point] (`main` if not given) for the feature branch.
+
+The optional third parameter is the https://git-scm.com/docs/git-push#Documentation/git-push.txt---set-upstream[upstream] (`origin` if not given) for the feature branch.
+
+[NOTE]
+====
+The created feature branch will be pushed to the upstream if possible.
+====
+
+[TIP]
+====
+Set the following Git configuration variables on your repository if you want to use a https://git-scm.com/book/en/v2/Git-Branching-Rebasing[rebase workflow]:
+
+[,shell]
+----
+$ git config branch.autosetuprebase always
+$ git config --bool pull.rebase true
+----
+
+Or set it globally:
+
+[,shell]
+----
+$ git config --global branch.autosetuprebase always
+$ git config --global --bool pull.rebase true
+----
+
+More Information:
+
+* https://git-scm.com/docs/git-config.html#Documentation/git-config.txt-branchautoSetupRebase[branch.autoSetupRebase]
+* https://git-scm.com/docs/git-config.html#Documentation/git-config.txt-pullrebase[pull.rebase]
+
+====
+
+== Usage
+
+[,shell]
+----
+$ git_new_feature issue-1
+$ git branch -vv
+* issue-1 5a669af [origin/issue-1] initial
+  main    5a669af [origin/main] initial
+$ git log --oneline
+5a669af (HEAD -> issue-1, origin/main, origin/issue-1, main) initial
+
+$ touch work
+$ git add work
+$ git commit --quiet -m work
+$ git push --quiet
+$ git log --oneline
+2baf87f (HEAD -> issue-1, origin/issue-1) work
+5a669af (origin/main, main) initial
+
+$ git_new_feature stacked issue-1
+$ git branch -vv
+  issue-1 2baf87f [origin/issue-1] work
+  main    5a669af [origin/main] initial
+* stacked 2baf87f [origin/stacked] work
+$ git log --oneline
+2baf87f (HEAD -> stacked, origin/stacked, origin/issue-1, issue-1) work
+5a669af (origin/main, main) initial
+
+$ git_new_feature issue-2 main upstream
+$ git branch -vv
+* issue-2 5a669af [upstream/another] initial
+  issue-1 2baf87f [origin/issue-1] work
+  main    5a669af [origin/main] initial
+  stacked 2baf87f [origin/stacked] work
+$ git log --oneline
+5a669af (HEAD -> another, upstream/another, origin/main, main) initial
+----
+
+== More Information
+
+* https://git-scm.com/book/en/v2/Git-Branching-Rebasing[Git Branching - Rebasing]
+* https://www.git-tower.com/blog/stacked-prs/[Stacked Pull Requests Workflow]
+* https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request[GitHub - Pull Request]

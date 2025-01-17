@@ -100,6 +100,7 @@
 *** xref:functions/general/color-stderr.adoc[]
 *** xref:functions/general/ls-extensions.adoc[]
 ** xref:functions/git/git.adoc[]
+*** xref:functions/git/git-new-feature.adoc[]
 *** xref:functions/git/ls-extensions-git.adoc[]
 ** xref:functions/gh/gh.adoc[]
 *** xref:functions/gh/repo-new-gh.adoc[]
