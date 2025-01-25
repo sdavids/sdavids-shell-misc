@@ -6,7 +6,7 @@
 
 import * as htmlparser2 from 'htmlparser2';
 import { findAll, findOne, replaceElement, textContent } from 'domutils';
-import { access, readFile, writeFile } from 'fs/promises';
+import { access, readFile, writeFile } from 'node:fs/promises';
 import { relative } from 'node:path';
 import { cwd } from 'node:process';
 import { render } from 'dom-serializer';
