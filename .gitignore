@@ -44,6 +44,3 @@ jffi*.dylib
 
 ### direnv files ###
 .envrc
-
-### Build ###
-build/
