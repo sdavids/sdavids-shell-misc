@@ -7,9 +7,14 @@
 
 The optional second parameter is the name of the branch to keep (defaults to the value of the `init.defaultBranch` Git configuration parameter or `main` if not set).
 
+[IMPORTANT]
+====
+Protected remote branches will not be deleted.
+====
+
 [WARNING]
 ====
-The branches will be irreversibly deleted--be careful, you have been warned!
+All other local and remote branches will be irreversibly deleted--be careful, you have been warned!
 ====
 
 == Usage
@@ -21,10 +26,66 @@ $ scripts/git/git_delete_branches.sh
 
 [,shell]
 ----
+$ (cd /tmp/example && git branch -vv --all)
+  docs/issue-1                69bad6f [origin/docs/issue-1] issue 1
+  feat/issue-2                b542a1c [origin/feat/issue-2: ahead 1] not pushed
+  fix/issue-3                 10caf8a issue 3
+* main                        4cf1f7d [origin/main] initial
+  remotes/origin/docs/issue-1 69bad6f issue 1
+  remotes/origin/feat/issue-2 b7b9f06 issue 2
+  remotes/origin/main         4cf1f7d initial
 $ scripts/git/git_delete_branches.sh /tmp/example
-$ scripts/git/git_delete_branches.sh /tmp/example master
+
+WARNING: The following branches will be deleted from the repository located at '/private/tmp/example'.
+
+Local branches:
+- docs/issue-1
+- feat/issue-2
+- fix/issue-3
+
+Remote branches:
+- docs/issue-1
+- feat/issue-2
+
+Do you really want to irreversibly delete these branches (Y/N)? y
+$ (cd /tmp/example && git branch -vv --all)
+* main                4cf1f7d [origin/main] initial
+  remotes/origin/main 4cf1f7d chore: initial
+
+$ (cd /tmp/example2 && git branch -vv --all)
+  docs/issue-1                bf48e73 [origin/docs/issue-1] issue 1
+  feat/issue-2                12bfe9e [origin/feat/issue-2: ahead 1] not pushed
+  fix/issue-3                 137da91 issue 3
+* main                        3d1dd24 [origin/main] initial
+  remotes/origin/docs/issue-1 bf48e73 issue 1
+  remotes/origin/feat/issue-2 f8b0f86 issue 2
+  remotes/origin/main         3d1dd24 initial
+$ scripts/git/git_delete_branches.sh /tmp/example2 'docs/issue-1'
+
+WARNING: The following branches will be deleted from the repository located at '/private/tmp/example2'.
+
+Local branches:
+- feat/issue-2
+- fix/issue-3
+- main
+
+Remote branches:
+- feat/issue-2
+- main
+
+Do you really want to irreversibly delete these branches (Y/N)? y
+
+To github.com:sdavids/example2.git
+ ! [remote rejected] main (refusing to delete the current branch: refs/heads/main)
+error: failed to push some refs to 'github.com:sdavids/example2.git'
+$ (cd /tmp/example2 && git branch -vv --all)
+* docs/issue-1                bf48e73 [origin/main: ahead 1] docs: issue-1
+  remotes/origin/docs/issue-1 bf48e73 docs: issue-1
+  remotes/origin/main         3d1dd24 chore: initial
 ----
 
 == More Information
 
 * https://git-scm.com/docs/git-init#Documentation/git-init.txt-code\--initial-branchcodeemltbranch-namegtem[init.defaultBranch]
+* https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches#allow-deletions[GitHub - Protected branches]
+* https://docs.gitlab.com/ee/user/project/repository/branches/protected.html#delete-a-protected-branch[GitLab - Protected branches]

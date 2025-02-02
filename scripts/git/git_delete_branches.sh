@@ -50,7 +50,7 @@ branch_to_keep="${2:-}"
   }
   set +e
   local_branches="$(git branch | grep -v "^* ${branch_to_keep}$" | awk '{$1=$1};1' | awk '{print "- " $0}')"
-  remote_branches="$(git ls-remote --quiet --branches origin | awk '{print $2}' | cut -d '/' -f3 | grep -v "${branch_to_keep}" | awk '{print "- " $0}')"
+  remote_branches="$(git ls-remote --quiet --branches origin | awk '{print $2}' | cut -c 12- | grep -v "${branch_to_keep}" | awk '{print "- " $0}')"
   set -e
 
   if [ -z "${local_branches}" ] && [ -z "${remote_branches}" ]; then
@@ -70,7 +70,7 @@ branch_to_keep="${2:-}"
     echo "${remote_branches}"
   fi
   printf '\n'
-  read -p 'Do you really want to irreversibly delete the branches (Y/N)? ' -n 1 -r should_delete
+  read -p 'Do you really want to irreversibly delete these branches (Y/N)? ' -n 1 -r should_delete
 
   case "${should_delete}" in
     y | Y) printf '\n' ;;
@@ -84,7 +84,7 @@ branch_to_keep="${2:-}"
     git branch | grep -v "^* ${branch_to_keep}$" | xargs -I {} git branch --quiet -D {}
   fi
   if [ -n "${remote_branches}" ]; then
-    git ls-remote --quiet --branches origin | awk '{print $2}' | cut -d '/' -f3 | grep -v "${branch_to_keep}" | xargs -I {} git push --quiet origin :{}
+    git ls-remote --quiet --branches origin | awk '{print $2}' | cut -c 12- | grep -v "${branch_to_keep}" | xargs -I {} sh -c 'git push --quiet origin :{}'
   fi
   git fetch --all --prune
 )
