@@ -19,22 +19,7 @@ You should change the template being used:
 
 [NOTE]
 ====
-This script uses https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[Git commit signing]; you need to:
-
-* configure your https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key#telling-git-about-your-gpg-key[local git
-config]
-* https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-gpg-key-to-your-github-account#adding-a-gpg-key[add your public GPG key] to GitHub
-
-Alternatively, you can remove `--gpg-sign`:
-
-.zfunc/repo_new_gh
-[,shell,highlight=3]
-----
-  git commit \
-    --quiet \
--   --gpg-sign \
-    --signoff \
-----
+This script uses https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[Git commit signing] if `user.signingKey` is set in the https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key#telling-git-about-your-gpg-key[global Git configuration].
 ====
 
 [NOTE]

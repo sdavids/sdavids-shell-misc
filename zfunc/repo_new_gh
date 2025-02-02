@@ -57,14 +57,29 @@ repo_new_gh() {
 
     sleep "${wait_for_github}"
 
+    key="$(git config get user.signingkey)"
+    # shellcheck disable=SC2181
+    if [ $? -ne 0 ]; then
+      key=''
+    fi
+
     # https://git-scm.com/docs/git-commit
-    git commit \
-      --quiet \
-      --gpg-sign \
-      --signoff \
-      --amend \
-      --reset-author \
-      --message 'chore: initial'
+    if [ -n "${key}" ]; then
+      git commit \
+        --quiet \
+        --gpg-sign \
+        --signoff \
+        --amend \
+        --reset-author \
+        --message 'chore: initial'
+    else
+      git commit \
+        --quiet \
+        --signoff \
+        --amend \
+        --reset-author \
+        --message 'chore: initial'
+    fi
 
     git push --quiet --force
   fi
