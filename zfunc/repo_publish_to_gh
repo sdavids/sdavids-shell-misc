@@ -31,7 +31,10 @@ repo_publish_to_gh() {
       base_dir="$(ls -ld "${base_dir}" | awk '{ print $11 }')"
     else
       # shellcheck disable=SC2164
-      base_dir="$(cd "$(dirname -- "${base_dir}")" >/dev/null; pwd -P)/$(basename -- "${base_dir}")"
+      base_dir="$(
+        cd "$(dirname -- "${base_dir}")" >/dev/null
+        pwd -P
+      )/$(basename -- "${base_dir}")"
     fi
   fi
 
