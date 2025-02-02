@@ -18,7 +18,7 @@ To get a consistent hash length across systems you should either
 +
 [,shell]
 ----
-$ git config --local core.abbrev 20
+$ git config set core.abbrev 20
 ----
 +
 Unfortunately, these settings are https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_git_config[not under version control].
@@ -41,7 +41,7 @@ $ scripts/git/git_get_short_hash.sh path/to/git/repository
 dbd0ffb
 $ scripts/git/git_get_short_hash.sh . 10
 844881d148
-$ git config --local core.abbrev 20
+$ git config set core.abbrev 20
 $ scripts/git/git_get_short_hash.sh
 844881d148be35d7c0a9
 $ touch a
