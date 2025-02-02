@@ -31,7 +31,7 @@ readonly base_dir="${1:-$PWD}"
     }
 
     printf "\nThe repository at '%s' does not ignore '.DS_Store' files.\n\n" "$(realpath "${base_dir}")"
-    printf "You should add '.DS_Store' to your global exclusion file:\n\n  git config --global core.excludesfile\n\n"
+    printf "You should add '.DS_Store' to your global exclusion file:\n\n  git config get --global core.excludesfile\n\n"
     printf "And to your project's exclusion file:\n\n  %s\n\n" "$(realpath "${base_dir}/.gitignore")"
     printf -- "---\n\n"
   fi
