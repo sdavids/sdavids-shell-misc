@@ -8,13 +8,13 @@ After cloning this repository you need to install the Git hooks via:
 
 [,console]
 ----
-$ git config core.hooksPath .githooks
+$ git config set core.hooksPath .githooks
 ----
 
 And configure the https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile[ignore-revs-file]:
 
 [,console]
 ----
-$ git config blame.ignoreRevsFile .git-blame-ignore-revs
+$ git config set blame.ignoreRevsFile .git-blame-ignore-revs
 ----
 ====

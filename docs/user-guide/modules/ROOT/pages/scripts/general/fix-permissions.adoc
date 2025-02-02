@@ -90,7 +90,7 @@ $ touch f && chmod u+x f
 $ touch s.sh
 $ mkdir .githooks
 $ touch .githooks/pre-commit && chmod u+x .githooks/pre-commit
-$ git config core.hooksPath .githooks
+$ git config set core.hooksPath .githooks
 $ mkdir -p node_modules/some-module
 $ touch node_modules/some-module/some-script && chmod u+x node_modules/some-module/some-script
 $ touch node_modules/some-module/some-script-without-execute-permission.sh

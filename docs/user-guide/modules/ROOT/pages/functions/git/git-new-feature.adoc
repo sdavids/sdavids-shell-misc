@@ -20,16 +20,16 @@ Set the following Git configuration variables on your repository if you want to 
 
 [,shell]
 ----
-$ git config branch.autosetuprebase always
-$ git config --bool pull.rebase true
+$ git config set branch.autosetuprebase always
+$ git config set --bool pull.rebase true
 ----
 
 Or set it globally:
 
 [,shell]
 ----
-$ git config --global branch.autosetuprebase always
-$ git config --global --bool pull.rebase true
+$ git config set --global branch.autosetuprebase always
+$ git config set --global --bool pull.rebase true
 ----
 
 More Information:
