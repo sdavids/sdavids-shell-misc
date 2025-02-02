@@ -13,5 +13,6 @@ xref:scripts/git/git-get-hash.adoc[]:: return the hash of the HEAD commit
 xref:scripts/git/git-get-short-hash.adoc[]:: return the short hash of the HEAD commit
 xref:scripts/git/git-ignore-all.adoc[]:: create a `.gitignore` file ignoring everything for a given repository
 xref:scripts/git/git-is-working-tree-clean.adoc[]:: check whether the Git working tree is clean
+xref:scripts/git/git-set-identity.adoc[]:: set the identity (`user.name`, `user.email`, and `user.signingKey`) in the Git repositories of the given directory
 
 Related: xref:functions/git/git.adoc[Git Functions]

@@ -55,6 +55,7 @@
 *** xref:scripts/git/git-get-short-hash.adoc[]
 *** xref:scripts/git/git-ignore-all.adoc[]
 *** xref:scripts/git/git-is-working-tree-clean.adoc[]
+*** xref:scripts/git/git-set-identity.adoc[]
 ** xref:scripts/gh/gh.adoc[]
 *** xref:scripts/gh/gh-delete-workflow-runs.adoc[]
 ** xref:scripts/gradle/gradle.adoc[]
