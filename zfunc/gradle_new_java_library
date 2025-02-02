@@ -42,7 +42,7 @@ gradle_new_java_library() {
 
     unset project_name
 
-    cat << 'EOF' >gradle.properties
+    cat <<'EOF' >gradle.properties
 # https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_configuration_properties
 
 # https://docs.gradle.org/current/userguide/build_cache.html#sec:build_cache_enable
@@ -64,7 +64,7 @@ org.gradle.parallel=true
 org.gradle.java.installations.auto-download=false
 EOF
 
-    cat << 'EOF' >.gitignore
+    cat <<'EOF' >.gitignore
 # https://git-scm.com/docs/gitignore
 
 ### Temporary ###
@@ -80,7 +80,7 @@ EOF
 .DS_Store
 
 ### Windows ###
-desktop.ini
+[Dd]esktop.ini
 Thumbs.db
 
 ### Jetbrains ###
@@ -103,7 +103,7 @@ bin/
 build/
 EOF
 
-    cat << 'EOF' >.gitattributes
+    cat <<'EOF' >.gitattributes
 # https://git-scm.com/docs/gitattributes
 
 # https://git-scm.com/docs/gitattributes#__code_text_code
@@ -122,7 +122,7 @@ EOF
 *.sh diff=bash
 EOF
 
-    cat << 'EOF' >.editorconfig
+    cat <<'EOF' >.editorconfig
 # http://EditorConfig.org
 
 root = true
@@ -155,13 +155,13 @@ max_line_length = 100
 max_line_length = 80
 EOF
 
-    cat << 'EOF' >.git-blame-ignore-revs
+    cat <<'EOF' >.git-blame-ignore-revs
 # https://git-scm.com/docs/git-blame#Documentation/git-blame.txt---ignore-revs-fileltfilegt
 EOF
 
     mkdir .githooks
 
-    cat << 'EOF' >.githooks/pre-commit
+    cat <<'EOF' >.githooks/pre-commit
 #!/usr/bin/env sh
 
 set -eu
@@ -172,28 +172,68 @@ if [ -z "${GIT_REFLOG_ACTION+x}" ]; then
   trap 'git stash pop --quiet 2>/dev/null' EXIT INT QUIT TSTP
 fi
 
-./gradlew check
+# https://docs.gradle.org/8.7/userguide/command_line_interface.html
+./gradlew \
+  --quiet \
+  check
+EOF
+
+    cat <<'EOF' >.githooks/pre-push
+#!/usr/bin/env sh
+
+set -eu
+
+if [ -n "$(git status --porcelain=v1)" ]; then
+  echo 'Git workspace is not clean: commit, stash, or reset your changes' >&2
+  exit 1
+fi
+
+# https://docs.gradle.org/current/userguide/command_line_interface.html
+./gradlew \
+  --no-daemon \
+  --configure-on-demand \
+  --no-configuration-cache \
+  --parallel \
+  --quiet \
+  check
 EOF
 
     chmod u+x .githooks/pre-commit
+    chmod u+x .githooks/pre-push
 
     if command -v git >/dev/null 2>&1; then
       # https://git-scm.com/docs/git-init
       # https://git-scm.com/docs/git-config#Documentation/git-config.txt-initdefaultBranch
       git -c 'init.defaultBranch=main' init --quiet
+      # https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile
+      git config set blame.ignoreRevsFile .git-blame-ignore-revs
+      # https://git-scm.com/docs/git-config#Documentation/git-config.txt-corehooksPath
+      git config set core.hooksPath .githooks
+      key="$(git config get user.signingkey)"
+      # shellcheck disable=SC2181
+      if [ $? -ne 0 ]; then
+        key=''
+      fi
       # https://git-scm.com/docs/git-add
       git add --all
       # https://git-scm.com/docs/git-commit
-      git commit \
-      --quiet \
-      --gpg-sign \
-      --signoff \
-      --message 'chore: initial'
-      # https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile
-      git config blame.ignoreRevsFile .git-blame-ignore-revs
-      # https://git-scm.com/docs/git-config#Documentation/git-config.txt-corehooksPath
-      git config core.hooksPath .githooks
-      .githooks/pre-commit >/dev/null
+      # note: --no-verify because the commit hook does now work with the initial commit
+      if [ -n "${key}" ]; then
+        git commit \
+          --quiet \
+          --gpg-sign \
+          --signoff \
+          --no-verify \
+          --message 'chore: initial'
+      else
+        git commit \
+          --quiet \
+          --signoff \
+          --no-verify \
+          --message 'chore: initial'
+      fi
     fi
+
+    ./gradlew --quiet check
   fi
 }
