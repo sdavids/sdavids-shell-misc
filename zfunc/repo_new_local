@@ -50,7 +50,7 @@ repo_new_local() {
     (
       cd "${gh_repo_name}" || return
 
-      git config --bool core.bare false
+      git config set --bool core.bare false
 
       git reset --hard HEAD >/dev/null
 
@@ -59,7 +59,7 @@ repo_new_local() {
       # GitHub is slow so let's wait a bit
       sleep 5
 
-      git remote remove origin 1> /dev/null
+      git remote remove origin 1>/dev/null
     )
 
     mv "${gh_repo_name}" "${repo_name}"
@@ -68,13 +68,28 @@ repo_new_local() {
 
     unset repo_name gh_repo_name
 
+    key="$(git config get user.signingkey)"
+    # shellcheck disable=SC2181
+    if [ $? -ne 0 ]; then
+      key=''
+    fi
+
     # https://git-scm.com/docs/git-commit
-    git commit \
-      --quiet \
-      --gpg-sign \
-      --signoff \
-      --amend \
-      --reset-author \
-      --message 'chore: initial'
+    if [ -n "${key}" ]; then
+      git commit \
+        --quiet \
+        --gpg-sign \
+        --signoff \
+        --amend \
+        --reset-author \
+        --message 'chore: initial'
+    else
+      git commit \
+        --quiet \
+        --signoff \
+        --amend \
+        --reset-author \
+        --message 'chore: initial'
+    fi
   fi
 }
