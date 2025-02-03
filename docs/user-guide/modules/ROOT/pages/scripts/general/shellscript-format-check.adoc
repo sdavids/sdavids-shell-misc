@@ -7,7 +7,7 @@
 
 This script's exit code is `0` if all shell script files adhere to Google Shell Style or `1` if not.
 
-The following parameters are optional:
+The following parameter is optional:
 
 `v` :: display the paths of the files whose formatting does not adhere to Google Shell Style
 

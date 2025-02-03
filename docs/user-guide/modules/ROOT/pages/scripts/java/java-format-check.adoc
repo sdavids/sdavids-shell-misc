@@ -7,7 +7,7 @@
 
 This script's exit code is `0` if all `*.java` files adhere to Google Java Style or `1` if not.
 
-The following parameters are optional:
+The following parameter is optional:
 
 `v` :: display the paths of the files whose formatting does not adhere to Google Java Style
 

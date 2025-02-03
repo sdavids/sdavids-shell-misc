@@ -5,7 +5,7 @@
 
 {script_url}[This script^] will create a `.gitignore` file ignoring everything for a given Git directory (`$PWD` if not given).
 
-The following parameters are optional:
+The following parameter is optional:
 
 `f` :: overwrite an existing `.gitignore` file
 
