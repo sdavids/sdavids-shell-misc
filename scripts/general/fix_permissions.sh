@@ -27,9 +27,14 @@ readonly base_dir="${base_dir:?DIRECTORY is required}"
 readonly group="${group:-false}"
 readonly mask="${mask:-false}"
 
+if [ ! -d "${base_dir}" ]; then
+  printf "The directory '%s' does not exist.\n" "${base_dir}" >&2
+  exit 2
+fi
+
 if [ "${group}" = 'true' ] && [ "${mask}" = 'true' ]; then
   echo "options '-g' and '-u' are exclusive" >&2
-  exit 2
+  exit 3
 elif [ "${group}" = 'true' ]; then
   dir_perm=770
   file_perm=660

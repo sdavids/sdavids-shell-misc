@@ -8,6 +8,11 @@ set -eu
 readonly base_dir="${1:-$PWD}"
 readonly ignore_scripts="${2:-true}"
 
+if [ ! -d "${base_dir}" ]; then
+  printf "The directory '%s' does not exist.\n" "${base_dir}" >&2
+  exit 1
+fi
+
 if [ "${base_dir}" != "$PWD" ] && [ "${base_dir}" != '.' ]; then
   cd "${base_dir}"
   if command -v fnm >/dev/null 2>&1; then

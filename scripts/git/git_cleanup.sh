@@ -23,6 +23,11 @@ while getopts ':d:e:n' opt; do
   esac
 done
 
+if [ ! -d "${base_dir}" ]; then
+  printf "The directory '%s' does not exist.\n" "${base_dir}" >&2
+  exit 2
+fi
+
 readonly base_dir="${base_dir:-$PWD}"
 readonly expire="${expire:-1.month.ago}"
 readonly dry_run="${dry_run:-}"
@@ -32,7 +37,7 @@ readonly dry_run="${dry_run:-}"
 
   if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != 'true' ]; then
     echo "'${base_dir}' is not a git repository" >&2
-    exit 2
+    exit 3
   fi
 
   # shellcheck disable=SC2086

@@ -22,6 +22,11 @@ readonly force="${force:-false}"
 
 readonly base_dir="${1:-$PWD}"
 
+if [ ! -d "${base_dir}" ]; then
+  printf "The directory '%s' does not exist.\n" "${base_dir}" >&2
+  exit 2
+fi
+
 (
   cd "${base_dir}"
 
