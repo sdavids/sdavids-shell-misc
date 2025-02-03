@@ -9,7 +9,7 @@ The optional second parameter is the directory (`$PWD` if not given) the project
 
 [NOTE]
 ====
-A Git repository with `pre-commit`  and `pre-push` https://git-scm.com/docs/githooks[hooks] will also be initialized for the project if `git` is installed.
+A Git repository with `pre-commit` and `pre-push` https://git-scm.com/docs/githooks[hooks] will also be initialized for the project if `git` is installed.
 
 This script uses https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[Git commit signing] if `user.signingKey` is set in the https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key#telling-git-about-your-gpg-key[global Git configuration].
 ====
@@ -22,40 +22,47 @@ You can https://docs.gradle.org/8.6/release-notes.html#simpler-source-package-ha
 
 [,console]
 ----
-printf 'org.gradle.buildinit.source.package=my.org' >> "${GRADLE_USER_HOME:=${HOME}}/gradle.properties"
+printf 'org.gradle.buildinit.source.package=my.org' >>"${GRADLE_USER_HOME:=${HOME}}/gradle.properties"
 ----
 
 If you want https://docs.gradle.org/8.7/release-notes.html#generating-concise-projects-with-gradle-init[no comments]  to be generated add `org.gradle.buildinit.comments=false` in https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_configuration_properties[Gradle properties]:
 
 [,console]
 ----
-printf 'org.gradle.buildinit.comments=false' >> "${GRADLE_USER_HOME:=${HOME}}/gradle.properties"
+printf 'org.gradle.buildinit.comments=false' >>"${GRADLE_USER_HOME:=${HOME}}/gradle.properties"
 ----
 ====
 
 [TIP]
 ====
-You might want to customize the defaults for the created `gradle.properties`, `.gitignore`, `.gitattributes`, or `.editorconfig`, e.g.:
+You might want to customize the defaults for the created `.editorconfig`, `.gitattributes`, `.gitignore`, `gradle.properties`, `pre-commit` or `pre-push`, e.g.:
 
 .zfunc/gradle_new_java_library
 [,shell]
 ----
-      cat << 'EOF' >gradle.properties
-  ...
-  EOF
+    cat <<'EOF' >gradle.properties
+...
+EOF
 
-      cat << 'EOF' >.gitignore
-  ...
-  EOF
+    cat <<'EOF' >.gitignore
+...
+EOF
 
-      cat << 'EOF' >.gitattributes
-  ...
-  ...
-  EOF
+    cat <<'EOF' >.gitattributes
+...
+EOF
 
-      cat << 'EOF' >.editorconfig
-  ...
-  EOF
+    cat <<'EOF' >.editorconfig
+...
+EOF
+
+    cat <<'EOF' >.githooks/pre-commit
+...
+EOF
+
+    cat <<'EOF' >.githooks/pre-push
+...
+EOF
 ----
 ====
 
