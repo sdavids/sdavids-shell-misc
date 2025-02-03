@@ -81,19 +81,21 @@ $ tree --noreport -a /tmp/example_workspace
 ├── project1
 │   └── node_modules
 └── project2
-    └── node_modules
+    └── frontend
+        └── node_modules
 $ scripts/nodejs/macos_node_modules_fix.sh /tmp/example_workspace
 $ xattr -r /tmp/example_workspace                                         <1>
 /tmp/example_workspace/project1/node_modules: com.apple.metadata:com_apple_backup_excludeItem
-/tmp/example_workspace/project2/node_modules: com.apple.metadata:com_apple_backup_excludeItem
+/tmp/example_workspace/project2/frontend/node_modules: com.apple.metadata:com_apple_backup_excludeItem
 $ tree --noreport -a /tmp/example_workspace
 /tmp/example_workspace
 ├── project1
 │   └── node_modules
 │       └── .metadata_never_index                                         <2>
 └── project2
-    └── node_modules
-        └── .metadata_never_index                                         <2>
+    └── frontend
+        └── node_modules
+            └── .metadata_never_index                                     <2>
 ----
 
 <1> `node_modules` directories are not backed up by Time Machine
