@@ -60,7 +60,7 @@ And execute it manually:
 
 [,console]
 ----
-$ npm install && npm run macos:fix-node-modules
+$ npm install && node --run macos:fix-node-modules
 ----
 ====
 

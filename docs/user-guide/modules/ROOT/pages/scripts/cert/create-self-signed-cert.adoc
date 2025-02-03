@@ -100,10 +100,10 @@ Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc
 
 [,shell]
 ----
-$ npm run cert:create
-$ npm run cert:delete
-$ npm run cert:renew
-$ npm run cert:verify
+$ node --run cert:create
+$ node --run cert:delete
+$ node --run cert:renew
+$ node --run cert:verify
 ----
 ====
 

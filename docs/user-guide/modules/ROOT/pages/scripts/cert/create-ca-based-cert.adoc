@@ -108,14 +108,14 @@ Copy this script (and its related xref:scripts/cert/create-ca.adoc[], xref:scrip
 
 [,shell]
 ----
-$ npm run cert:ca:create
-$ npm run cert:ca:copy-root
-$ npm run cert:create
-$ npm run cert:copy
-$ npm run cert:renew
-$ npm run cert:verify
-$ npm run cert:delete
-$ npm run cert:ca:delete
+$ node --run cert:ca:create
+$ node --run cert:ca:copy-root
+$ node --run cert:create
+$ node --run cert:copy
+$ node --run cert:renew
+$ node --run cert:verify
+$ node --run cert:delete
+$ node --run cert:ca:delete
 ----
 ====
 

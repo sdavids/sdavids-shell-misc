@@ -24,7 +24,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 
 [,console]
 ----
-$ npm run clean:node
+$ node --run clean:node
 $ npm i
 ----
 ====

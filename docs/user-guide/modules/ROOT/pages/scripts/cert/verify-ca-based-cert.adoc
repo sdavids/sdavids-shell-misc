@@ -29,7 +29,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 
 [,console]
 ----
-$ npm run cert:verify
+$ node --run cert:verify
 ----
 ====
 
