@@ -43,7 +43,7 @@ The repository at '/private/tmp/example' does not ignore '.DS_Store' files.
 
 You should add '.DS_Store' to your global exclusion file:
 
-  git config get --global core.excludesfile
+  git config get core.excludesfile
 
 And to your project's exclusion file:
 
