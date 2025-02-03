@@ -39,10 +39,7 @@ If you use https://typicode.github.io/husky/[Husky] then the Husky base director
 [,console]
 ----
 $ scripts/general/fix_permissions.sh
-----
 
-[,console]
-----
 $ tree --noreport -p /tmp/example
 [drwxrwxrwx]  /tmp/example
 ├── [dr-xr-xr-x]  a

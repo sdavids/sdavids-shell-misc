@@ -10,10 +10,6 @@
 [,console]
 ----
 $ scripts/web/minify_json.sh
-----
-
-[,console]
-----
 $ scripts/web/minify_json.sh dist
 ----
 

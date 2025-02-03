@@ -24,10 +24,6 @@ PDF Version                     : 1.4
 [,console]
 ----
 $ scripts/pdf/pdf_remove_metadata.sh test.pdf
-----
-
-[,console]
-----
 $ find dist -type f -name '*.pdf' -exec scripts/pdf/pdf_remove_metadata.sh {} \;
 ----
 

@@ -33,9 +33,5 @@ $ node --run clean:node && npm i
 [,console]
 ----
 $ scripts/nodejs/clean_node.sh
-----
-
-[,console]
-----
 $ scripts/nodejs/clean_node.sh /tmp/nodejs-example-project
 ----

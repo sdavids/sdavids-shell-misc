@@ -44,10 +44,6 @@
 [,console]
 ----
 $ node scripts/web/minify_json_tags.mjs dist/index.html
-----
-
-[,console]
-----
 $ find dist -type f -name '*.html' -exec node scripts/web/minify_json_tags.mjs {} \;
 ----
 

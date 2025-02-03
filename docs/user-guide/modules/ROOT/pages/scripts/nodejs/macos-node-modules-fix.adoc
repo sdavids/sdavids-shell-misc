@@ -69,10 +69,6 @@ $ npm install && node --run macos:fix-node-modules
 [,console]
 ----
 $ scripts/nodejs/macos_node_modules_fix.sh
-----
-
-[,console]
-----
 $ scripts/nodejs/macos_node_modules_fix.sh /tmp/example_project
 
 $ xattr -r /tmp/example_workspace

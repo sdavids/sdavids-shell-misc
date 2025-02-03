@@ -47,8 +47,10 @@ $ node --run cert:delete
 ----
 $ scripts/cert/delete_self_signed_cert.sh
 Removing 'localhost' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
+
 $ scripts/cert/delete_self_signed_cert.sh ~/.local/secrets/certs/localhost
 Removing 'localhost' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
+
 $ scripts/cert/delete_self_signed_cert.sh ~/.local/secrets/certs/https.internal https.internal
 Removing 'https.internal' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
 ----

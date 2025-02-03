@@ -50,10 +50,6 @@ $ node --run cert:delete
 [,console]
 ----
 $ scripts/cert/delete_ca_based_cert.sh
-----
-
-[,console]
-----
 $ scripts/cert/delete_ca_based_cert.sh ~/.local/secrets/certs/localhost
 $ scripts/cert/delete_ca_based_cert.sh ~/.local/secrets/certs/https.internal https.internal
 ----

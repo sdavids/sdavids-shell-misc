@@ -70,10 +70,6 @@ Copy this script into your project:
 [,console]
 ----
 $ scripts/git/git_cleanup.sh
-----
-
-[,console]
-----
 $ scripts/git/git_cleanup.sh -d /tmp/example
 $ scripts/git/git_cleanup.sh -n
 $ scripts/git/git_cleanup.sh -e now

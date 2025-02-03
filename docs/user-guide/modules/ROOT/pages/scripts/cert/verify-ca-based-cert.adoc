@@ -38,10 +38,6 @@ $ node --run cert:verify
 [,console]
 ----
 $ scripts/cert/verify_ca_based_cert.sh
-----
-
-[,console]
-----
 $ scripts/cert/verify_ca_based_cert.sh ~/.local/secrets/certs/localhost
 keychain: "/Library/Keychains/System.keychain"
 ...

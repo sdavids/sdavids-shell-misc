@@ -51,10 +51,6 @@ $ node --run cert:renew
 [,console]
 ----
 $ scripts/cert/renew_self_signed_cert.sh
-----
-
-[,console]
-----
 $ scripts/cert/renew_self_signed_cert.sh dist/etc/nginx
 
 $ scripts/cert/renew_self_signed_cert.sh . 30

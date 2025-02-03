@@ -16,17 +16,16 @@ The following parameter is optional:
 [,console]
 ----
 $ scripts/general/shellscript_format_check.sh
-----
 
-[,console]
-----
 $ scripts/general/shellscript_format_check.sh /tmp/example
 $ echo $?
 1
+
 $ scripts/general/shellscript_format_check.sh -v /tmp/example
 /tmp/example/example.sh
 $ echo $?
 1
+
 $ scripts/general/shellscript_format.sh /tmp/example
 $ scripts/general/shellscript_format_check.sh /tmp/example
 $ echo $?

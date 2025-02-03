@@ -10,10 +10,6 @@
 [,console]
 ----
 $ scripts/web/minify_html.sh
-----
-
-[,console]
-----
 $ scripts/web/minify_html.sh dist
 ----
 

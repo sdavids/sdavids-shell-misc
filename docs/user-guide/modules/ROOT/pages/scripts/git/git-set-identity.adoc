@@ -46,10 +46,6 @@ See: <<example>>
 [,console]
 ----
 $ scripts/git/git_set_identity.sh
-----
-
-[,console]
-----
 $ scripts/git/git_set_identity.sh -e cameron@howe.name
 $ scripts/git/git_set_identity.sh \
 -d ~/workspaces/mutiny \

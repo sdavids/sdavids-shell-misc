@@ -123,10 +123,6 @@ jobs:
 [,console]
 ----
 $ scripts/gradle/check_reproducible_build_gradle.sh
-----
-
-[,console]
-----
 $ scripts/gradle/check_reproducible_build_gradle.sh /tmp/example
 ----
 

@@ -24,10 +24,6 @@ Also, you might want to add a xref:scripts/general/hash-filename.adoc[hash] to t
 [,console]
 ----
 $ scripts/web/minify_svg.sh
-----
-
-[,console]
-----
 $ scripts/web/minify_svg.sh dist
 ----
 

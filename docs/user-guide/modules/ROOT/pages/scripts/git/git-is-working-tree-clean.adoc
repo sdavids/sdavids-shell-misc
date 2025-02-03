@@ -10,10 +10,6 @@
 [,console]
 ----
 $ scripts/git/git_is_working_tree_clean.sh
-----
-
-[,console]
-----
 $ echo $?
 ----
 

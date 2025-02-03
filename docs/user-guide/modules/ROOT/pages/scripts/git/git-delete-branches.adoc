@@ -22,10 +22,6 @@ All other local and remote branches will be irreversibly deleted--be careful, yo
 [,console]
 ----
 $ scripts/git/git_delete_branches.sh
-----
-
-[,console]
-----
 $ scripts/git/git_delete_branches.sh /tmp/example
 ----
 

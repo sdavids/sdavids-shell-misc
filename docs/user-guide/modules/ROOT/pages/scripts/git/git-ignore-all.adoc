@@ -30,10 +30,7 @@ link:https://gitignore.io[gitignore.io] can be used to add fine-grained ignores.
 [,console]
 ----
 $ scripts/git/git_ignore_all.sh
-----
 
-[,console]
-----
 $ tree --noreport -a -I .git /tmp/example1
 /tmp/example1
 $ scripts/git/git_ignore_all.sh /tmp/example1

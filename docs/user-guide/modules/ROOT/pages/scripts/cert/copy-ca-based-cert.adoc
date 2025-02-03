@@ -56,10 +56,6 @@ $ node --run cert:copy
 [,console]
 ----
 $ scripts/cert/copy_ca_based_cert.sh
-----
-
-[,console]
-----
 $ scripts/cert/copy_ca_based_cert.sh ~/.local/secrets/certs/localhost
 
 $ scripts/cert/copy_ca_based_cert.sh ~/.local/secrets/certs/https.internal https.internal

@@ -30,10 +30,6 @@ See the general Docker script xref:scripts/docker/docker.adoc#usage[usage notes]
 [,console]
 ----
 $ scripts/docker/docker_build.sh
-----
-
-[,console]
-----
 $ scripts/docker/docker_build.sh -n
 
 $ scripts/docker/docker_build.sh -d scripts/docker/Dockerfile

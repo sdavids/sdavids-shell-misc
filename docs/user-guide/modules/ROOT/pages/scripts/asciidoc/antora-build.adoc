@@ -37,10 +37,7 @@ See: <<antora-build-example>>
 [,console]
 ----
 $ scripts/asciidoc/antora_build.sh
-----
 
-[,console]
-----
 $ tree --noreport -I .git /tmp/example
 /tmp/example
 └── docs

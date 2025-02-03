@@ -33,10 +33,6 @@ $ node --run cert:verify
 [,console]
 ----
 $ scripts/cert/verify_self_signed_cert.sh
-----
-
-[,console]
-----
 $ scripts/cert/verify_self_signed_cert.sh ~/.local/secrets/certs/localhost
 keychain: "/Users/example/Library/Keychains/login.keychain-db"
 ...

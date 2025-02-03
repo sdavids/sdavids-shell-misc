@@ -58,11 +58,7 @@ export PATH="${HOME}/.local/scripts${PATH:+:${PATH}}"
 [,console]
 ----
 $ scripts/general/copy_shell_scripts.sh -d ~/.local/scripts
-----
 
-[,console]
-----
-$ scripts/general/copy_shell_scripts.sh -d ~/.local/scripts
 $ scripts/general/copy_shell_scripts.sh -d /tmp/dst -s /tmp/src
 The following script names are not unique:
 

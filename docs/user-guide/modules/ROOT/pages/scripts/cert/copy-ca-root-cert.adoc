@@ -33,10 +33,7 @@ Related Script:       xref:scripts/git/git-cleanup.adoc#git-cleanup-untracked-ex
 [,console]
 ----
 $ scripts/cert/copy_ca_root_cert.sh
-----
 
-[,console]
-----
 $ scripts/cert/copy_ca_root_cert.sh ~/.local/secrets/certs/ca-root
 $ stat -f '%A %N' ~/.local/secrets/certs/ca-root/ca.crt
 600 /Users/example/.local/secrets/certs/ca-root/ca.crt
