@@ -36,7 +36,7 @@ readonly realm_client_id='my-realm-client'
 
 # https://www.keycloak.org/docs/latest/authorization_services/#_service_obtaining_permissions
 # https://www.keycloak.org/docs/latest/authorization_services/#_service_authorization_api
-# https://www.man7.org/linux/man-pages/man1/curl.1.html
+# https://man.archlinux.org/man/curl.1
 access_token="$(curl \
   -s \
   -f \

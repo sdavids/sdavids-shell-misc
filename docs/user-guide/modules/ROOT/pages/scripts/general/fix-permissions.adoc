@@ -18,7 +18,7 @@ The following parameter is required:
 The following parameters are optional:
 
 `g` :: also fix the group permissions (`770`/`660`/`770`); cannot be used together with `-u`
-`u` :: use the current process' https://www.man7.org/linux/man-pages/man2/umask.2.html[umask] to fix the permissions; cannot be used together with `-g`
+`u` :: use the current process' https://man.archlinux.org/man/umask.2[umask] to fix the permissions; cannot be used together with `-g`
 
 [IMPORTANT]
 ====
@@ -142,6 +142,6 @@ $ tree --noreport -p -a -I .git /tmp/test
 
 == More Information
 
-* https://www.man7.org/linux/man-pages/man2/umask.2.html[umask]
+* https://man.archlinux.org/man/umask.2[umask]
 * https://support.apple.com/en-us/HT201684[Set a custom umask in macOS]
 * https://git-scm.com/docs/githooks[Git hooks]

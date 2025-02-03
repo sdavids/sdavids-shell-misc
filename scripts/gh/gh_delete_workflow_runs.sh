@@ -81,7 +81,7 @@ readonly owner='sdavids'
 # https://docs.github.com/en/rest/about-the-rest-api/api-versions?apiVersion=2022-11-28
 readonly gh_api_version='2022-11-28'
 
-# https://www.man7.org/linux/man-pages/man1/curl.1.html
+# https://man.archlinux.org/man/curl.1
 response="$(
   curl -s \
     -L \
