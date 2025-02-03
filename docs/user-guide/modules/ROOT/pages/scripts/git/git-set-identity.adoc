@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
 = git_set_identity
-:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_set_identity.sh.sh
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_set_identity.sh
 
 {script_url}[This script^] will set the identity (`user.name`, `user.email`, and `user.signingKey`) in the Git repositories of the given directory.
 
