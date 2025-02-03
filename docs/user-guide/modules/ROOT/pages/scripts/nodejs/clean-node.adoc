@@ -24,8 +24,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 
 [,console]
 ----
-$ node --run clean:node
-$ npm i
+$ node --run clean:node && npm i
 ----
 ====
 
@@ -36,7 +35,7 @@ $ npm i
 $ scripts/nodejs/clean_node.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/nodejs/clean_node.sh /tmp/nodejs-example-project
 ----

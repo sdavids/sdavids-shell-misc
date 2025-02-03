@@ -44,7 +44,7 @@ The workflow runs will be irreversibly deleted by this script--be careful, you h
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ GH_DELETE_WORKFLOW_RUNS_TOKEN_FILE=~/.local/secrets/gh/gh-actions-rw scripts/gh/gh_delete_workflow_runs.sh -r sdavids-shell-misc -k 0
 

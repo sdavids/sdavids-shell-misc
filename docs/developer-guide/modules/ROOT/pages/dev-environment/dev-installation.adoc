@@ -213,7 +213,7 @@ Install {fnm-install-url}[fnm] or {nvm-install-url}[NVM].
 === fnm
 
 .~/.zprofile
-[,shell]
+[,zsh]
 ----
 if command -v fnm >/dev/null 2>&1; then
   eval "$(fnm env --use-on-cd)"
@@ -223,7 +223,7 @@ fi
 === nvm
 
 .~/.zshrc
-[,shell]
+[,zsh]
 ----
 export NVM_DIR="${HOME}/.nvm"
 

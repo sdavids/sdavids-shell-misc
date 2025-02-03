@@ -11,7 +11,7 @@ Use the optional second parameter `-e` to print the new filename to stdout.
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/general/hash_filename.sh test.txt
 $ scripts/general/hash_filename.sh test-echo.txt -e

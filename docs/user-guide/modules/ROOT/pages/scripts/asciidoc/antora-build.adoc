@@ -21,7 +21,7 @@ The source directory https://docs.antora.org/antora/latest/content-source-reposi
 ====
 Copy this script into your project:
 
-[,shell]
+[,text]
 ----
 <project root directory>
 └── scripts
@@ -39,7 +39,7 @@ See: <<antora-build-example>>
 $ scripts/asciidoc/antora_build.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ tree --noreport -I .git /tmp/example
 /tmp/example
@@ -89,7 +89,7 @@ $ tree --noreport -I .git -L 2 /tmp/example2/
 [#antora-build-example]
 == Example
 
-[,shell]
+[,console]
 ----
 $ mkdir -p /tmp/example/scripts
 $ cp scripts/asciidoc/antora_build.sh /tmp/example/scripts

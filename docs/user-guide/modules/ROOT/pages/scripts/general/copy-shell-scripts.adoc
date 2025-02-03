@@ -25,7 +25,7 @@ The following parameters are optional:
 ====
 This script will error out when two or more scripts with the same name are found in the given source directory (`-s`).
 
-[,shell]
+[,text]
 ----
 a.sh
   /tmp/src/sub/a.sh
@@ -41,13 +41,13 @@ Copy the scripts to a https://docstore.mik.ua/orelly/unix3/upt/ch35_06.htm[$PATH
 
 Example zsh setup:
 
-[,shell]
+[,console]
 ----
 $ mkdir ~/.local/scripts
 ----
 
 .~/.zshrc
-[,shell]
+[,zsh]
 ----
 export PATH="${HOME}/.local/scripts${PATH:+:${PATH}}"
 ----
@@ -60,7 +60,7 @@ export PATH="${HOME}/.local/scripts${PATH:+:${PATH}}"
 $ scripts/general/copy_shell_scripts.sh -d ~/.local/scripts
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/general/copy_shell_scripts.sh -d ~/.local/scripts
 $ scripts/general/copy_shell_scripts.sh -d /tmp/dst -s /tmp/src

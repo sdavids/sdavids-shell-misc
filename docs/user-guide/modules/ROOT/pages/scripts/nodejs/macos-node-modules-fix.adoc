@@ -71,7 +71,7 @@ $ npm install && node --run macos:fix-node-modules
 $ scripts/nodejs/macos_node_modules_fix.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/nodejs/macos_node_modules_fix.sh /tmp/example_project
 

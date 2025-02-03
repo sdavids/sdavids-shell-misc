@@ -20,7 +20,7 @@ Both `key.pem` and `cert.pem` https://owasp.org/www-project-devsecops-guideline/
 
 If the given directory is inside a Git working tree the script will offer to modify the https://git-scm.com/docs/gitignore[.gitignore] file:
 
-[,shell]
+[,text]
 ----
 WARNING: key.pem and/or cert.pem is not ignored in '/Users/example/tmp/.gitignore'
 
@@ -58,7 +58,7 @@ $ node --run cert:copy
 $ scripts/cert/copy_ca_based_cert.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/cert/copy_ca_based_cert.sh ~/.local/secrets/certs/localhost
 

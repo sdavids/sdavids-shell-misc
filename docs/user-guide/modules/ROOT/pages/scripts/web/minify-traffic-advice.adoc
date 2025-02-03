@@ -7,7 +7,7 @@
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/web/minify_traffic_advice.sh dist/.well-known/traffic-advice
 ----

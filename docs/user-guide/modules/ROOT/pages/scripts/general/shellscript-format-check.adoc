@@ -18,7 +18,7 @@ The following parameter is optional:
 $ scripts/general/shellscript_format_check.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/general/shellscript_format_check.sh /tmp/example
 $ echo $?

@@ -47,7 +47,7 @@ $ node --run cert:renew
 $ scripts/cert/renew_ca_based_cert.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/cert/renew_ca_based_cert.sh dist/etc/nginx
 

@@ -19,7 +19,7 @@ You need to commit the changes afterward (if any `.DS_Store` files have previous
 $ scripts/git/git_delete_dsstore_files.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ tree --noreport -a -I .git /tmp/example
 /tmp/example

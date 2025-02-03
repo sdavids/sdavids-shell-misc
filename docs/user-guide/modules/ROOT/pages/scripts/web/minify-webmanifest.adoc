@@ -7,7 +7,7 @@
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/web/minify_webmanifest.sh dist/site.webmanifest
 ----

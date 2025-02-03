@@ -32,7 +32,7 @@ link:https://gitignore.io[gitignore.io] can be used to add fine-grained ignores.
 $ scripts/git/git_ignore_all.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ tree --noreport -a -I .git /tmp/example1
 /tmp/example1

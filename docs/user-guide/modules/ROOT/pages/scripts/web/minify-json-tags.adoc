@@ -41,7 +41,7 @@
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ node scripts/web/minify_json_tags.mjs dist/index.html
 ----

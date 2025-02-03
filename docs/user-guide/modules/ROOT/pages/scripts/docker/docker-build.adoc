@@ -32,7 +32,7 @@ See the general Docker script xref:scripts/docker/docker.adoc#usage[usage notes]
 $ scripts/docker/docker_build.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/docker/docker_build.sh -n
 

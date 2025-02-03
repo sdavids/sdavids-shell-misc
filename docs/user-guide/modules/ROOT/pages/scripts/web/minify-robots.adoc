@@ -7,7 +7,7 @@
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/web/minify_robots.sh dist
 ----

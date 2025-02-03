@@ -15,7 +15,7 @@ For a https://docs.oracle.com/en/java/javase/21/docs/specs/jar/jar.html#multi-re
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ curl -L -O -s https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.11.0/junit-jupiter-api-5.11.0.jar
 $ scripts/java/jar_java_versions.sh junit-jupiter-api-5.11.0.jar

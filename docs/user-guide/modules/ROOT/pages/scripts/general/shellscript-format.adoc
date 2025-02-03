@@ -12,7 +12,7 @@
 $ scripts/general/shellscript_format.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/general/shellscript_format.sh /tmp/example
 ----

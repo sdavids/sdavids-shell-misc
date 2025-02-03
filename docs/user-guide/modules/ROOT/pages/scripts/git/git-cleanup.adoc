@@ -56,7 +56,7 @@ By default, the metadata files of https://eclipseide.org[Eclipse], https://www.j
 ====
 Copy this script into your project:
 
-[,shell]
+[,text]
 ----
 <project root directory>
 └── scripts
@@ -72,7 +72,7 @@ Copy this script into your project:
 $ scripts/git/git_cleanup.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/git/git_cleanup.sh -d /tmp/example
 $ scripts/git/git_cleanup.sh -n

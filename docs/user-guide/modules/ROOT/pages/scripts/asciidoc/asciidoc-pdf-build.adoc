@@ -32,7 +32,7 @@ You can configure the https://docs.asciidoctor.org/pdf-converter/latest/image-pa
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ tree --noreport -I scripts
 .
@@ -177,7 +177,7 @@ Typeset PDF: xref:attachment$asciidoc/main.pdf[main.pdf]
 * xref:scripts/asciidoc/asciidoc-html-build.adoc[]
 * xref:scripts/pdf/pdf-remove-metadata.adoc[]
 +
-[,shell]
+[,console]
 ----
 $ exiftool build/main.pdf
 ExifTool Version Number         : 12.76

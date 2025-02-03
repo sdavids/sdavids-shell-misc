@@ -17,7 +17,7 @@ On macOS, the certificate will be added to the "login" keychain also.
 ====
 The certificate created by this script is useful if you do not use mutual TLS, the HTTP-client can be configured to ignore self-signed certificates, the server’s certificate verifier supports using a trust anchor as both a CA certificate and an end-entity certificate, or if you can add the certificate to your trust store.
 
-[,shell]
+[,console]
 ----
 $ curl --insecure ...
 $ wget --no-check-certificate ...
@@ -38,7 +38,7 @@ Docker needs to be restarted.
 ====
 Ensure that the common name (set via the third parameter of this script) of the generated certificate has an entry in `/etc/hosts`.
 
-[,shell]
+[,text]
 ----
 WARNING: /etc/hosts does not have an entry for '127.0.0.1 localhost https.internal'
 ----
@@ -64,7 +64,7 @@ Both `key.pem` and `cert.pem` https://owasp.org/www-project-devsecops-guideline/
 
 If the given directory is inside a Git working tree the script will offer to modify the https://git-scm.com/docs/gitignore[.gitignore] file:
 
-[,shell]
+[,text]
 ----
 WARNING: key.pem and/or cert.pem is not ignored in '/Users/example/tmp/.gitignore'
 
@@ -98,7 +98,7 @@ Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc
 }
 ----
 
-[,shell]
+[,console]
 ----
 $ node --run cert:create
 $ node --run cert:delete
@@ -109,7 +109,7 @@ $ node --run cert:verify
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/cert/create_self_signed_cert.sh
 Adding 'localhost' certificate (expires on: 2024-02-29) to keychain /Users/example/Library/Keychains/login.keychain-db ...

@@ -12,7 +12,7 @@
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/general/create_timestamp_file.sh .timestamp
 $ cat .timestamp

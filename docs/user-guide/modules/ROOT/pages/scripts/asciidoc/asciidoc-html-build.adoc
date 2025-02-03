@@ -42,7 +42,7 @@ Depending on your use case, you might want to use xref:scripts/asciidoc/antora-b
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ tree --noreport -I scripts
 .
@@ -109,7 +109,7 @@ Rel(p, s, "Uses", "https")
 @enduml
 ....
 
-[,shell,highlight=2..3;5]                                                 <4>
+[,text,highlight=2..3;5]                                                 <4>
 ....
 A
 B

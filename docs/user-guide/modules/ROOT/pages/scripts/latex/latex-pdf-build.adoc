@@ -26,7 +26,7 @@ The PDF is generated using the https://tug.org/xetex/[XeTeX] typesetting engine.
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/latex/latex_pdf_build.sh -r main.tex
 
@@ -83,7 +83,7 @@ Typeset PDF: xref:attachment$latex/main.pdf[main.pdf]
 
 * xref:scripts/pdf/pdf-remove-metadata.adoc[]
 +
-[,shell]
+[,console]
 ----
 $ exiftool build/main.pdf
 ExifTool Version Number         : 12.76

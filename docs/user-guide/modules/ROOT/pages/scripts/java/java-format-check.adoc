@@ -77,7 +77,7 @@ If you are using a JetBrains IDE you might want to use the https://plugins.jetbr
 $ scripts/java/java_format_check.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/java/java_format_check.sh /tmp/example/src/main/java
 $ echo $?

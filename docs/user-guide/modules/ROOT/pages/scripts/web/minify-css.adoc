@@ -27,7 +27,7 @@ last 2 versions
 $ scripts/web/minify_css.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/web/minify_css.sh dist
 ----

@@ -125,7 +125,7 @@ jobs:
 $ scripts/gradle/check_reproducible_build_gradle.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/gradle/check_reproducible_build_gradle.sh /tmp/example
 ----

@@ -56,7 +56,7 @@ $ node --run cert:ca:delete
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ ./delete_ca.sh
 

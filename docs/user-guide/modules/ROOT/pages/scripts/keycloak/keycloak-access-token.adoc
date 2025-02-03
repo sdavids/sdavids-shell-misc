@@ -31,7 +31,7 @@ readonly keycloak_proxy_path_prefix='/keycloak'
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/keycloak/keycloak_access_token.sh my-user
 

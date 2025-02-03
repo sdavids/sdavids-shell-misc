@@ -43,7 +43,12 @@ See: <<example>>
 
 == Usage
 
-[,shell]
+[,console]
+----
+$ scripts/git/git_set_identity.sh
+----
+
+[,console]
 ----
 $ scripts/git/git_set_identity.sh -e cameron@howe.name
 $ scripts/git/git_set_identity.sh \
@@ -59,7 +64,7 @@ $ scripts/git/git_set_identity.sh \
 
 Cameron works for two companies and also has personal projects:
 
-[,shell]
+[,console]
 ----
 $ tree --noreport ~/workspaces
 /Users/example/workspaces
@@ -75,7 +80,7 @@ $ tree --noreport ~/workspaces
 
 She has three GPG secret keys--one for each company and one personal:
 
-[,shell]
+[,console]
 ----
 $ gpg --list-secret-keys
 /Users/example/.gnupg/pubring.kbx
@@ -99,7 +104,7 @@ ssb   rsa4096/6C2E4F6CB45DD27E 2025-02-02 [E] [expires: 2029-02-02]
 
 She has configured her personal GPG key in her global Git configuration and signs commits and tags by default:
 
-[,shell]
+[,console]
 ----
 $ cat ~/.gitconfig
 [user]
@@ -115,7 +120,7 @@ $ cat ~/.gitconfig
 
 With this configuration the following identities will be used for commits and tags:
 
-[,shell]
+[,console]
 ----
 $ find ~/workspaces/cardiff-electric -mindepth 1 -maxdepth 1 -type d -exec sh -c '(cd {} && echo "$PWD" && echo "  $(git config get user.name) <$(git config get user.email)> $(git config get user.signingkey)")' \;
 /Users/example/workspaces/cardiff-electric/frontend
@@ -136,7 +141,7 @@ $ find ~/workspaces/personal -mindepth 1 -maxdepth 1 -type d -exec sh -c '(cd {}
 
 She now uses this script to configure the identities for the companies' projects:
 
-[,shell]
+[,console]
 ----
 $ scripts/git/git_set_identity.sh \
 -d ~/workspaces/cardiff-electric \
@@ -153,7 +158,7 @@ Cameron Howe <c.howe@mutiny.com> 39564B7AA0B51F88A8F8BCBC49F1A380A5660737 - /Use
 
 The following identities will be used for commits and tags now:
 
-[,shell]
+[,console]
 ----
 $ find ~/workspaces/cardiff-electric -mindepth 1 -maxdepth 1 -type d -exec sh -c '(cd {} && echo "$PWD" && echo "  $(git config get user.name) <$(git config get user.email)> $(git config get user.signingkey)")' \;
 /Users/example/workspaces/cardiff-electric/frontend

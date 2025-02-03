@@ -9,7 +9,7 @@
 ====
 You can use `exiftool` to display the metadata of a PDF file:
 
-[,shell]
+[,console]
 ----
 $ exiftool test.pdf
 ExifTool Version Number         : 12.76
@@ -21,7 +21,7 @@ PDF Version                     : 1.4
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/pdf/pdf_remove_metadata.sh test.pdf
 ----

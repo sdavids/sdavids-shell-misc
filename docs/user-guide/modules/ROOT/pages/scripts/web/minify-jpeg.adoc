@@ -26,7 +26,7 @@ Also, you might want to add a xref:scripts/general/hash-filename.adoc[hash] to t
 $ scripts/web/minify_jpeg.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/web/minify_jpeg.sh dist
 ----

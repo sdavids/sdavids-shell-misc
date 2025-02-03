@@ -59,7 +59,7 @@ $ npm config ls -l
 $ scripts/dependency_check_node.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/dependency_check_node.sh /tmp/example
 $ scripts/dependency_check_node.sh /tmp/example false

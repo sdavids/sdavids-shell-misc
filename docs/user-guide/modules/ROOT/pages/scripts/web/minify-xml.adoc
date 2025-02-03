@@ -12,7 +12,7 @@
 $ scripts/web/minify_xml.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/web/minify_xml.sh dist
 ----

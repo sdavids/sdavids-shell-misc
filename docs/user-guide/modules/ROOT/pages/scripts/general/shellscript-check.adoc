@@ -23,7 +23,7 @@ If you use https://typicode.github.io/husky/[Husky]:
 $ scripts/general/shellscript_check.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/general/shellscript_check.sh /tmp
 ----

@@ -9,7 +9,7 @@
 ====
 This script, in conjunction with the xref:functions/general/ls-extensions.adoc[] script, is helpful in determining whether you have covered your files properly in your https://git-scm.com/docs/gitattributes[.gitattributes] file.
 
-[,shell]
+[,console]
 ----
 $ tree --noreport -a -I .git .
 .
@@ -61,7 +61,7 @@ $ ls_extensions_git                                                       <5>
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ ls_extensions_git
    5 sh

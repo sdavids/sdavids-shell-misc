@@ -12,7 +12,7 @@ This script combines xref:scripts/keycloak/keycloak-access-token.adoc[] and xref
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/keycloak/keycloak_access_token_decoded.sh my-user
 

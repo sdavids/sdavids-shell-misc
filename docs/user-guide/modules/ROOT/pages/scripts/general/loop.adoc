@@ -25,7 +25,7 @@ fi
 exit 100 # infinite loop
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/general/loop.sh 10 10 some_script.sh
 $ scripts/general/loop.sh 5 0 some_otherscript_with_parameters.sh a 1
@@ -35,7 +35,7 @@ $ scripts/general/loop.sh 5 0 some_otherscript_with_parameters.sh a 1
 
 * xref:scripts/general/counter.adoc[]
 +
-[,shell]
+[,console]
 ----
 $ scripts/general/loop.sh 1 0 scripts/general/counter.sh my-counter 5
 12345

@@ -27,7 +27,7 @@ The value of `build.time` is either the value of the `SOURCE_DATE_EPOCH` https:/
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/web/create_build_info_ts.sh src/build-info.ts
 ----

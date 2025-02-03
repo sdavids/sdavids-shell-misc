@@ -19,7 +19,7 @@ You can use this script to verify the initial publication year of your https://r
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/git/git_author_date_initial.sh /tmp/example
 2022-04-16T15:59:50+02:00 a.txt
@@ -65,7 +65,7 @@ A       a.txt
 
 * xref:scripts/git/git-author-date-last.adoc[]
 +
-[,shell]
+[,console]
 ----
 $ scripts/git/git_author_date_initial.sh /tmp/example
 2022-04-16T15:59:50+02:00 a.txt

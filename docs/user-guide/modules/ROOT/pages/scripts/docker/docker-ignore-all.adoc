@@ -26,7 +26,7 @@ It should be used as a starting point, i.e. you should remove entries which shou
 $ scripts/docker/docker_ignore_all.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ tree --noreport -a -I .git /tmp/example
 /tmp/example

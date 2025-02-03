@@ -12,7 +12,7 @@
 $ scripts/web/minify_html.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/web/minify_html.sh dist
 ----

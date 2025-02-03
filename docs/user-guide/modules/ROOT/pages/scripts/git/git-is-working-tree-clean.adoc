@@ -12,7 +12,7 @@
 $ scripts/git/git_is_working_tree_clean.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ echo $?
 ----

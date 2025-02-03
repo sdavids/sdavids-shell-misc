@@ -101,13 +101,13 @@ Select menu:File[Export > RAW]
 IMPORTANT: Unfortunately, Mac und Linux handle `sed -i` differently:
 
 .Mac
-[source,shell]
+[,shell]
 ----
 sed -i '' '/^[@#]/d' "$file"
 ----
 
 .Linux
-[source,shell]
+[,shell]
 ----
 sed -i '/^[@#]/d' "$file"
 ----

@@ -22,14 +22,14 @@ You can https://docs.gradle.org/8.6/release-notes.html#simpler-source-package-ha
 
 [,console]
 ----
-printf 'org.gradle.buildinit.source.package=my.org' >>"${GRADLE_USER_HOME:=${HOME}}/gradle.properties"
+$ printf 'org.gradle.buildinit.source.package=my.org' >>"${GRADLE_USER_HOME:=${HOME}}/gradle.properties"
 ----
 
 If you want https://docs.gradle.org/8.7/release-notes.html#generating-concise-projects-with-gradle-init[no comments]  to be generated add `org.gradle.buildinit.comments=false` in https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_configuration_properties[Gradle properties]:
 
 [,console]
 ----
-printf 'org.gradle.buildinit.comments=false' >>"${GRADLE_USER_HOME:=${HOME}}/gradle.properties"
+$ printf 'org.gradle.buildinit.comments=false' >>"${GRADLE_USER_HOME:=${HOME}}/gradle.properties"
 ----
 ====
 
@@ -68,7 +68,7 @@ EOF
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ gradle_new_java_library example-java-library
 $ gradle_new_java_library other-java-library /tmp

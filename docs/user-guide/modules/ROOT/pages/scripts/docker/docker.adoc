@@ -20,7 +20,7 @@ xref:scripts/docker/docker-stop.adoc[]:: stop the container
 
 The scripts should be copied into a project, e.g.:
 
-[,shell]
+[,text]
 ----
 <project root directory>
 ├── Dockerfile
@@ -62,7 +62,7 @@ The scripts expect the container to be named `$+{container_name}+`.
 ====
 You can try the scripts with the {dockerfile_url}[example Dockerfile]:
 
-[,shell]
+[,console]
 ----
 $ scripts/docker/docker_build.sh -d scripts/docker/Dockerfile
 $ scripts/docker/docker_start.sh
@@ -70,7 +70,7 @@ $ scripts/docker/docker_start.sh
 
 => http://localhost:3000
 
-[,shell]
+[,console]
 ----
 $ scripts/docker/docker_logs.sh
 $ scripts/docker/docker_health.sh
@@ -78,7 +78,7 @@ $ scripts/docker/docker_inspect.sh
 $ scripts/docker/docker_sh.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/docker/docker_stop.sh
 $ scripts/docker/docker_remove.sh

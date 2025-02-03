@@ -18,7 +18,7 @@ Ensure that the xref:scripts/cert/create-ca.adoc[certificate authority has been 
 
 If the given directory is inside a Git working tree the script will offer to modify the https://git-scm.com/docs/gitignore[.gitignore] file:
 
-[,shell]
+[,text]
 ----
 WARNING: ca.crt is not ignored in '/Users/example/tmp/.gitignore'
 
@@ -35,7 +35,7 @@ Related Script:       xref:scripts/git/git-cleanup.adoc#git-cleanup-untracked-ex
 $ scripts/cert/copy_ca_root_cert.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/cert/copy_ca_root_cert.sh ~/.local/secrets/certs/ca-root
 $ stat -f '%A %N' ~/.local/secrets/certs/ca-root/ca.crt

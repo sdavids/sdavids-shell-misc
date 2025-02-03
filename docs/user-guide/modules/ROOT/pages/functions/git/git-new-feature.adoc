@@ -18,7 +18,7 @@ The created feature branch will be pushed to the upstream if possible.
 ====
 Set the following Git configuration variables on your repository if you want to use a https://git-scm.com/book/en/v2/Git-Branching-Rebasing[rebase workflow]:
 
-[,shell]
+[,console]
 ----
 $ git config set branch.autosetuprebase always
 $ git config set --bool pull.rebase true
@@ -26,7 +26,7 @@ $ git config set --bool pull.rebase true
 
 Or set it globally:
 
-[,shell]
+[,console]
 ----
 $ git config set --global branch.autosetuprebase always
 $ git config set --global --bool pull.rebase true
@@ -41,7 +41,7 @@ More Information:
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ git_new_feature issue-1
 $ git branch -vv

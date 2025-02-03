@@ -16,7 +16,7 @@ To get a consistent hash length across systems you should either
 [loweralpha]
 . ensure that `core.abbrev` is set on the repository after initialization:
 +
-[,shell]
+[,console]
 ----
 $ git config set core.abbrev 20
 ----
@@ -25,7 +25,7 @@ Unfortunately, these settings are https://git-scm.com/book/en/v2/Customizing-Git
 
 . explicitly set the length when invoking the script:
 +
-[,shell]
+[,console]
 ----
 $ scripts/git/git_get_short_hash.sh . 20
 ----
@@ -33,7 +33,7 @@ $ scripts/git/git_get_short_hash.sh . 20
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/git/git_get_short_hash.sh
 844881d
@@ -53,7 +53,7 @@ $ scripts/git/git_get_short_hash.sh
 
 * xref:scripts/git/git-get-hash.adoc[]
 +
-[,shell]
+[,console]
 ----
 $ scripts/git/git_get_short_hash.sh
 844881d

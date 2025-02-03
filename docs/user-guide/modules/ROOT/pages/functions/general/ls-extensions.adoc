@@ -7,7 +7,7 @@
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ ls_extensions
    5 sh

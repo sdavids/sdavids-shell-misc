@@ -42,7 +42,7 @@ Ensure that the certificate authority has been xref:scripts/cert/create-ca.adoc[
 ====
 Ensure that the common name (set via the third parameter of this script) of the generated certificate has an entry in `/etc/hosts`.
 
-[,shell]
+[,text]
 ----
 WARNING: /etc/hosts does not have an entry for '127.0.0.1 localhost https.internal'
 ----
@@ -68,7 +68,7 @@ Both `key.pem` and `cert.pem` https://owasp.org/www-project-devsecops-guideline/
 
 If the given directory is inside a Git working tree the script will offer to modify the https://git-scm.com/docs/gitignore[.gitignore] file:
 
-[,shell]
+[,text]
 ----
 WARNING: key.pem and/or cert.pem is not ignored in '/Users/example/tmp/.gitignore'
 
@@ -106,7 +106,7 @@ Copy this script (and its related xref:scripts/cert/create-ca.adoc[], xref:scrip
 }
 ----
 
-[,shell]
+[,console]
 ----
 $ node --run cert:ca:create
 $ node --run cert:ca:copy-root
@@ -121,7 +121,7 @@ $ node --run cert:ca:delete
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ scripts/cert/create_ca_based_cert.sh
 $ date -Idate

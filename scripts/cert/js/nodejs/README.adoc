@@ -10,7 +10,7 @@ Sebastian Davids <sdavids@gmx.de>
 
 == With standalone certificates
 
-[source,shell]
+[,console]
 ----
 $ ../../create_self_signed_cert.sh
 $ node server.mjs
@@ -20,7 +20,7 @@ $ node server.mjs
 
 == With certificate authority based certificates
 
-[source,shell]
+[,console]
 ----
 $ ../../create_ca.sh
 $ ../../create_ca_based_cert.sh

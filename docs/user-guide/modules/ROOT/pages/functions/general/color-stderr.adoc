@@ -14,7 +14,7 @@
 echo 'error' >&2
 ----
 
-[,shell,subs="quotes"]
+[,console,subs="quotes"]
 ----
 $ ./with-stderr-output.sh
 error

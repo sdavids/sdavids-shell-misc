@@ -38,7 +38,7 @@ if [ $? -ne 100 ]; then
 fi
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/general/counter.sh my-counter 2
 1
@@ -81,7 +81,7 @@ $ rm -rf "${XDG_STATE_HOME:=${HOME}}/retry"
 
 * xref:scripts/general/loop.adoc[]
 +
-[,shell]
+[,console]
 ----
 $ scripts/general/loop.sh 1 0 scripts/general/counter.sh my-counter 5
 12345

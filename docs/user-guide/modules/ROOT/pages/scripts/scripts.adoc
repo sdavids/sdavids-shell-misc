@@ -6,7 +6,7 @@
 ====
 Copy the scripts useful for a given project into a `scripts` folder within the project so they are easily accessible by team members.
 
-[,shell]
+[,text]
 ----
 project_root
 ├── scripts

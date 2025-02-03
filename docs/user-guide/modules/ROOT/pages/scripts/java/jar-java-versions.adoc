@@ -14,7 +14,7 @@ This script is useful to verify that you have not inadvertently forgotten the ht
 
 == Usage
 
-[,shell]
+[,console]
 ----
 $ curl -L -O -s https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.11.0/junit-jupiter-api-5.11.0.jar
 $ jar_is_multi_release junit-jupiter-api-5.11.0.jar

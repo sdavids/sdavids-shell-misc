@@ -53,7 +53,7 @@ $ node --run cert:renew
 $ scripts/cert/renew_self_signed_cert.sh
 ----
 
-[,shell]
+[,console]
 ----
 $ scripts/cert/renew_self_signed_cert.sh dist/etc/nginx
 
