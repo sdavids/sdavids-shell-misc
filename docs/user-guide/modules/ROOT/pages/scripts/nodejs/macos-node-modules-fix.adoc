@@ -15,7 +15,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 {
 ...
   "scripts": {
-    "preinstall": "scripts/macos–node-modules-fix.sh"
+    "preinstall": "scripts/macos_node_modules_fix.sh"
   }
 }
 ----
@@ -51,7 +51,7 @@ Alternatively, you can use this script as https://docs.npmjs.com/cli/v10/command
 {
 ...
   "scripts": {
-    "macos:fix-node-modules": "scripts/macos–node-modules-fix.sh"
+    "macos:fix-node-modules": "scripts/macos_node_modules_fix.sh"
   }
 }
 ----
@@ -68,12 +68,12 @@ $ npm install && node --run macos:fix-node-modules
 
 [,console]
 ----
-$ scripts/nodejs/macos–node-modules-fix.sh
+$ scripts/nodejs/macos_node_modules_fix.sh
 ----
 
 [,shell]
 ----
-$ scripts/nodejs/macos–node-modules-fix.sh /tmp/example_project
+$ scripts/nodejs/macos_node_modules_fix.sh /tmp/example_project
 
 $ xattr -r /tmp/example_workspace
 $ tree --noreport -a /tmp/example_workspace
@@ -82,7 +82,7 @@ $ tree --noreport -a /tmp/example_workspace
 │   └── node_modules
 └── project2
     └── node_modules
-$ scripts/nodejs/macos–node-modules-fix.sh /tmp/example_workspace
+$ scripts/nodejs/macos_node_modules_fix.sh /tmp/example_workspace
 $ xattr -r /tmp/example_workspace                                         <1>
 /tmp/example_workspace/project1/node_modules: com.apple.metadata:com_apple_backup_excludeItem
 /tmp/example_workspace/project2/node_modules: com.apple.metadata:com_apple_backup_excludeItem

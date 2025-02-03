@@ -27,8 +27,8 @@ exit 100 # infinite loop
 
 [,shell]
 ----
-$ scripts/general/loop.sh 10 10 some-script.sh
-$ scripts/general/loop.sh 5 0 some-otherscript-with-parameters.sh a 1
+$ scripts/general/loop.sh 10 10 some_script.sh
+$ scripts/general/loop.sh 5 0 some_otherscript_with_parameters.sh a 1
 ----
 
 == Related Scripts
