@@ -101,7 +101,6 @@ readonly commit
 docker image build \
   ${no_cache} \
   --file "${dockerfile}" \
-  --compress \
   --tag "${image_name}:latest" \
   --tag "${image_name}:${tag}" \
   --label "${label_group}=${repository}" \
