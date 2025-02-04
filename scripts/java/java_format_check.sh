@@ -7,12 +7,12 @@
 #   Linux:
 #     sudo apt-get install curl
 
-# java needs to be in $PATH
+# java (JDK 17+) needs to be in $PATH
 
 set -Eeu -o pipefail -o posix
 
 # https://github.com/google/google-java-format/releases
-readonly version='1.24.0'
+readonly version='1.25.2'
 
 while getopts ':v' opt; do
   case "${opt}" in
