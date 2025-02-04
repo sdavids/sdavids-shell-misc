@@ -23,14 +23,14 @@ while getopts ':d:e:n' opt; do
   esac
 done
 
+readonly base_dir="${base_dir:-$PWD}"
+readonly expire="${expire:-1.month.ago}"
+readonly dry_run="${dry_run:-}"
+
 if [ ! -d "${base_dir}" ]; then
   printf "The directory '%s' does not exist.\n" "${base_dir}" >&2
   exit 2
 fi
-
-readonly base_dir="${base_dir:-$PWD}"
-readonly expire="${expire:-1.month.ago}"
-readonly dry_run="${dry_run:-}"
 
 (
   cd "${base_dir}"
