@@ -68,3 +68,7 @@ husky                 9.1.4   9.1.4   9.1.5  node_modules/husky               ex
 == Related Scripts
 
 * xref:scripts/nodejs/clean-node.adoc[]
+
+== More Information
+
+* https://docs.npmjs.com/cli/v11/commands/npm-outdated[npm outdated]
