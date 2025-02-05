@@ -1,0 +1,23 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= dependency_check_rust
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/rust/dependency_check_rust.sh
+
+{script_url}[This script^] checks for dependency updates of the link:https://www.rust-lang.org[Rust] project in the given directory (`$PWD` if not given).
+
+== Usage
+
+[,console]
+----
+$ scripts/dependency_check_rust.sh
+$ scripts/dependency_check_rust.sh /tmp/example
+    Updating crates.io index
+     Locking 2 packages to latest compatible versions
+    Updating log v0.4.22 -> v0.4.25
+    Updating minreq v2.13.0 -> v2.13.2
+warning: not updating lockfile due to dry run
+----
+
+== More Information
+
+* https://doc.rust-lang.org/cargo/commands/cargo-update.html[cargo update]

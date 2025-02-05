@@ -3,3 +3,5 @@
 = Rust
 
 This section contains scripts related to https://www.rust-lang.org[Rust]:
+
+xref:scripts/rust/dependency-check-rust.adoc[]:: check for dependency updates
