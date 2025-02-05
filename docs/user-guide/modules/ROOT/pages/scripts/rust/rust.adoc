@@ -1,0 +1,5 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= Rust
+
+This section contains scripts related to https://www.rust-lang.org[Rust]:
