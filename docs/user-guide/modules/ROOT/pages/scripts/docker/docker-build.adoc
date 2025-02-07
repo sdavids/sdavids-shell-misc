@@ -9,6 +9,7 @@ The following parameters are supported:
 
 `d` :: the path to the https://docs.docker.com/reference/cli/docker/image/build/#file[Dockerfile] (`$PWD/Dockerfile` if not given) to be used
 `n` :: do not use the cache when building the image
+`p` :: the https://docs.docker.com/reference/cli/docker/buildx/build/#platform[target platform] for the build (if not given the platform of the BuildKit daemon where the build runs is used)
 `t` :: one of the two image's https://docs.docker.com/engine/reference/commandline/image_build/#tag[tags] (`local` if not given);
 the image will always be tagged with `latest`
 
@@ -58,6 +59,13 @@ $ SOURCE_DATE_EPOCH=0 scripts/docker/docker_build.sh -d scripts/docker/Dockerfil
 ...
 "org.opencontainers.image.revision":"46cca5eff61eabb008ed43e81988e6a9099aa469-next"
 ...
+
+$ scripts/docker/docker_build.sh -d scripts/docker/Dockerfile -t amd -p linux/amd64
+$ docker inspect --format='{{.Os}}/{{.Architecture}}' de.sdavids/sdavids-shell-misc:amd
+linux/amd64
+$ scripts/docker/docker_build.sh -d scripts/docker/Dockerfile -t arm -p linux/arm64
+$ docker inspect --format='{{.Os}}/{{.Architecture}}' de.sdavids/sdavids-shell-misc:arm
+linux/arm64
 ----
 
 == Prerequisites
@@ -69,3 +77,8 @@ $ SOURCE_DATE_EPOCH=0 scripts/docker/docker_build.sh -d scripts/docker/Dockerfil
 * xref:scripts/docker/docker-start.adoc[]
 * xref:scripts/docker/docker-remove.adoc[]
 * xref:scripts/docker/docker-cleanup.adoc[]
+
+== More Information
+
+* https://docs.docker.com/reference/cli/docker/buildx/build/#platform[Docker build - platform]
+* https://docs.docker.com/reference/cli/docker/buildx/build/#tag[Docker build - tag]

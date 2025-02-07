@@ -5,7 +5,7 @@
 
 set -Eeu -o pipefail -o posix
 
-while getopts ':d:nt:' opt; do
+while getopts ':d:np:t:' opt; do
   case "${opt}" in
     d)
       dockerfile="${OPTARG}"
@@ -13,11 +13,14 @@ while getopts ':d:nt:' opt; do
     n)
       no_cache='--pull --no-cache'
       ;;
+    p)
+      platform="${OPTARG}"
+      ;;
     t)
       tag="${OPTARG}"
       ;;
     ?)
-      echo "Usage: $0 [-d Dockerfile] [-n] [-t tag]" >&2
+      echo "Usage: $0 [-d Dockerfile] [-n] [-p platform] [-t tag]" >&2
       exit 1
       ;;
   esac
@@ -26,6 +29,9 @@ done
 readonly dockerfile="${dockerfile:-$PWD/Dockerfile}"
 
 readonly no_cache="${no_cache:-}"
+
+# https://docs.docker.com/reference/cli/docker/buildx/build/#platform
+readonly platform="${platform:-}"
 
 readonly tag="${tag:-local}"
 
@@ -98,15 +104,28 @@ readonly commit
 
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 # shellcheck disable=SC2086
-docker image build \
-  ${no_cache} \
-  --file "${dockerfile}" \
-  --tag "${image_name}:latest" \
-  --tag "${image_name}:${tag}" \
-  --label "${label_group}=${repository}" \
-  --label "org.opencontainers.image.revision=${commit}" \
-  --label "org.opencontainers.image.created=${created_at}" \
-  .
+if [ -n "${platform}" ]; then
+  docker image build \
+    ${no_cache} \
+    --file "${dockerfile}" \
+    --platform="${platform}" \
+    --tag "${image_name}:latest" \
+    --tag "${image_name}:${tag}" \
+    --label "${label_group}=${repository}" \
+    --label "org.opencontainers.image.revision=${commit}" \
+    --label "org.opencontainers.image.created=${created_at}" \
+    .
+else
+  docker image build \
+    ${no_cache} \
+    --file "${dockerfile}" \
+    --tag "${image_name}:latest" \
+    --tag "${image_name}:${tag}" \
+    --label "${label_group}=${repository}" \
+    --label "org.opencontainers.image.revision=${commit}" \
+    --label "org.opencontainers.image.created=${created_at}" \
+    .
+fi
 
 echo
 
