@@ -4,6 +4,7 @@
 
 # https://yamllint.readthedocs.io/en/stable/configuration.html#default-configuration
 
+# https://github.com/adrienverge/yamllint/blob/master/yamllint/conf/default.yaml
 extends: default
 rules:
   braces:
