@@ -52,8 +52,8 @@ public final class Server {
   static {
     // see sun.net.httpserver.ServerConfig
     System.setProperty("sun.net.httpserver.maxReqTime", "5");
-    System.setProperty("sun.net.httpserver.maxRspTime", "5");
-    System.setProperty("sun.net.httpserver.idleInterval", "5000");
+    System.setProperty("sun.net.httpserver.maxRspTime", "10");
+    System.setProperty("sun.net.httpserver.idleInterval", "30000");
   }
 
   private static final Logger LOGGER = getLogger(MethodHandles.lookup().lookupClass().getName());

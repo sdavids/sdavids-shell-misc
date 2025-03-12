@@ -13,11 +13,12 @@ import (
 
 const port = 3000
 
+// https://blog.cloudflare.com/the-complete-guide-to-golang-net-http-timeouts/
 const (
 	readTimeout    = 5 * time.Second
-	writeTimeout   = 5 * time.Second
-	idleTimeout    = 5 * time.Second
-	handlerTimeout = 2 * time.Second
+	writeTimeout   = 10 * time.Second
+	idleTimeout    = 30 * time.Second
+	handlerTimeout = 15 * time.Second
 )
 
 func main() {
