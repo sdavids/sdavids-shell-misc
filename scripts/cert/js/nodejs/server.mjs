@@ -23,9 +23,9 @@ if (isNaN(port) || port < 1 || port > 65535) {
   process.exit(64); // EX_USAGE
 }
 // eslint-disable-next-line dot-notation
-const keyPath = process.env['KEY_PATH'] ?? 'key.pem';
-// eslint-disable-next-line dot-notation
 const certPath = process.env['CERT_PATH'] ?? 'cert.pem';
+// eslint-disable-next-line dot-notation
+const keyPath = process.env['KEY_PATH'] ?? 'key.pem';
 
 // eslint-disable-next-line init-declarations
 let engine;
