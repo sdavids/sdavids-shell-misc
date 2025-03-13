@@ -61,7 +61,7 @@ public final class Server {
   private static int getPort() {
     var port = Integer.valueOf(requireNonNullElse(getenv("PORT"), "3000"));
     if (port < 1 || port > 65535) {
-      throw new IllegalArgumentException("Port out of range [1..65535]: " + port);
+      throw new IllegalArgumentException("port must be between 1 and 65535: " + port);
     }
     return port;
   }

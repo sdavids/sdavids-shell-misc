@@ -19,7 +19,7 @@ import process from 'node:process';
 // eslint-disable-next-line dot-notation
 const port = Number(process.env['PORT'] ?? 3000);
 if (isNaN(port) || port < 1 || port > 65535) {
-  console.error(`Illegal port '${port}' [1..65535]`);
+  console.error(`port must be between 1 and 65535: ${port}`);
   process.exit(64); // EX_USAGE
 }
 // eslint-disable-next-line dot-notation
@@ -40,13 +40,13 @@ const options = {};
 try {
   options.cert = readFileSync(certPath);
 } catch {
-  console.error(`certificate '${certPath}' not found`);
+  console.error(`cert path "${certPath}" invalid`);
   process.exit(64); // EX_USAGE
 }
 try {
   options.key = readFileSync(keyPath);
 } catch {
-  console.error(`key '${keyPath}' not found`);
+  console.error(`key path "${keyPath}" invalid`);
   process.exit(64); // EX_USAGE
 }
 
