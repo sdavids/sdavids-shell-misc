@@ -70,9 +70,10 @@ fi
     fi
   fi
 
-  git repack -d --name-hash-version=2 --quiet
   git rerere clear
   rm -rf .git/rr-cache
   git reflog expire --expire="${expire}" --expire-unreachable=now 1>/dev/null
-  git gc --aggressive --prune="${expire}"
+  git gc --prune="${expire}"
+  # https://stackoverflow.com/a/28721047
+  git repack -f -a -d --depth=50 --window=250 --threads=0 --name-hash-version=2 --quiet
 )
