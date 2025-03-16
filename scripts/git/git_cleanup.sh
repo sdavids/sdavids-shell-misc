@@ -70,7 +70,7 @@ fi
     fi
   fi
 
-  git repack -d --quiet
+  git repack -d --name-hash-version=2 --quiet
   git rerere clear
   rm -rf .git/rr-cache
   git reflog expire --expire="${expire}" --expire-unreachable=now 1>/dev/null
