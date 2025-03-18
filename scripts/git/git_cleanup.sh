@@ -36,7 +36,7 @@ fi
   cd "${base_dir}"
 
   if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != 'true' ]; then
-    echo "'${base_dir}' is not a git repository" >&2
+    echo "'${base_dir}' is not inside a git repository" >&2
     exit 3
   fi
 
@@ -71,7 +71,7 @@ fi
   fi
 
   git rerere clear
-  rm -rf .git/rr-cache
+  rm -rf "$(git rev-parse --show-toplevel)/.git/rr-cache"
   git reflog expire --expire="${expire}" --expire-unreachable=now 1>/dev/null
   git gc --prune="${expire}"
   # https://stackoverflow.com/a/28721047
