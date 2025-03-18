@@ -13,6 +13,10 @@ if [ -z "${GIT_REFLOG_ACTION+x}" ]; then
   trap 'git stash pop --quiet 2>/dev/null' EXIT INT QUIT TSTP
 fi
 
+git_root="$(git rev-parse --show-toplevel)"
+cd "${git_root}" || exit 1
+unset git_root
+
 shfmt --diff --indent 2 --case-indent --binary-next-line --simplify .
 find zfunc -type f -print0 | xargs -0L1 shfmt --diff --indent 2 --case-indent --binary-next-line --simplify
 
