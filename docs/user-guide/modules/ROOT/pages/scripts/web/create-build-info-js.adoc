@@ -29,14 +29,15 @@ The value of `build.time` is either the value of the `SOURCE_DATE_EPOCH` https:/
 
 [,console]
 ----
-$ scripts/web/create_build_info_js.sh src/build-info.mjs
+$ scripts/web/create_build_info_js.sh src/build-info.js
 ----
 
 ⇓
 
-.src/build-info.mjs
+.src/build-info.js
 [,javascript]
 ----
+/** @type {{build: {id: string, time: string}, git: {commit: {id: string, time: string}, branch: string}}} */
 export const buildInfo = {
   build: {
     id: '1710116787',
