@@ -3,8 +3,6 @@
 # SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
 # SPDX-License-Identifier: Apache-2.0
 
-# script needs to be invoked from the project's root directory
-
 set -eu
 
 if [ -z "$*" ]; then
@@ -28,20 +26,6 @@ else
   build_at="$(date -d "@${SOURCE_DATE_EPOCH}" -Iseconds -u | sed -e 's/+00:00$/Z/')"
 fi
 readonly build_at
-
-branch="$(git rev-parse --verify --abbrev-ref HEAD)"
-readonly branch
-
-commit="$(git rev-parse --verify HEAD)"
-readonly commit
-
-commit_at="$(git log --max-count=1 --pretty=format:%ct)"
-if [ "$(uname)" = 'Darwin' ]; then
-  commit_at="$(date -r "${commit_at}" -Iseconds -u | sed -e 's/+00:00$/Z/')"
-else
-  commit_at="$(date -d "@${commit_at}" -Iseconds -u | sed -e 's/+00:00$/Z/')"
-fi
-readonly commit_at
 
 if [ -n "${GITHUB_RUN_ID+x}" ]; then
   # https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
@@ -72,9 +56,24 @@ else
 fi
 readonly build_id
 
-printf "// eslint-disable-next-line max-len
+if [ -n "$(command -v git)" ] && [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = 'true' ]; then
+  branch="$(git rev-parse --verify --abbrev-ref HEAD)"
+  readonly branch
+
+  commit="$(git rev-parse --verify HEAD)"
+  readonly commit
+
+  commit_at="$(git log --max-count=1 --pretty=format:%ct)"
+  if [ "$(uname)" = 'Darwin' ]; then
+    commit_at="$(date -r "${commit_at}" -Iseconds -u | sed -e 's/+00:00$/Z/')"
+  else
+    commit_at="$(date -d "@${commit_at}" -Iseconds -u | sed -e 's/+00:00$/Z/')"
+  fi
+  readonly commit_at
+
+  printf "// eslint-disable-next-line max-len
 /* WARNING: will be overwritten by the \`%s\` script */
-/** @type {{git: {commit: {id: string, time: string}, branch: string}, build: {id: string, time: string}}} */
+/** @type {{build: {id: string, time: string}, git: {commit: {id: string, time: string}, branch: string}}} */
 export const buildInfo = {
   build: {
     id: '%s',
@@ -87,11 +86,24 @@ export const buildInfo = {
       time: '%s',
     },
   },
-};
-" "$0" \
-  "${build_id}" \
-  "${build_at}" \
-  "${branch}" \
-  "${commit}" \
-  "${commit_at}" \
-  >"${file}"
+};\n" "$0" \
+    "${build_id}" \
+    "${build_at}" \
+    "${branch}" \
+    "${commit}" \
+    "${commit_at}" \
+    >"${file}"
+else
+  printf "// eslint-disable-next-line max-len
+/* WARNING: will be overwritten by the \`%s\` script */
+/** @type {{build: {id: string, time: string}}} */
+export const buildInfo = {
+  build: {
+    id: '%s',
+    time: '%s',
+  },
+};\n" "$0" \
+    "${build_id}" \
+    "${build_at}" \
+    >"${file}"
+fi
