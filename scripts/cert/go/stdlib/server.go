@@ -6,6 +6,7 @@ package main
 import (
 	"fmt"
 	"log/slog"
+	"net"
 	"net/http"
 	"os"
 	"strconv"
@@ -42,7 +43,7 @@ func main() {
 
 func run(port int, certPath string, keyPath string) int {
 	server := http.Server{
-		Addr:         fmt.Sprintf(":%d", port),
+		Addr:         net.JoinHostPort("", strconv.Itoa(port)),
 		ReadTimeout:  readTimeout,
 		WriteTimeout: writeTimeout,
 		IdleTimeout:  idleTimeout,
