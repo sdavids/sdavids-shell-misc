@@ -19,10 +19,6 @@ max_line_length = 80
 [*.adoc]
 max_line_length = off
 
-[*.md]
-trim_trailing_whitespace = false
-max_line_length = 80
-
 [*.{yaml,yml}]
 max_line_length = 80
 
