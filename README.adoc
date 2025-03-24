@@ -12,14 +12,6 @@ ifdef::env-browser[:outfilesuffix: .adoc]
 
 ifdef::env-github[]
 :outfilesuffix: .adoc
-:badges:
-endif::[]
-
-ifdef::badges[]
-image:https://img.shields.io/maintenance/yes/2025[Maintenance]
-image:https://img.shields.io/github/last-commit/sdavids/sdavids-shell-misc[GitHub last commit]
-image:http://isitmaintained.com/badge/resolution/sdavids/sdavids-shell-misc.svg[Resolution Time]
-image:http://isitmaintained.com/badge/open/sdavids/sdavids-shell-misc.svg[Open Issues]
 endif::[]
 
 {description}
