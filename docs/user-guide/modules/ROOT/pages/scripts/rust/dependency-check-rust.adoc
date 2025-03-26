@@ -9,8 +9,8 @@
 
 [,console]
 ----
-$ scripts/dependency_check_rust.sh
-$ scripts/dependency_check_rust.sh /tmp/example
+$ scripts/rust/dependency_check_rust.sh
+$ scripts/rust/dependency_check_rust.sh /tmp/example
     Updating crates.io index
      Locking 2 packages to latest compatible versions
     Updating log v0.4.22 -> v0.4.25
