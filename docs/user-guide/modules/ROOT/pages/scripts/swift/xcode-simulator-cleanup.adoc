@@ -1,0 +1,39 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= xcode_simulator_cleanup
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/swift/xcode_simulator_cleanup.sh
+
+{script_url}[This script^] will:
+
+* remove unneeded simulators
+* erases all data of simulator devices
+
+[NOTE]
+====
+
+Display information on simulators:
+
+[,console]
+----
+$ xcrun simctl list
+----
+
+Simulator devices and their data can be found at:
+
+[,console]
+----
+$ ls $HOME/Library/Developer/Xcode/UserData/Previews/Simulator\ Devices
+----
+====
+
+[TIP]
+====
+You might want to use the app https://apps.apple.com/in/app/devcleaner-for-xcode/id1388020431[DevCleaner] instead of using this script.
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/swift/xcode_simulator_cleanup.sh
+----
