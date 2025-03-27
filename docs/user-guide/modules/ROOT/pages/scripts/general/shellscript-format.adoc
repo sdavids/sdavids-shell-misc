@@ -13,6 +13,24 @@ $ scripts/general/shellscript_format.sh
 $ scripts/general/shellscript_format.sh /tmp/example
 ----
 
+[TIP]
+====
+Instead of this script you might want to add a shell alias:
+
+[,shell]
+----
+alias shfmtg='shfmt --write --indent 2 --case-indent --binary-next-line --simplify'
+----
+
+⇓
+
+[,console]
+----
+$ shfmtg .
+$ shfmtg /tmp/example
+----
+====
+
 == Prerequisites
 
 * xref:developer-guide::dev-environment/dev-installation.adoc#shfmt[shfmt]
