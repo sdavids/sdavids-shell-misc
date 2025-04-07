@@ -6,6 +6,9 @@
 
 # https://github.com/adrienverge/yamllint/blob/master/yamllint/conf/default.yaml
 extends: default
+ignore:
+  - scripts/cert/java/quarkus/build
+  - scripts/cert/java/spring-boot/build
 rules:
   braces:
     min-spaces-inside: 0
