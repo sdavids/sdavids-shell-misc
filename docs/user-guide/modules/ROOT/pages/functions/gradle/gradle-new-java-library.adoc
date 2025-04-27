@@ -66,6 +66,20 @@ EOF
 ----
 ====
 
+[TIP]
+====
+You might want to use xref:functions/gh/repo-publish-to-gh.adoc[] to publish the newly created project to GitHub:
+
+[,console]
+----
+$ gradle_new_java_library example-java-library
+$ repo_publish_to_gh
+✓ Created repository sdavids/example-java-library on GitHub
+  https://github.com/sdavids/example-java-library
+...
+----
+====
+
 == Usage
 
 [,console]
@@ -75,7 +89,6 @@ $ gradle_new_java_library other-java-library /tmp
 $ tree --noreport -a -I .git .
 .
 ├── .editorconfig
-├── .git-blame-ignore-revs
 ├── .gitattributes
 ├── .githooks
 │   ├── pre-commit
@@ -114,7 +127,16 @@ nothing to commit, working tree clean
 
 * xref:developer-guide::dev-environment/dev-installation.adoc#gradle[Gradle]
 
+== Related Functions
+
+* xref:functions/gh/repo-publish-to-gh.adoc[]
+
 == More Information
 
 * https://docs.gradle.org/current/userguide/build_init_plugin.html[Gradle - Build Init Plugin]
 * https://docs.gradle.org/current/userguide/java_library_plugin.html[Gradle - Java library]
+* https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_configuration_properties[Gradle properties]
+* https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks[Git Hooks]
+* https://git-scm.com/docs/gitattributes[gitattributes]
+* https://git-scm.com/docs/gitignore[gitignore]
+* https://editorconfig.org[EditorConfig]

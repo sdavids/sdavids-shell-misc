@@ -155,13 +155,10 @@ max_line_length = 100
 max_line_length = 80
 EOF
 
-    cat <<'EOF' >.git-blame-ignore-revs
-# https://git-scm.com/docs/git-blame#Documentation/git-blame.txt---ignore-revs-fileltfilegt
-EOF
+    if command -v git >/dev/null 2>&1; then
+      mkdir .githooks
 
-    mkdir .githooks
-
-    cat <<'EOF' >.githooks/pre-commit
+      cat <<'EOF' >.githooks/pre-commit
 #!/usr/bin/env sh
 
 set -eu
@@ -172,13 +169,11 @@ if [ -z "${GIT_REFLOG_ACTION+x}" ]; then
   trap 'git stash pop --quiet 2>/dev/null' EXIT INT QUIT TSTP
 fi
 
-# https://docs.gradle.org/8.7/userguide/command_line_interface.html
-./gradlew \
-  --quiet \
-  check
+# https://docs.gradle.org/current/userguide/command_line_interface.html
+./gradlew --quiet check
 EOF
 
-    cat <<'EOF' >.githooks/pre-push
+      cat <<'EOF' >.githooks/pre-push
 #!/usr/bin/env sh
 
 set -eu
@@ -189,24 +184,15 @@ if [ -n "$(git status --porcelain=v1)" ]; then
 fi
 
 # https://docs.gradle.org/current/userguide/command_line_interface.html
-./gradlew \
-  --no-daemon \
-  --configure-on-demand \
-  --no-configuration-cache \
-  --parallel \
-  --quiet \
-  check
+./gradlew --quiet check
 EOF
 
-    chmod u+x .githooks/pre-commit
-    chmod u+x .githooks/pre-push
+      chmod u+x .githooks/pre-commit
+      chmod u+x .githooks/pre-push
 
-    if command -v git >/dev/null 2>&1; then
       # https://git-scm.com/docs/git-init
       # https://git-scm.com/docs/git-config#Documentation/git-config.txt-initdefaultBranch
       git -c 'init.defaultBranch=main' init --quiet
-      # https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile
-      git config set blame.ignoreRevsFile .git-blame-ignore-revs
       # https://git-scm.com/docs/git-config#Documentation/git-config.txt-corehooksPath
       git config set core.hooksPath .githooks
       key="$(git config get user.signingkey)"
@@ -234,6 +220,7 @@ EOF
       fi
     fi
 
+    # https://docs.gradle.org/current/userguide/command_line_interface.html
     ./gradlew --quiet check
   fi
 }
