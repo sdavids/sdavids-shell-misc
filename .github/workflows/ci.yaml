@@ -33,6 +33,9 @@ jobs:
               - 'zfunc/**'
             yaml:
               - '**.yaml'
+            Dockerfile:
+              - '.hadolint.yaml'
+              - '**/Dockerfile'
       - if: steps.changes.outputs.sh == 'true'
         name: Lint shell scripts
         run: |
@@ -41,3 +44,10 @@ jobs:
       - if: steps.changes.outputs.yaml == 'true'
         name: Lint YAML files
         run: yamllint --strict .
+      - if: steps.changes.outputs.Dockerfile == 'true'
+        name: Lint Dockerfile
+        # https://github.com/hadolint/hadolint-action/releases
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: scripts/docker/Dockerfile
+          no-color: true
