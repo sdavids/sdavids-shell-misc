@@ -11,9 +11,8 @@
 
 # oxipng
 #   Mac:
-#     brew install optipng oxipng
+#     brew install oxipng
 #   Linux:
-#     sudo apt-get install optipng
 #     https://github.com/shssoichiro/oxipng/issues/69
 
 set -eu
