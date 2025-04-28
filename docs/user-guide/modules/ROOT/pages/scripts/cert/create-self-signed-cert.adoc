@@ -78,6 +78,8 @@ Related Script: xref:scripts/git/git-cleanup.adoc#git-cleanup-untracked-exclusio
 [WARNING]
 ====
 Certificates with more than 180 days validity will https://support.apple.com/en-us/103214[not be accepted by the Apple platform] or Safari.
+
+As of March 15, 2029, the maximum lifetime for a certificate will be https://www.digicert.com/blog/tls-certificate-lifetimes-will-officially-reduce-to-47-days[47 days].
 ====
 
 [TIP]
