@@ -21,7 +21,7 @@ Ensure that the xref:scripts/cert/create-ca.adoc[certificate authority has been 
 
 [IMPORTANT]
 ====
-Additional xref:scripts/cert/copy-ca-based-cert.adoc[copies] will not be deleted by this script, i.e. only the private key and certificate in the given directory and the CA will be removed.
+Additional xref:scripts/cert/copy-ca-based-cert.adoc[copies] will not be deleted by this script, i.e., only the private key and certificate in the given directory and the CA will be removed.
 ====
 
 [TIP]

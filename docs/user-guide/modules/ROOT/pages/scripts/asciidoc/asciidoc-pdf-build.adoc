@@ -148,7 +148,7 @@ $ tree --noreport -a /tmp/example -I src
 <4> PlantUML customization
 <5> the custom theme uses the custom fonts
 <6> PlantUML uses a custom font
-<7> a document with an https://docs.asciidoctor.org/diagram-extension/latest/diagram_types/plantuml/[PlantUML diagram]
+<7> a document with a https://docs.asciidoctor.org/diagram-extension/latest/diagram_types/plantuml/[PlantUML diagram]
 <8> notice there is no `footer.pdf` in an `_includes` directory
 <9> the files of the https://docs.asciidoctor.org/diagram-extension/latest/generate/#diagram_caching[diagram cache]
 <10> the output directory has been cleaned (`-f`) and no files for the cache have been created (`-n`)

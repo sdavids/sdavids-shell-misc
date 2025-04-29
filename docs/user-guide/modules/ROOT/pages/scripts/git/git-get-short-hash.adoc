@@ -3,7 +3,7 @@
 = git_get_short_hash
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_get_short_hash.sh
 
-{script_url}[This script^] will return the https://git-scm.com/docs/git-rev-parse#Documentation/git-rev-parse.txt---shortltlengthgt[short hash] of the HEAD commit of the checked out branch of the given Git repository directory (`$PWD` if not given).
+{script_url}[This script^] will return the https://git-scm.com/docs/git-rev-parse#Documentation/git-rev-parse.txt---shortltlengthgt[short hash] of the HEAD commit of the checked-out branch of the given Git repository directory (`$PWD` if not given).
 
 The suffix `-dirty` will be appended if the working tree is dirty.
 
@@ -11,7 +11,7 @@ The length of the hash can be configured via the optional second parameter (rang
 
 [TIP]
 ====
-To get a consistent hash length across systems you should either
+To get a consistent hash length across systems, you should
 
 [loweralpha]
 . ensure that `core.abbrev` is set on the repository after initialization:
@@ -21,7 +21,7 @@ To get a consistent hash length across systems you should either
 $ git config set core.abbrev 20
 ----
 +
-Unfortunately, these settings are https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_git_config[not under version control].
+Unfortunately, this setting is https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_git_config[not under version control].
 
 . explicitly set the length when invoking the script:
 +

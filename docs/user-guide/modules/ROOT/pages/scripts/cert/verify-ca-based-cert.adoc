@@ -3,7 +3,7 @@
 = verify_ca_based_cert
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/verify_ca_based_cert.sh
 
-{script_url}[This script^] will verify the certificate authority based certificate `cert.pem` in the given directory (`$PWD` if not given).
+{script_url}[This script^] will verify the certificate-authority-based certificate `cert.pem` in the given directory (`$PWD` if not given).
 
 On macOS, the CA root certificate will be verified in the "System" keychain also.
 

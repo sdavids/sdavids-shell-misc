@@ -20,13 +20,13 @@ The JAR is cached in the following location (in order of preference):
 
 * `$GOOGLE_JAVA_FORMAT_HOME` if `$GOOGLE_JAVA_FORMAT_HOME` is set
 * `$XDG_CACHE_HOME/googlejavaformat` if `$XDG_CACHE_HOME` is set
-* `$HOME/Library/Application Support/Google/googlejavaformat` on MacOS
+* `$HOME/Library/Application Support/Google/googlejavaformat` on macOS
 * `$HOME/.m2/repository/com/google/googlejavaformat-all-deps`
 ====
 
 [TIP]
 ====
-If you are using Gradle or Maven you might want to use https://github.com/diffplug/spotless[Spotless] instead of this script:
+If you are using Gradle or Maven, you might want to use https://github.com/diffplug/spotless[Spotless] instead of this script:
 
 https://github.com/diffplug/spotless/tree/main/plugin-gradle#google-java-format[Gradle]::
 +
@@ -61,7 +61,7 @@ https://github.com/diffplug/spotless/tree/main/plugin-maven#google-java-format[M
 </plugin>
 ----
 
-If you are using a JetBrains IDE you might want to use the https://plugins.jetbrains.com/plugin/8527-google-java-format[google-java-format plugin].
+If you are using a JetBrains IDE, you might want to use the https://plugins.jetbrains.com/plugin/8527-google-java-format[google-java-format plugin].
 ====
 
 == Usage

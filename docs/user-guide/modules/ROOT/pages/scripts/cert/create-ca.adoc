@@ -56,7 +56,7 @@ You need to xref:scripts/cert/create-ca-based-cert.adoc[create] new certificates
 
 [TIP]
 ====
-Add `EASYRSA_PKI` to your shell's startup file (e.g. `.bashrc` or `.zshrc`):
+Add `EASYRSA_PKI` to your shell's startup file (e.g., `.bashrc` or `.zshrc`):
 
 .~/.zshrc
 [,zsh]

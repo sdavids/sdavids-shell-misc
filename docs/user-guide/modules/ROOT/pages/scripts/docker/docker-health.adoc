@@ -3,7 +3,7 @@
 = docker_health
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_health.sh
 
-{script_url}[This script^] will query the https://docs.docker.com/reference/dockerfile/#healthcheck[health status] of the running container named `$+{container_name}+`, i.e. the project's container.
+{script_url}[This script^] will query the https://docs.docker.com/reference/dockerfile/#healthcheck[health status] of the running container named `$+{container_name}+`, i.e., the project's container.
 
 [NOTE]
 ====

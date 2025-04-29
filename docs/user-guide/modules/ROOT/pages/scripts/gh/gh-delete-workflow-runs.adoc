@@ -20,7 +20,7 @@ The following parameters are required:
 
 The following environment variable is required:
 
-`GH_DELETE_WORKFLOW_RUNS_TOKEN_FILE` :: the path to the file containing the https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28#authenticating-with-a-personal-access-token[GitHub access token] having the https://docs.github.com/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens?apiVersion=2022-11-28#repository-permissions-for-actions[`actions:rw` permission]
+`GH_DELETE_WORKFLOW_RUNS_TOKEN_FILE` :: the path to the file containing the https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28#authenticating-with-a-personal-access-token[GitHub access token] has the https://docs.github.com/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens?apiVersion=2022-11-28#repository-permissions-for-actions[`actions:rw` permission]
 +
 [NOTE]
 ====
@@ -34,12 +34,12 @@ The GitHub API https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=
 
 [IMPORTANT]
 ====
-This script does not handle concurrent changes to the workflow runs, i.e. this script might fail if someone else adds or deletes workflow runs while this script is running.
+This script does not handle concurrent changes to the workflow runs, i.e., this script might fail if someone else adds or deletes workflow runs while this script is running.
 ====
 
 [WARNING]
 ====
-The workflow runs will be irreversibly deleted by this script--be careful, you have been warned!
+This script will irreversibly delete the workflow runs--be careful, you have been warned!
 ====
 
 == Usage

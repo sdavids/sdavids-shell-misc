@@ -3,7 +3,7 @@
 = renew_ca_based_cert
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/renew_ca_based_cert.sh
 
-{script_url}[This script^] will renew the certificate authority based certificate `cert.pem` in the given directory (`$PWD` if not given).
+{script_url}[This script^] will renew the certificate-authority-based certificate `cert.pem` in the given directory (`$PWD` if not given).
 
 The optional second positive integer parameter (range: [1, 24855]) specifies the number of days the generated certificate is valid for; the default is 30 days.
 

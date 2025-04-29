@@ -3,22 +3,22 @@
 = docker_build
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_build.sh
 
-{script_url}[This script^] will build the `$+{namespace}+/$+{repository}+` image, i.e. the project's image.
+{script_url}[This script^] will build the `$+{namespace}+/$+{repository}+` image, i.e., the project's image.
 
 The following parameters are supported:
 
 `d` :: the path to the https://docs.docker.com/reference/cli/docker/image/build/#file[Dockerfile] (`$PWD/Dockerfile` if not given) to be used
 `n` :: do not use the cache when building the image
-`p` :: the https://docs.docker.com/reference/cli/docker/buildx/build/#platform[target platform] for the build (if not given the platform of the BuildKit daemon where the build runs is used)
+`p` :: the https://docs.docker.com/reference/cli/docker/buildx/build/#platform[target platform] for the build (the platform of the BuildKit daemon where the build run is used if not given)
 `t` :: one of the two image's https://docs.docker.com/engine/reference/commandline/image_build/#tag[tags] (`local` if not given);
 the image will always be tagged with `latest`
 
 This script will add the `org.opencontainers.image.revision` label to the image; its value is set via:
 
-. the value of a specific CI environment variable (e.g. `GITHUB_SHA` or `CI_COMMIT_SHA`)
-. the hash of the HEAD commit of the checked out branch; the suffix `-next` will be appended if the working tree is dirty.
+. the value of a specific CI environment variable (e.g., `GITHUB_SHA` or `CI_COMMIT_SHA`)
+. the hash of the HEAD commit of the checked-out branch; the suffix `-next` will be appended if the working tree is dirty.
 
-This script will add the `org.opencontainers.image.created` label to the image with the creation timestamp of the HEAD commit of the checked out branch as its value; the current time will be used if the working tree is dirty.
+This script will add the `org.opencontainers.image.created` label to the image with the creation timestamp of the HEAD commit of the checked-out branch as its value; the current time will be used if the working tree is dirty.
 Alternatively, you can use the https://reproducible-builds.org/docs/source-date-epoch/[SOURCE_DATE_EPOCH] environment variable to pass in the timestamp.
 
 [NOTE]

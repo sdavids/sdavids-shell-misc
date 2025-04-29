@@ -16,7 +16,7 @@ The created feature branch will be pushed to the upstream if possible.
 
 [TIP]
 ====
-Set the following Git configuration variables on your repository if you want to use a https://git-scm.com/book/en/v2/Git-Branching-Rebasing[rebase workflow]:
+Set the following Git configuration variables in your repository if you want to use a https://git-scm.com/book/en/v2/Git-Branching-Rebasing[rebase workflow]:
 
 [,console]
 ----

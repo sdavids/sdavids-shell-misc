@@ -20,7 +20,7 @@ $ KEYSTORE_PATH=keystore.jks KEYSTORE_PASS=changeit java Server.java
 
 => https://localhost:3000
 
-== With certificate authority based certificates
+== With certificate-authority-based certificates
 
 [,console]
 ----

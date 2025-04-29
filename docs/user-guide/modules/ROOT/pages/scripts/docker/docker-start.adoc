@@ -4,7 +4,7 @@
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_start.sh
 :dockerfile_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/Dockerfile
 
-{script_url}[This script^] will start the `$+{image_name}+` image with the tag `local`, i.e. the project's locally built image.
+{script_url}[This script^] will start the `$+{image_name}+` image with the tag `local`, i.e., the project's locally built image.
 
 The container will be named `$+{container_name}+` and labeled with `$+{label_group}+=$+{repository}+`.
 

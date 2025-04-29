@@ -158,7 +158,7 @@ $ tree --noreport -I .git -I '*.svg' -I '*.woff' -I '*.woff2' /tmp/example/
 
 <1> a https://docs.antora.org/antora/latest/playbook/content-source-url/#local-urls[local content source root] needs at least one commit
 <2> an https://docs.antora.org/antora/latest/component-with-no-version/[unversioned] component
-<3> `url` needs to point to the Git repository root, i.e. the directory with the `.git` subdirectory; this is relative to `antora-playbook.yml`
+<3> `url` needs to point to the Git repository root, i.e., the directory with the `.git` subdirectory; this is relative to `antora-playbook.yml`
 <4> `start_path` points to where the component (`antora.yml`) can be found; relative to `url`
 
 == Prerequisites

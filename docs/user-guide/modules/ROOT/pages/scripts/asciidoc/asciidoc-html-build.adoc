@@ -173,7 +173,7 @@ $ tree --noreport -a /tmp/example -I src
 <2> https://docs.asciidoctor.org/asciidoc/latest/blocks/admonitions/[admonitions] need https://docs.asciidoctor.org/asciidoctor/latest/html-backend/local-font-awesome/[Font Awesome]
 <3> https://docs.asciidoctor.org/asciidoc/latest/docinfo[custom styles]
 <4> use https://docs.asciidoctor.org/asciidoc/latest/verbatim/highlight-lines/#rouge[Rogue source highlighter]
-<5> a document with an https://docs.asciidoctor.org/diagram-extension/latest/diagram_types/plantuml/[PlantUML diagram]
+<5> a document with a https://docs.asciidoctor.org/diagram-extension/latest/diagram_types/plantuml/[PlantUML diagram]
 <6> notice there is no `footer.html` in an `_includes` directory
 <7> Asciidoctor currently https://github.com/asciidoctor/asciidoctor/issues/4622[does not support a nested set of documents] well
 <8> the files of the https://docs.asciidoctor.org/diagram-extension/latest/generate/#diagram_caching[diagram cache]

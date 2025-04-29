@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 = Certificates
 
-This section contains scripts related to <<standalone-certificates,standalone>> and <<certificate-authority-based-certificates,certificate authority based>> certificates.
+This section contains scripts related to <<standalone-certificates,standalone>> and <<certificate-authority-based-certificates,certificate-authority-based>> certificates.
 
+[#standalone-certificates]
 == Standalone Certificates
 
 [NOTE]
@@ -16,16 +17,17 @@ xref:scripts/cert/delete-self-signed-cert.adoc[]:: delete the private key and se
 xref:scripts/cert/renew-self-signed-cert.adoc[]:: renew the private key and self-signed certificate
 xref:scripts/cert/verify-self-signed-cert.adoc[]:: verify the self-signed certificate
 
-== Certificate Authority Based Certificates
+[#certificate-authority-based-certificates]
+== Certificate-Authority-Based Certificates
 
 [NOTE]
 ====
-Certificate authority based certificates are useful if you want to use mutual TLS or if the server's certificate verifier does not support using a trust anchor as both a CA certificate and an end-entity certificate (e.g. https://docs.rs/craftls/latest/rustls/#non-features[rusttls]).
+Certificate-authority-based certificates are useful if you want to use mutual TLS or if the server's certificate verifier does not support using a trust anchor as both a CA certificate and an end-entity certificate, (e.g., https://docs.rs/craftls/latest/rustls/#non-features[rusttls]).
 ====
 
 [TIP]
 ====
-Standalone certificates are simpler to use than certificate authority based certificates.
+Standalone certificates are simpler to use than certificate-authority-based certificates.
 ====
 
 xref:scripts/cert/copy-ca-based-cert.adoc[]:: copies the private key and certificate based on a certificate authority to a given directory
@@ -33,6 +35,6 @@ xref:scripts/cert/copy-ca-root-cert.adoc[]:: copies the root certificate of the 
 xref:scripts/cert/create-ca.adoc[]:: create a certificate authority and its root certificate
 xref:scripts/cert/create-ca-based-cert.adoc[]:: create a private key and certificate based on a certificate authority
 xref:scripts/cert/delete-ca.adoc[]:: delete the certificate authority
-xref:scripts/cert/delete-ca-based-cert.adoc[]:: delete the certificate authority based private key and certificate
-xref:scripts/cert/renew-ca-based-cert.adoc[]:: renew the certificate authority based certificate
-xref:scripts/cert/verify-ca-based-cert.adoc[]:: verify the certificate authority based certificate
+xref:scripts/cert/delete-ca-based-cert.adoc[]:: delete the certificate-authority-based private key and certificate
+xref:scripts/cert/renew-ca-based-cert.adoc[]:: renew the certificate-authority-based certificate
+xref:scripts/cert/verify-ca-based-cert.adoc[]:: verify the certificate-authority-based certificate

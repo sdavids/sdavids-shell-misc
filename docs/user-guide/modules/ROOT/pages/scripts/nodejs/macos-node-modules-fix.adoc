@@ -22,7 +22,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 
 For this to work, NPM https://docs.npmjs.com/cli/v10/using-npm/config#ignore-scripts[should not ignore pre- or post-scripts] (the default).
 
-For https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html#3-minimize-attack-surfaces-by-ignoring-run-scripts[security reasons] you might want to disable them globally via:
+For https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html#3-minimize-attack-surfaces-by-ignoring-run-scripts[security reasons], you might want to disable them globally via:
 
 [,console]
 ----
@@ -43,7 +43,7 @@ You can show your current configuration via:
 $ npm config ls -l
 ----
 
-Alternatively, you can use this script as https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] in your `package.json` file:
+Alternatively, you can use this script as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] in your `package.json` file:
 
 .package.json
 [,json]

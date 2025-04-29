@@ -15,7 +15,7 @@ $ scripts/general/shellscript_format.sh /tmp/example
 
 [TIP]
 ====
-Instead of this script you might want to add a shell alias:
+Instead of this script, you might want to add a shell alias:
 
 [,shell]
 ----

@@ -14,7 +14,7 @@ The following parameter is required:
 The following parameters are optional:
 
 `f` :: delete the output directory before typesetting
-`n` :: turn caching off, i.e. the auxiliary files will not be kept
+`n` :: turn caching off, i.e., the auxiliary files will not be kept
 `o` :: the output directory (`$PWD/build` if not given)
 `s` :: the source the directory (`$PWD/src` if not given)
 `v` :: show diagnostic messages during typesetting

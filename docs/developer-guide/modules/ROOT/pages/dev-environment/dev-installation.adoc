@@ -9,6 +9,7 @@
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
 :oxipng-install-url: https://github.com/shssoichiro/oxipng/issues/69
 
+[#brotli]
 == brotli
 
 === Linux
@@ -25,6 +26,7 @@ $ sudo apt-get install brotli
 $ brew install brotli
 ----
 
+[#curl]
 == curl
 
 === Linux
@@ -38,10 +40,12 @@ $ sudo apt-get install curl
 
 `curl` is part of the standard macOS installation.
 
+[#docker]
 == Docker
 
 Install {docker-install-url}[Docker].
 
+[#easyrsa]
 == EasyRSA
 
 [IMPORTANT]
@@ -69,6 +73,7 @@ $ ln -s ~/.local/share/easyrsa/easyrsa ~/.local/bin/easyrsa
 $ rm ~/Downloads/easy-rsa.tgz
 ----
 
+[#exiftool]
 == exiftool
 
 === Linux
@@ -85,6 +90,7 @@ $ sudo apt-get install exiftool
 $ brew install exiftool
 ----
 
+[#gifsicle]
 == gifsicle
 
 === Linux
@@ -115,6 +121,7 @@ Install {gh-cli-install-url}[GitHub CLI].
 $ brew install gh
 ----
 
+[#gradle]
 == Gradle
 
 First <<jdk,install a JDK>>.
@@ -128,6 +135,7 @@ The recommended way is to https://sdkman.io/install[install via SDKMAN!]:
 $ sdk install gradle
 ----
 
+[#gzip]
 == gzip
 
 === Linux
@@ -157,6 +165,7 @@ Install {hadolint-install-url}[hadolint].
 $ brew install hadolint
 ----
 
+[#jdk]
 == JDK
 
 There are https://whichjdk.com[several different JDKs] and multiple options of installing them.
@@ -172,6 +181,7 @@ $ sdk install java
 
 https://sdkman.io/jdks[SDKMAN! - JDK Distributions]
 
+[#jpegoptim]
 == jpegoptim
 
 === Linux
@@ -188,6 +198,7 @@ $ sudo apt-get install jpegoptim
 $ brew install jpegoptim
 ----
 
+[#jq]
 == jq
 
 === Linux
@@ -204,6 +215,7 @@ $ sudo apt-get install jq
 $ brew install jq
 ----
 
+[#node-version-manager]
 == Node Version Manager
 
 Install {fnm-install-url}[fnm] or {nvm-install-url}[NVM].
@@ -250,6 +262,7 @@ if command -v nvm >/dev/null 2>&1; then
 fi
 ----
 
+[#openssl]
 == OpenSSL
 
 === Linux
@@ -263,6 +276,7 @@ $ sudo apt-get install openssl
 
 `openssl` is part of the standard macOS installation.
 
+[#optipng]
 == optipng
 
 === Linux
@@ -279,6 +293,7 @@ $ sudo apt-get install optipng
 $ brew install optipng
 ----
 
+[#oxipng]
 == oxipng
 
 === Linux
@@ -292,6 +307,7 @@ Install {oxipng-install-url}[oxipng].
 $ brew install oxipng
 ----
 
+[#qpdf]
 == qpdf
 
 === Linux
@@ -308,6 +324,7 @@ $ sudo apt-get install qpdf
 $ brew install qpdf
 ----
 
+[#shellcheck]
 == ShellCheck
 
 === Linux
@@ -324,6 +341,7 @@ $ sudo apt-get install shellcheck
 $ brew install shellcheck
 ----
 
+[#shfmt]
 == shfmt
 
 === Linux
@@ -340,6 +358,7 @@ $ sudo apt-get install shfmt
 $ brew install shfmt
 ----
 
+[#unzip]
 == unzip
 
 === Linux
@@ -369,6 +388,7 @@ $ sudo apt-get install yamllint
 $ brew install yamllint
 ----
 
+[#zstd]
 == zstd
 
 === Linux

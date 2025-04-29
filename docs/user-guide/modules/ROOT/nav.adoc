@@ -15,7 +15,7 @@
 **** xref:scripts/cert/delete-self-signed-cert.adoc[]
 **** xref:scripts/cert/renew-self-signed-cert.adoc[]
 **** xref:scripts/cert/verify-self-signed-cert.adoc[]
-*** Certificate Authority Based
+*** Certificate-Authority-Based
 **** xref:scripts/cert/copy-ca-based-cert.adoc[]
 **** xref:scripts/cert/copy-ca-root-cert.adoc[]
 **** xref:scripts/cert/create-ca.adoc[]

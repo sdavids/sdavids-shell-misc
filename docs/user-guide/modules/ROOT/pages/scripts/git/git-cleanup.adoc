@@ -14,7 +14,7 @@ The following parameters are supported:
 
 `d` :: the directory (`$PWD` if not given) containing the Git repository to clean
 `e` :: https://git-scm.com/docs/git-reflog#Documentation/git-reflog.txt---expirelttimegt[prune] entries older than the argument; default: `1.month.ago`
-`n` :: Do not actually clean anything, just show what would be done.
+`n` :: Do not clean anything, just show what would be done.
 
 [WARNING]
 ====

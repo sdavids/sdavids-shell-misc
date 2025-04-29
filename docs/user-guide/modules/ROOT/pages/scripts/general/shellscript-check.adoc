@@ -7,7 +7,7 @@
 
 [TIP]
 ====
-If you copy this script into a Node.js-based project you should exclude the `node_modules` directory:
+If you copy this script into a Node.js-based project, you should exclude the `node_modules` directory:
 
 `find … -name '*.sh' -not -path '*/node_modules/*' -print0 …`
 

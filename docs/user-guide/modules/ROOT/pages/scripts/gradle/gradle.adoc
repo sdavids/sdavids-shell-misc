@@ -4,6 +4,6 @@
 
 This section contains scripts related to https://gradle.org[Gradle]:
 
-xref:scripts/gradle/check-reproducible-build-gradle.adoc[]:: checks whether a Gradle build produces reproducible JARs
+xref:scripts/gradle/check-reproducible-build-gradle.adoc[]:: check whether a Gradle build produces reproducible JARs
 
 Related: xref:functions/gradle/gradle.adoc[Gradle Functions]

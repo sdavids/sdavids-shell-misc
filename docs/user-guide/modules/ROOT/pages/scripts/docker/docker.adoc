@@ -16,6 +16,7 @@ xref:scripts/docker/docker-sh.adoc[]:: open a shell into the running container
 xref:scripts/docker/docker-start.adoc[]:: start the image
 xref:scripts/docker/docker-stop.adoc[]:: stop the container
 
+[#usage]
 == Usage
 
 The scripts should be copied into a project, e.g.:

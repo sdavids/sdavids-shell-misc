@@ -17,7 +17,7 @@ readonly realm_scope='my-realm-scope'
 readonly realm_client_id='my-realm-client'
 ----
 
-Depending on your setup, you might have to change the protocol, host, port, or proxy path prefix, e.g. if your Keycloak instance is accessible at `\http://localhost:9050/keycloak` you should adjust the script as follows:
+Depending on your setup, you might have to change the protocol, host, port, or proxy path prefix, e.g., if your Keycloak instance is accessible at `\http://localhost:9050/keycloak` you should adjust the script as follows:
 
 .scripts/keycloak/keycloak_access_token.sh
 [,shell]

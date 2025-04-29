@@ -3,7 +3,7 @@
 = git_get_hash
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_get_hash.sh
 
-{script_url}[This script^] will return the hash of the HEAD commit of the checked out branch of the given Git repository directory (`$PWD` if not given).
+{script_url}[This script^] will return the hash of the HEAD commit of the checked-out branch of the given Git repository directory (`$PWD` if not given).
 
 The suffix `-dirty` will be appended if the working tree is dirty.
 

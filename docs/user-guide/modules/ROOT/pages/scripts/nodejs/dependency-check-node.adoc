@@ -30,7 +30,7 @@ $ node --run dependency:updates
 
 [TIP]
 ====
-For https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html#3-minimize-attack-surfaces-by-ignoring-run-scripts[security reasons] you might want to disable the https://docs.npmjs.com/cli/v10/using-npm/config#ignore-scripts[pre- or post-scripts] globally via:
+For https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html#3-minimize-attack-surfaces-by-ignoring-run-scripts[security reasons], you might want to disable the https://docs.npmjs.com/cli/v10/using-npm/config#ignore-scripts[pre- or post-scripts] globally via:
 
 [,console]
 ----

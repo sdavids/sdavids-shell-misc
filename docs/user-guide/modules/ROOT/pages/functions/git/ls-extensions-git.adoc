@@ -49,7 +49,7 @@ $ ls_extensions_git                                                       <5>
 ----
 ====
 
-<1> Both `gradlew.bat` and `gradle-wrapper.jar` have no attributes set--if we would add them to the Git index at this point they would https://dev.to/deadlybyte/please-add-gitattributes-to-your-git-repository-1jld[not be handled properly] by Git.
+<1> Both `gradlew.bat` and `gradle-wrapper.jar` have no attributes set--if we added them to the Git index at this point, they would https://dev.to/deadlybyte/please-add-gitattributes-to-your-git-repository-1jld[not be handled properly] by Git.
 
 <2> Add the appropriate attributes for JAR and Windows batch files.
 

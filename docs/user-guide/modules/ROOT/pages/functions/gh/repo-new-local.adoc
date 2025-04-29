@@ -37,7 +37,7 @@ This script uses https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[Git 
 [NOTE]
 ====
 Sometimes GitHub is slow or you have bad latency.
-In that case you need to increase the time used to wait between GitHub interactions:
+In that case, you need to increase the time used to wait between GitHub interactions:
 
 .zfunc/repo_new_local
 [,shell]

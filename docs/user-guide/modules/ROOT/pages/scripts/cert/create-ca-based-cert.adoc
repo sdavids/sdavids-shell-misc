@@ -14,7 +14,10 @@ The optional third parameter is the common name (`localhost` if not given) of th
 
 [NOTE]
 ====
-The certificate created by this script is useful if you want to use mutual TLS or if the server's certificate verifier does not support using a trust anchor as both a CA certificate and an end-entity certificate (e.g. https://docs.rs/craftls/latest/rustls/#non-features[rusttls]).
+The certificate created by this script is useful if
+
+* you want to use mutual TLS
+* if the server's certificate verifier does not support using a trust anchor as both a CA certificate and an end-entity certificate (e.g., https://docs.rs/craftls/latest/rustls/#non-features[rusttls])
 ====
 
 [NOTE]

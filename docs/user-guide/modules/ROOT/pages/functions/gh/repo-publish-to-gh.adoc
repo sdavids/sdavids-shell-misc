@@ -15,7 +15,7 @@ Only the https://git-scm.com/docs/git-config#Documentation/git-config.txt-codein
 [NOTE]
 ====
 Sometimes GitHub is slow or you have bad latency.
-In that case you need to increase the time used to wait between GitHub interactions:
+In that case, you need to increase the time used to wait between GitHub interactions:
 
 .zfunc/repo_publish_to_gh
 [,shell]

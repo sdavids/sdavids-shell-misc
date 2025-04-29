@@ -3,7 +3,7 @@
 = docker_stop
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_stop.sh
 
-{script_url}[This script^] will stop the `$+{container_name}+` container, i.e. the project's container.
+{script_url}[This script^] will stop the `$+{container_name}+` container, i.e., the project's container.
 
 [NOTE]
 ====

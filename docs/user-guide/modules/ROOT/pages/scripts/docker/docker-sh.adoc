@@ -3,7 +3,7 @@
 = docker_sh
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_sh.sh
 
-{script_url}[This script^] will open a shell into the running container named `$+{container_name}+`, i.e. the project's container.
+{script_url}[This script^] will open a shell into the running container named `$+{container_name}+`, i.e., the project's container.
 
 [NOTE]
 ====

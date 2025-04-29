@@ -7,14 +7,14 @@
 
 [TIP]
 ====
-If you are using macOS you might want to use https://imageoptim.com/mac[ImageOptim] instead of using this script.
+If you are using macOS, you might want to use https://imageoptim.com/mac[ImageOptim] instead of using this script.
 ====
 
 [TIP]
 ====
 It is advisable to minimize image files before adding them to a Git repository.
 
-Minimizing image files during a build is usually bad idea unless the build generates images files.
+Minimizing image files during a build is usually a bad idea unless the build generates image files.
 
 Also, you might want to add a xref:scripts/general/hash-filename.adoc[hash] to the minified image file before adding it to a Git repository.
 ====

@@ -16,7 +16,12 @@ On macOS, the certificate will be added to the "login" keychain also.
 
 [NOTE]
 ====
-The certificate created by this script is useful if you do not use mutual TLS, the HTTP-client can be configured to ignore self-signed certificates, the server’s certificate verifier supports using a trust anchor as both a CA certificate and an end-entity certificate, or if you can add the certificate to your trust store.
+The certificate created by this script is useful if
+
+* you do not use mutual TLS
+* the HTTP-client can be configured to ignore self-signed certificates
+* the server’s certificate verifier supports using a trust anchor as both a CA certificate and an end-entity certificate
+* you can add the certificate to your trust store
 
 [,console]
 ----
@@ -30,7 +35,7 @@ $ http --verify=no ...
 ====
 Chrome and Safari need no further configuration--you should restart your browser though.
 
-For Firefox the created certificate has to be <<create-self-signed-cert-firefox,accepted manually>>.
+For Firefox, the created certificate has to be <<create-self-signed-cert-firefox,accepted manually>>.
 
 Docker needs to be restarted.
 ====
@@ -63,7 +68,7 @@ WARNING: /etc/hosts does not have an entry for '127.0.0.1 localhost https.intern
 ====
 Both `key.pem` and `cert.pem` https://owasp.org/www-project-devsecops-guideline/latest/01a-Secrets-Management[should not be checked into version control]!
 
-If the given directory is inside a Git working tree the script will offer to modify the https://git-scm.com/docs/gitignore[.gitignore] file:
+If the given directory is inside a Git working tree, the script will offer to modify the https://git-scm.com/docs/gitignore[.gitignore] file:
 
 [,text]
 ----

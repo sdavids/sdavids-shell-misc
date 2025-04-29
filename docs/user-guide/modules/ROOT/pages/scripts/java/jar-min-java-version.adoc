@@ -5,12 +5,12 @@
 
 {script_url}[This script^] will display the minimum Java runtime version necessary for the given JAR file.
 
-The minimum Java runtime version is the determined by evaluating the classes contained in the JAR file:
-The class with the highest Java (class file) version determines version displayed by this script.
+The minimum Java runtime version is determined by evaluating the classes contained in the JAR file:
+The class with the highest Java (class file) version determines the version displayed by this script.
 
 [WARNING]
 ====
-For a https://docs.oracle.com/en/java/javase/21/docs/specs/jar/jar.html#multi-release-jar-files[multi-release JAR] this script will not necessarily report the correct version.
+For a https://docs.oracle.com/en/java/javase/21/docs/specs/jar/jar.html#multi-release-jar-files[multi-release JAR], this script will not necessarily report the correct version.
 ====
 
 == Usage

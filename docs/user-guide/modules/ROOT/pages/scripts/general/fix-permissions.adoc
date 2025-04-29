@@ -29,7 +29,7 @@ The permissions of the given directory (`-d`) itself are not modified.
 ====
 `node_modules` directories will be ignored.
 
-If the given directory (`-d`) is a Git repository and it has https://git-scm.com/docs/githooks[Git hooks] configured (`git config get core.hooksPath`) then the hooks directory will be ignored by this script.
+If the given directory (`-d`) is a Git repository, and it has https://git-scm.com/docs/githooks[Git hooks] configured (`git config get core.hooksPath`) then this script will ignore the git hooks directory.
 
 If you use https://typicode.github.io/husky/[Husky] then the Husky base directory (`.husky`) will be ignored.
 ====
@@ -127,7 +127,7 @@ $ tree --noreport -p -a -I .git /tmp/test
 └── [-rwx------]  s.sh                                                    <5>
 ----
 
-<1> the Git hooks directory and it's files are ignored
+<1> the Git hooks directory and its files are ignored
 
 <2> the `node_modules` directories and their subdirectories and files are ignored
 

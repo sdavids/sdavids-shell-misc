@@ -13,10 +13,10 @@ The following parameter is optional:
 ====
 The generated file contains two sections:
 
-. generally useful ignores
+. general ignores
 . all top-level directories and files
 
-It should be used as a starting point, i.e. you should remove entries which should not be ignored.
+It should be used as a starting point, i.e., you should remove entries which should not be ignored.
 ====
 
 == Usage

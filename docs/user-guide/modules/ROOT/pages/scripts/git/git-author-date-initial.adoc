@@ -5,7 +5,7 @@
 
 {script_url}[This script^] will display the initial https://git-scm.com/book/en/v2/Distributed-Git-Maintaining-a-Project#_git_am[author dates] of the files of the given Git repository directory (`$PWD` if not given).
 
-If you use the optional second parameter then only the author date of the given file path will be displayed.
+If you use the optional second parameter, then only the author date of the given file path will be displayed.
 
 [NOTE]
 ====

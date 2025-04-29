@@ -9,9 +9,9 @@ This script uses https://github.com/browserslist/browserslist[browserslist] to d
 
 [TIP]
 ====
-If you do not want the https://browserslist.dev/?q=ZGVmYXVsdHM%3D[defaults] you have https://lightningcss.dev/transpilation.html#cli[several options] to change them.
+If you do not want the https://browserslist.dev/?q=ZGVmYXVsdHM%3D[defaults], you have https://lightningcss.dev/transpilation.html#cli[several options] to change them.
 
-For example via the following file:
+For example, via the following file:
 
 ..browserslistrc
 [,text]

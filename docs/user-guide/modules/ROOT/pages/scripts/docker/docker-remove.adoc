@@ -3,7 +3,7 @@
 = docker_remove
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_remove.sh
 
-{script_url}[This script^] will remove the `$+{container_name}+` container and any unnamed volumes associated with it, i.e. the project's container and volumes.
+{script_url}[This script^] will remove the `$+{container_name}+` container and any unnamed volumes associated with it, i.e., the project's container and volumes.
 
 The container will be stopped before removal.
 

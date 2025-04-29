@@ -15,7 +15,7 @@ On macOS, the certificate will be removed from the "login" keychain also.
 ====
 Chrome and Safari need no further configuration.
 
-For Firefox the old certificate has to be <<delete-self-signed-cert-firefox,deleted manually>>.
+For Firefox, the old certificate has to be <<delete-self-signed-cert-firefox,deleted manually>>.
 
 Docker needs to be restarted.
 ====

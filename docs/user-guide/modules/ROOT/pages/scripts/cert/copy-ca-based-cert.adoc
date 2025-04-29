@@ -18,7 +18,7 @@ Ensure that the xref:scripts/cert/create-ca.adoc[certificate authority has been 
 ====
 Both `key.pem` and `cert.pem` https://owasp.org/www-project-devsecops-guideline/latest/01a-Secrets-Management[should not be checked into version control]!
 
-If the given directory is inside a Git working tree the script will offer to modify the https://git-scm.com/docs/gitignore[.gitignore] file:
+If the given directory is inside a Git working tree, the script will offer to modify the https://git-scm.com/docs/gitignore[.gitignore] file:
 
 [,text]
 ----
