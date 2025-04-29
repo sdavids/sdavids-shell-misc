@@ -46,9 +46,7 @@ Install {docker-install-url}[Docker].
 
 [IMPORTANT]
 ====
-Ensure that you install version `3.1.7` and not `3.2.0`!
-
-Version `3.2.0` is an incompatible https://github.com/OpenVPN/easy-rsa/releases/tag/v3.2.0[development snapshot release].
+Ensure that you install version `3.1.7` and not `3.2.x`!
 ====
 
 === Linux
@@ -59,7 +57,7 @@ Install {easyrsa-install-url}[EasyRSA].
 
 [WARNING]
 ====
-Unfortunately, homebrew provides `easy-rsa` version `3.2.0` at this point in time (August 2024).
+Unfortunately, _homebrew_ provides `easy-rsa` version `3.2.x`.
 ====
 
 [,console]
