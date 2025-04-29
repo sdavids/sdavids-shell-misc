@@ -4,3 +4,4 @@
 
 This section contains scripts related to https://www.swift.org[Swift] and https://developer.apple.com/xcode/[XCode]:
 
+xref:scripts/swift/xcode-simulator-cleanup.adoc[]:: remove simulators and simulator device data

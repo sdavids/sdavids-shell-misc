@@ -80,6 +80,7 @@
 ** xref:scripts/rust/rust.adoc[]
 *** xref:scripts/rust/dependency-check-rust.adoc[]
 ** xref:scripts/swift/swift.adoc[]
+*** xref:scripts/swift/xcode-simulator-cleanup.adoc[]
 ** xref:scripts/web/web.adoc[]
 *** xref:scripts/web/compress-brotli.adoc[]
 *** xref:scripts/web/compress-gzip.adoc[]
