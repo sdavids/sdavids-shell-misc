@@ -2,15 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 = Overview
 :uri-apache-license: https://www.apache.org/licenses/LICENSE-2.0
-:uri-contributor-covenant: https://www.contributor-covenant.org
-:uri-contributor-covenant-2-1: https://www.contributor-covenant.org/version/2/1/code_of_conduct.html
 
-== License
+[IMPORTANT]
+====
+After cloning this repository you need to install the Git hooks via:
 
-{uri-apache-license}[Apache License, Version 2.0]
-
-== Code of Conduct
-
-We abide by the {uri-contributor-covenant}[Contributor Covenant] Version 2.1 and ask that you do as well.
-
-For the full text, please see {uri-contributor-covenant-2-1}[Code of Conduct].
+[,console]
+----
+$ git config set core.hooksPath .githooks
+----
+====

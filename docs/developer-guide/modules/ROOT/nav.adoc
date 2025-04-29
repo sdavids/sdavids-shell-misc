@@ -4,6 +4,5 @@
 // https://docs.antora.org/antora/latest/navigation/files-and-lists/
 
 * xref:index.adoc[]
-* xref:dev-environment/dev-environment-setup.adoc[]
-** xref:dev-environment/dev-installation.adoc[]
+* xref:dev-environment/dev-installation.adoc[]
 ** xref:dev-environment/dev-ide.adoc[]
