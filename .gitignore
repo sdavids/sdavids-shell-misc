@@ -44,3 +44,6 @@ jffi*.dylib
 
 ### direnv files ###
 .envrc
+
+### Doc Build ###
+build/
