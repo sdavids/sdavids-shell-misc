@@ -7,31 +7,78 @@
 
 The following parameters are required:
 
-`e` :: the email to be used for the identity and GPG secret key retrieval; can be omitted if `git config get user.email` is set, and you want to use its value
+`e` :: the email to be used for the identity; can be omitted if `git config get user.email` is set, and you want to use its value; also used for GPG secret key retrieval if `-s` is not set
+
 `n` :: the name to be used for the identity; can be omitted if `git config get user.name` is set, and you want to use its value
 
-The following parameter is optional:
+The following parameters are optional:
 
 `d` :: the directory (`$PWD` if not given) containing the Git repositories
+`s` :: the path to the https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key#_generate_ssh_key[SSH public key] if you want to use https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgformat[Git SSH signing]
 
 [NOTE]
 ====
-This script will not recursively search the given directory for Git repositories--only direct child directories are considered.
+This script will not recursively search the given directory for Git repositories--only direct child directories are considered:
+
+[,console]
+----
+$ scripts/git/git_set_identity.sh -d root
+----
+
+[,console]
+----
+root
+├── considered
+│   └── not_considered
+└── considered_also
+----
 ====
 
 [NOTE]
 ====
-This script will set up https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[GPG signing] under the following conditions:
+This script will set up https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[key signing] if
 
-. `git config get gpg.program` or `gpg`/`gpg2` is installed
-. a GPG secret key for the given email exists
+. a valid SSH public key is given via `-s`
+. the following conditions are met:
+.. `git config get gpg.program` or `gpg`/`gpg2` is installed
+.. a GPG secret key for the given email exists
 
 In that case, the following Git configuration will be applied in addition to `user.email` and `user.name`:
 
 commit.gpgSign :: set to `true`
 tag.forceSignAnnotated :: set to `true`
 tag.gpgSign :: set to `true`
-user.signingKey :: set to the first secret key returned by `--list-secret-keys` for the given email
+user.signingKey :: set to the SSH public key given via `-s` or the first secret key returned by `gpg --list-secret-keys` for the given email if  `-s` is not set
+gpg.format:: set to `ssh` if a SSH public key is given via `-s`, otherwise set to `openpgp`
+====
+
+[IMPORTANT]
+====
+If you want to use https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgformat[Git SSH signing] you need to configure the https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgsshallowedSignersFile[allowedSignersFile].
+
+I suggest to configure it globally instead of per repository:
+
+[,console]
+----
+$ echo "$(git config get user.email) namespaces=\"git\" $(cat ~/.ssh/id_dsa.pub)" >~/.ssh/allowed_signers
+$ chmod 600 ~/.ssh/allowed_signers
+$ git config set --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
+----
+
+⇓
+
+.~/.gitconfig
+[,ini]
+----
+[gpg "ssh"]
+  allowedSignersFile = /Users/example/.ssh/allowed_signers
+----
+
+.~/.ssh/allowed_signers
+[,text]
+----
+example@example.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEGXWK6+HHmAtv2Sh9nn1WCYOIzgvV7OojYTkKIyuI8x example@example.com
+----
 ====
 
 [TIP]
@@ -46,6 +93,7 @@ See: <<example>>
 [,console]
 ----
 $ scripts/git/git_set_identity.sh
+$ scripts/git/git_set_identity.sh -s ~/.ssh/id_dsa.pub
 $ scripts/git/git_set_identity.sh -e cameron@howe.name
 $ scripts/git/git_set_identity.sh \
 -d ~/workspaces/mutiny \
@@ -59,15 +107,17 @@ $ scripts/git/git_set_identity.sh \
 [#example]
 == Example
 
-Cameron works for two companies and also has personal projects:
+Cameron works for three companies and also has personal projects:
 
 [,console]
 ----
 $ tree --noreport ~/workspaces
-/Users/example/workspaces
+/Users/chowe/workspaces
 ├── cardiff-electric
 │   ├── backend
 │   └── frontend
+├── comet
+│   └── portal
 ├── mutiny
 │   └── giant
 └── personal
@@ -75,12 +125,12 @@ $ tree --noreport ~/workspaces
     └── secret-project
 ----
 
-She has three GPG secret keys--one for each company and one personal:
+She has three GPG secret keys--one for each company and one personal--and one SSH key:
 
 [,console]
 ----
 $ gpg --list-secret-keys
-/Users/example/.gnupg/pubring.kbx
+/Users/chowe/.gnupg/pubring.kbx
 -----------------------------------------
 
 sec   rsa4096/49F1A380A5660737 2025-02-02 [SC] [expires: 2029-02-02]
@@ -97,6 +147,8 @@ sec   rsa4096/77254FBC1027F48D 2025-02-02 [SC] [expires: 2029-02-02]
       Key fingerprint = C09B 7924 274A 9865 545C  6512 7725 4FBC 1027 F48D
 uid                 [ultimate] Catherine Howe <catherine.howe@cardiff-electric.com>
 ssb   rsa4096/6C2E4F6CB45DD27E 2025-02-02 [E] [expires: 2029-02-02]
+$ cat ~/.ssh/id_ed25519-comet-chowe.pub
+ssh-ed25519 ABAAC3NzaC1lZDI1NTE5AAAAIEGXWK6+HHmAtv2Sh9nn1WCYOIzgvV7OojYTkKIyuI88 chowe@comet.com
 ----
 
 She has configured her personal GPG key in her global Git configuration and signs commits and tags by default:
@@ -120,19 +172,23 @@ With this configuration, the following identities will be used for commits and t
 [,console]
 ----
 $ find ~/workspaces/cardiff-electric -mindepth 1 -maxdepth 1 -type d -exec sh -c '(cd {} && echo "$PWD" && echo "  $(git config get user.name) <$(git config get user.email)> $(git config get user.signingkey)")' \;
-/Users/example/workspaces/cardiff-electric/frontend
+/Users/chowe/workspaces/cardiff-electric/frontend
   Cameron Howe <cameron@howe.name> 2DAF54C767F3FD24EACFA1B5EC073F7EFD23C1FA
-/Users/example/workspaces/cardiff-electric/backend
+/Users/chowe/workspaces/cardiff-electric/backend
+  Cameron Howe <cameron@howe.name> 2DAF54C767F3FD24EACFA1B5EC073F7EFD23C1FA
+
+$ find ~/workspaces/comet -mindepth 1 -maxdepth 1 -type d -exec sh -c '(cd {} && echo "$PWD" && echo "  $(git config get user.name) <$(git config get user.email)> $(git config get user.signingkey)")' \;
+/Users/chowe/workspaces/comet/portal
   Cameron Howe <cameron@howe.name> 2DAF54C767F3FD24EACFA1B5EC073F7EFD23C1FA
 
 $ find ~/workspaces/mutiny -mindepth 1 -maxdepth 1 -type d -exec sh -c '(cd {} && echo "$PWD" && echo "  $(git config get user.name) <$(git config get user.email)> $(git config get user.signingkey)")' \;
-/Users/example/workspaces/mutiny/giant
+/Users/chowe/workspaces/mutiny/giant
   Cameron Howe <cameron@howe.name> 2DAF54C767F3FD24EACFA1B5EC073F7EFD23C1FA
 
 $ find ~/workspaces/personal -mindepth 1 -maxdepth 1 -type d -exec sh -c '(cd {} && echo "$PWD" && echo "  $(git config get user.name) <$(git config get user.email)> $(git config get user.signingkey)")' \;
-/Users/example/workspaces/personal/secret-project
+/Users/chowe/workspaces/personal/secret-project
   Cameron Howe <cameron@howe.name> 2DAF54C767F3FD24EACFA1B5EC073F7EFD23C1FA
-/Users/example/workspaces/personal/sandbox
+/Users/chowe/workspaces/personal/sandbox
   Cameron Howe <cameron@howe.name> 2DAF54C767F3FD24EACFA1B5EC073F7EFD23C1FA
 ----
 
@@ -144,13 +200,19 @@ $ scripts/git/git_set_identity.sh \
 -d ~/workspaces/cardiff-electric \
 -e catherine.howe@cardiff-electric.com \
 -n 'Catherine Howe'
-Catherine Howe <catherine.howe@cardiff-electric.com> C09B7924274A9865545C651277254FBC1027F48D - /Users/example/workspaces/cardiff-electric/backend
-Catherine Howe <catherine.howe@cardiff-electric.com> C09B7924274A9865545C651277254FBC1027F48D - /Users/example/workspaces/cardiff-electric/frontend
+Catherine Howe <catherine.howe@cardiff-electric.com> C09B7924274A9865545C651277254FBC1027F48D - /Users/chowe/workspaces/cardiff-electric/backend
+Catherine Howe <catherine.howe@cardiff-electric.com> C09B7924274A9865545C651277254FBC1027F48D - /Users/chowe/workspaces/cardiff-electric/frontend
+
+$ scripts/git/git_set_identity.sh \
+-d ~/workspaces/comet \
+-e chowe@comet.com \
+-s ~/.ssh/id_ed25519-comet-chowe.pub
+Cameron Howe <chowe@comet.com> /Users/chowe/.ssh/id_ed25519-comet-chowe.pub - /Users/chowe/workspaces/comet/portal
 
 $ scripts/git/git_set_identity.sh \
 -d ~/workspaces/mutiny \
 -e c.howe@mutiny.com
-Cameron Howe <c.howe@mutiny.com> 39564B7AA0B51F88A8F8BCBC49F1A380A5660737 - /Users/example/workspaces/mutiny/giant
+Cameron Howe <c.howe@mutiny.com> 39564B7AA0B51F88A8F8BCBC49F1A380A5660737 - /Users/chowe/workspaces/mutiny/giant
 ----
 
 The following identities will be used for commits and tags now:
@@ -158,28 +220,38 @@ The following identities will be used for commits and tags now:
 [,console]
 ----
 $ find ~/workspaces/cardiff-electric -mindepth 1 -maxdepth 1 -type d -exec sh -c '(cd {} && echo "$PWD" && echo "  $(git config get user.name) <$(git config get user.email)> $(git config get user.signingkey)")' \;
-/Users/example/workspaces/cardiff-electric/frontend
+/Users/chowe/workspaces/cardiff-electric/frontend
   Catherine Howe <catherine.howe@cardiff-electric.com> C09B7924274A9865545C651277254FBC1027F48D
-/Users/example/workspaces/cardiff-electric/backend
+/Users/chowe/workspaces/cardiff-electric/backend
   Catherine Howe <catherine.howe@cardiff-electric.com> C09B7924274A9865545C651277254FBC1027F48D
 
+$ find ~/workspaces/comet -mindepth 1 -maxdepth 1 -type d -exec sh -c '(cd {} && echo "$PWD" && echo "  $(git config get user.name) <$(git config get user.email)> $(git config get user.signingkey)")' \;
+/Users/chowe/workspaces/comet/portal
+  Cameron Howe <chowe@comet.com> /Users/chowe/.ssh/id_ed25519-comet-chowe.pub
+
 $ find ~/workspaces/mutiny -mindepth 1 -maxdepth 1 -type d -exec sh -c '(cd {} && echo "$PWD" && echo "  $(git config get user.name) <$(git config get user.email)> $(git config get user.signingkey)")' \;
-/Users/example/workspaces/mutiny/giant
+/Users/chowe/workspaces/mutiny/giant
   Cameron Howe <c.howe@mutiny.com> 39564B7AA0B51F88A8F8BCBC49F1A380A5660737
 
 $ find ~/workspaces/personal -mindepth 1 -maxdepth 1 -type d -exec sh -c '(cd {} && echo "$PWD" && echo "  $(git config get user.name) <$(git config get user.email)> $(git config get user.signingkey)")' \;
-/Users/example/workspaces/personal/secret-project
+/Users/chowe/workspaces/personal/secret-project
   Cameron Howe <cameron@howe.name> 2DAF54C767F3FD24EACFA1B5EC073F7EFD23C1FA
-/Users/example/workspaces/personal/sandbox
+/Users/chowe/workspaces/personal/sandbox
   Cameron Howe <cameron@howe.name> 2DAF54C767F3FD24EACFA1B5EC073F7EFD23C1FA
 ----
+
+== Prerequisites
+
+* xref:developer-guide::dev-environment/dev-installation.adoc#openssh[OpenSSH] if you want to use https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgformat[Git SSH signing]
 
 == More Information
 
 * https://git-scm.com/docs/git-config#Documentation/git-config.txt-authorname[Git user.name & user.email]
-* https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[GPG signing]
+* https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work[Git Key signing]
 * https://git-scm.com/docs/git-config#Documentation/git-config.txt-usersigningKey[user.signingKey]
 * https://git-scm.com/docs/git-config#Documentation/git-config.txt-commitgpgSign[commit.gpgSign]
 * https://git-scm.com/docs/git-config#Documentation/git-config.txt-taggpgSign[tag.gpgSign]
 * https://git-scm.com/docs/git-config#Documentation/git-config.txt-tagforceSignAnnotated[tag.forceSignAnnotated]
 * https://man.archlinux.org/man/core/gnupg/gpg.1[gpg]
+* https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgformat[gpg.format]
+* https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgsshallowedSignersFile[gpg.ssh.allowedSignersFile]

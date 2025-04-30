@@ -262,6 +262,20 @@ if command -v nvm >/dev/null 2>&1; then
 fi
 ----
 
+[#openssh]
+== OpenSSH
+
+=== Linux
+
+[,console]
+----
+$ sudo apt-get install openssh-client
+----
+
+=== Mac
+
+`openssh` is part of the standard macOS installation.
+
 [#openssl]
 == OpenSSL
 
