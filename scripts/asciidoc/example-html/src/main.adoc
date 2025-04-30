@@ -504,8 +504,8 @@ https://github.com/plantuml-stdlib/C4-PlantUML?tab=readme-ov-file#system-context
 @startuml
 
 skinparam Legend {
-	BackgroundColor transparent
-	BorderColor transparent
+    BackgroundColor transparent
+    BorderColor transparent
 }
 legend
 Root

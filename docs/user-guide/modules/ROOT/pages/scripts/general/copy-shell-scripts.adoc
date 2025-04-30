@@ -63,8 +63,8 @@ $ scripts/general/copy_shell_scripts.sh -d /tmp/dst -s /tmp/src
 The following script names are not unique:
 
 a.sh
-	/tmp/src/sub/a.sh
-	/tmp/src/a.sh
+  /tmp/src/sub/a.sh
+  /tmp/src/a.sh
 
 Make the file names unique and execute this script again.
 $ tree --noreport -p /tmp/src
