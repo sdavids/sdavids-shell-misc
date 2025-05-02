@@ -7,13 +7,26 @@
 
 [TIP]
 ====
-If you copy this script into a Node.js-based project, you should exclude the `node_modules` directory:
+If you copy this script into a _npm_-based project, you should exclude the `node_modules` directory:
 
-`find … -name '*.sh' -not -path '*/node_modules/*' -print0 …`
+[,shell]
+----
+find … -not -path '*/node_modules/*' -print0 …
+----
+
+If you use https://pnpm.io/faq#store-path-is-not-specified[pnpm]:
+
+[,shell]
+----
+find … -not -path '*/.pnpm-store/*' -print0 …
+----
 
 If you use https://typicode.github.io/husky/[Husky]:
 
-`find … -name '*.sh' -not -path '*/node_modules/*' -not -path '*/.husky/*' -print0 …``
+[,shell]
+----
+find … -not -path '*/.husky/*' -print0 …
+----
 ====
 
 == Usage
