@@ -27,7 +27,7 @@ The permissions of the given directory (`-d`) itself are not modified.
 
 [NOTE]
 ====
-`node_modules` directories will be ignored.
+`node_modules` and `.pnpm-store` directories will be ignored.
 
 If the given directory (`-d`) is a Git repository, and it has https://git-scm.com/docs/githooks[Git hooks] configured (`git config get core.hooksPath`) then this script will ignore the git hooks directory.
 
@@ -88,6 +88,8 @@ $ touch s.sh
 $ mkdir .githooks
 $ touch .githooks/pre-commit && chmod u+x .githooks/pre-commit
 $ git config set core.hooksPath .githooks
+$ mkdir .pnpm-store
+$ touch .pnpm-store/p.sh && chmod u+x .pnpm-store/p.sh
 $ mkdir -p node_modules/some-module
 $ touch node_modules/some-module/some-script && chmod u+x node_modules/some-module/some-script
 $ touch node_modules/some-module/some-script-without-execute-permission.sh
@@ -96,6 +98,8 @@ $ tree --noreport -p -a -I .git /tmp/test
 [drwx------]  /tmp/test
 ├── [drwx------]  .githooks
 │   └── [-rwx------]  pre-commit
+├── [drwx------]  .pnpm-store
+│   └── [-rwx------]  p.sh
 ├── [drw-------]  d
 ├── [-rwx------]  f
 ├── [drwx------]  node_modules
@@ -111,34 +115,41 @@ WARNING: The permissions in the directory '/private/tmp/test' will be fixed.
 The following directories will be ignored:
 
 /private/tmp/test/.githooks                                               <1>
-/private/tmp/test/node_modules                                            <2>
+/private/tmp/test/.pnpm-store                                             <2>
+/private/tmp/test/node_modules                                            <3>
 
 Do you really want to irreversibly fix the permissions (Y/N)? y
 $ tree --noreport -p -a -I .git /tmp/test
 [drwx------]  /tmp/test
 ├── [drwx------]  .githooks                                               <1>
 │   └── [-rwx------]  pre-commit
-├── [drwx------]  d                                                       <3>
-├── [-rw-------]  f                                                       <4>
-├── [drwx------]  node_modules                                            <2>
+├── [drwx------]  .pnpm-store
+│   └── [-rwx------]  p.sh                                                <2>
+├── [drwx------]  d                                                       <4>
+├── [-rw-------]  f                                                       <5>
+├── [drwx------]  node_modules                                            <3>
 │   └── [drwx------]  some-module
 │       ├── [-rwx------]  some-script
 │       └── [-rwx------]  some-script-without-execute-permission.sh
-└── [-rwx------]  s.sh                                                    <5>
+└── [-rwx------]  s.sh                                                    <6>
 ----
 
 <1> the Git hooks directory and its files are ignored
 
-<2> the `node_modules` directories and their subdirectories and files are ignored
+<2> the `.pnpm-store` directories and their subdirectories and files are ignored
 
-<3> directory permissions have been fixed
+<3> the `node_modules` directories and their subdirectories and files are ignored
 
-<4> file permissions have been fixed
+<4> directory permissions have been fixed
 
-<5> script permissions have been fixed
+<5> file permissions have been fixed
+
+<6> script permissions have been fixed
 
 == More Information
 
 * https://man.archlinux.org/man/umask.2[umask]
 * https://support.apple.com/en-us/HT201684[Set a custom umask in macOS]
 * https://git-scm.com/docs/githooks[Git hooks]
+* https://docs.npmjs.com/cli/v11/configuring-npm/foldersp[node_modules]
+* https://pnpm.io/faq#store-path-is-not-specified[.pnpm-store]

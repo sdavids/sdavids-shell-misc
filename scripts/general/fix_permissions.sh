@@ -97,18 +97,24 @@ readonly sh_perm
 
   node_exclusions=''
   if [ "$(find "${base_dir}" -type d -name 'node_modules' -exec printf %c {} + | wc -c)" -ne 0 ]; then
-    node_exclusions='-not -path */node_modules/*'
+    node_exclusions=' -not -path */node_modules/*'
   fi
   readonly node_exclusions
 
+  pnpm_exclusions=''
+  if [ "$(find "${base_dir}" -type d -name '.pnpm-store' -exec printf %c {} + | wc -c)" -ne 0 ]; then
+    pnpm_exclusions=' -not -path */.pnpm-store/*'
+  fi
+  readonly pnpm_exclusions
+
   printf "\nWARNING: The permissions in the directory '%s' will be fixed.\n" "$(realpath "${base_dir}")"
 
-  if [ -n "${node_exclusions}" ]; then
+  if [ -n "${node_exclusions}" ] || [ -n "${pnpm_exclusions}" ]; then
     printf '\nThe following directories will be ignored:\n\n'
     if [ -n "${hooks_exclusion}" ]; then
       realpath "${base_dir}/${hooks_path:-}"
     fi
-    find "${base_dir}" -type d -name 'node_modules' -exec sh -c 'realpath "$0";' {} \;
+    find "${base_dir}" -type d \( -name 'node_modules' -o -name '.pnpm-store' \) -exec sh -c 'realpath "$0";' {} \;
   elif [ -n "${hooks_exclusion}" ]; then
     printf "\nThe directory '%s' will be excluded.\n" "$(realpath "${base_dir}/${hooks_path:-}")"
   fi
@@ -127,7 +133,7 @@ readonly sh_perm
   find "${base_dir}" -type d -exec chmod "${dir_perm}" {} +
   set -f
   # shellcheck disable=SC2086
-  find "${base_dir}" -type f $hooks_exclusion $node_exclusions -exec chmod "${file_perm}" {} +
+  find "${base_dir}" -type f ${hooks_exclusion}${node_exclusions}${pnpm_exclusions} -exec chmod "${file_perm}" {} +
   set +f
   find "${base_dir}" -type f -name '*.sh' -exec chmod "${sh_perm}" {} +
 )
