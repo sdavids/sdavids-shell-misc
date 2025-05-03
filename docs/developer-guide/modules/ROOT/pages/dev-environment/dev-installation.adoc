@@ -126,7 +126,7 @@ $ brew install gh
 
 First <<jdk,install a JDK>>.
 
-There are https://gradle.org/install/[multiple options] of installing Gradle.
+There are https://gradle.org/install/[multiple options] for installing Gradle.
 
 The recommended way is to https://sdkman.io/install[install via SDKMAN!]:
 
@@ -168,7 +168,7 @@ $ brew install hadolint
 [#jdk]
 == JDK
 
-There are https://whichjdk.com[several different JDKs] and multiple options of installing them.
+There are https://whichjdk.com[several different JDKs] and multiple options for installing them.
 
 The https://whichjdk.com/#what-is-the-best-way-to-install-a-jdk-for-local-development[recommended] way is to https://sdkman.io/install[install via SDKMAN!]:
 
@@ -179,7 +179,7 @@ $ sdk install java
 
 === More Information
 
-https://sdkman.io/jdks[SDKMAN! - JDK Distributions]
+https://sdkman.io/jdks[SDKMAN JDKs]
 
 [#jpegoptim]
 == jpegoptim

@@ -41,9 +41,12 @@ Install and enable the following extensions:
 * https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck[ShellCheck]
 * https://marketplace.visualstudio.com/items?itemName=mkhl.shfmt[shfmt]
 
-=== https://code.visualstudio.com/docs/getstarted/settings[User and Workspace Settings]
+=== User and Workspace Settings
 
 Set text file encoding to `utf8` and line delimiters to `\n`:
 
 * `files.encoding`
 * `files.eol`
+
+More information:
+https://code.visualstudio.com/docs/getstarted/settings[VSCode - User and Workspace Settings]

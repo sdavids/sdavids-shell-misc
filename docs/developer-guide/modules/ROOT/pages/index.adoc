@@ -5,7 +5,7 @@
 
 [IMPORTANT]
 ====
-After cloning this repository you need to install the Git hooks via:
+After cloning this repository, you need to install the Git hooks via:
 
 [,console]
 ----
