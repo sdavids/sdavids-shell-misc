@@ -3,11 +3,20 @@
 = renew_self_signed_cert
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/renew_self_signed_cert.sh
 
-{script_url}[This script^] will renew the private key `key.pem` and the self-signed certificate `cert.pem` in the given directory (`$PWD` if not given).
+{script_url}[This script^] will renew a private key `key.pem` and a self-signed certificate `cert.pem`.
 
-The optional second positive integer parameter (range: [1, 24855]) specifies the number of days the certificate is valid for; the default is 30 days.
+The following parameters are optional:
 
-The optional third parameter is the common name (`localhost` if not given) of the certificate to be renewed.
+`c` :: the common name (`localhost` if not given) of the certificate
+`d` :: the directory (`$PWD` if not given) containing the key and certificate
+`v` :: the lifetime of the certificate in days (range: [1, 24855]; `30` if not given)
++
+[WARNING]
+====
+Certificates with a lifetime exceeding 180 days will https://support.apple.com/en-us/103214[not be accepted by the Apple platform] or Safari.
+
+As of March 15, 2029, the maximum lifetime for a certificate will be https://www.digicert.com/blog/tls-certificate-lifetimes-will-officially-reduce-to-47-days[47 days].
+====
 
 On macOS, the certificate will be renewed in the "login" keychain also.
 
@@ -20,13 +29,6 @@ For Firefox the old certificate has to be xref:scripts/cert/delete-self-signed-c
 Docker needs to be restarted.
 ====
 
-[WARNING]
-====
-Certificates with more than 180 days validity will https://support.apple.com/en-us/103214[not be accepted by the Apple platform] or Safari.
-
-As of March 15, 2029, the maximum lifetime for a certificate will be https://www.digicert.com/blog/tls-certificate-lifetimes-will-officially-reduce-to-47-days[47 days].
-====
-
 [TIP]
 ====
 Copy the script into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
@@ -37,7 +39,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 {
 ...
   "scripts": {
-    "cert:renew": "scripts/renew_self_signed_cert.sh certs"
+    "cert:renew": "scripts/renew_self_signed_cert.sh -d certs"
   }
 }
 ----
@@ -53,13 +55,13 @@ $ node --run cert:renew
 [,console]
 ----
 $ scripts/cert/renew_self_signed_cert.sh
-$ scripts/cert/renew_self_signed_cert.sh dist/etc/nginx
+$ scripts/cert/renew_self_signed_cert.sh -d dist/etc/nginx
 
-$ scripts/cert/renew_self_signed_cert.sh . 30
+$ scripts/cert/renew_self_signed_cert.sh -d . -v 30
 $ openssl x509 -enddate -noout -in ~/.local/secrets/certs/https.internal/cert.pem
 notAfter=Aug  8 11:18:36 2024 GMT
 
-$ scripts/cert/renew_self_signed_cert.sh ~/.local/secrets/certs/https.internal 10 https.internal
+$ scripts/cert/renew_self_signed_cert.sh -d ~/.local/secrets/certs/https.internal -v 10 -c https.internal
 Removing 'https.internal' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
 Adding 'https.internal' certificate (expires on: 2024-09-17) to keychain /Users/example/Library/Keychains/login.keychain-db ...
 $ date -Idate
