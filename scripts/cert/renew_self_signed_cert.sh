@@ -57,14 +57,14 @@ if [ -n "${1+x}" ]; then
   if [ -n "${2+x}" ]; then
     if [ -n "${3+x}" ]; then
       $delete_script_path "$1" "$3"
-      $create_script_path "$1" "$2" "$3"
+      $create_script_path -d "$1" -v "$2" -c "$3"
     else
       $delete_script_path "$1"
-      $create_script_path "$1" "$2"
+      $create_script_path -d "$1" -v "$2"
     fi
   else
     $delete_script_path "$1"
-    $create_script_path "$1"
+    $create_script_path -d "$1"
   fi
 else
   $delete_script_path

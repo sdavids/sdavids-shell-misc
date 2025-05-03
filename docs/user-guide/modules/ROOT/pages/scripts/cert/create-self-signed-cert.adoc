@@ -4,13 +4,21 @@
 :repo_url: https://github.com/sdavids/sdavids-shell-misc/blob/main
 :script_url: {repo_url}/scripts/cert/create_self_signed_cert.sh
 
-{script_url}[This script^] will create a private key `key.pem` and a self-signed certificate `cert.pem` in the given directory (`$PWD` if not given).
+{script_url}[This script^] will create a private key `key.pem` and a self-signed certificate `cert.pem`.
 
-The given directory will be created if it does not exit yet.
+The following parameters are optional:
 
-The optional second positive integer parameter (range: [1, 24855]) specifies the number of days the generated certificate is valid for; the default is 30 days.
+`c` :: the common name (`localhost` if not given) of the certificate
+`d` :: the directory (`$PWD` if not given) the key and certificate will be created in; will be created if it does not exit yet
+`v` :: the lifetime of the certificate in days (range: [1, 24855]; default: 30)
++
+[WARNING]
+====
+Certificates with a lifetime exceeding 180 days will https://support.apple.com/en-us/103214[not be accepted by the Apple platform] or Safari.
 
-The optional third parameter is the common name (`localhost` if not given) of the certificate to be added.
+As of March 15, 2029, the maximum lifetime for a certificate will be https://www.digicert.com/blog/tls-certificate-lifetimes-will-officially-reduce-to-47-days[47 days].
+====
+`x` :: do not exit with an error if the key and certificate already exist
 
 On macOS, the certificate will be added to the "login" keychain also.
 
@@ -42,7 +50,7 @@ Docker needs to be restarted.
 
 [IMPORTANT]
 ====
-Ensure that the common name (set via the third parameter of this script) of the generated certificate has an entry in `/etc/hosts`.
+Ensure that the common name (set via `-c`) of the generated certificate has an entry in `/etc/hosts`.
 
 [,text]
 ----
@@ -80,13 +88,6 @@ Do you want me to modify your .gitignore file (Y/N)?
 Related Script: xref:scripts/git/git-cleanup.adoc#git-cleanup-untracked-exclusions[git-cleanup]
 ====
 
-[WARNING]
-====
-Certificates with more than 180 days validity will https://support.apple.com/en-us/103214[not be accepted by the Apple platform] or Safari.
-
-As of March 15, 2029, the maximum lifetime for a certificate will be https://www.digicert.com/blog/tls-certificate-lifetimes-will-officially-reduce-to-47-days[47 days].
-====
-
 [TIP]
 ====
 Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc[delete], xref:scripts/cert/renew-self-signed-cert.adoc[renew], and xref:scripts/cert/verify-self-signed-cert.adoc[verify] scripts) into your Node.js project and add it as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] to your `package.json` file:
@@ -97,7 +98,7 @@ Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc
 {
 ...
   "scripts": {
-    "cert:create": "scripts/create_self_signed_cert.sh certs",
+    "cert:create": "scripts/create_self_signed_cert.sh -d certs",
     "cert:delete": "scripts/delete_self_signed_cert.sh certs",
     "cert:renew": "scripts/renew_self_signed_cert.sh certs",
     "cert:verify": "scripts/verify_self_signed_cert.sh certs",
@@ -134,13 +135,15 @@ notBefore=Jan 30 16:25:43 2024 GMT
 $ openssl x509 -enddate -noout -in cert.pem
 notAfter=Feb 29 16:25:43 2024 GMT
 
-$ scripts/cert/create_self_signed_cert.sh dist/etc/nginx
+$ scripts/cert/create_self_signed_cert.sh -d dist/etc/nginx
 Adding 'localhost' certificate (expires on: 2024-02-29) to keychain /Users/example/Library/Keychains/login.keychain-db ...
 
-$ scripts/cert/create_self_signed_cert.sh . 10
+$ scripts/cert/create_self_signed_cert.sh -d dist/etc/nginx -x
+
+$ scripts/cert/create_self_signed_cert.sh -d . -v 10
 Adding 'localhost' certificate (expires on: 2024-02-09) to keychain /Users/example/Library/Keychains/login.keychain-db ...
 
-$ scripts/cert/create_self_signed_cert.sh ~/.local/secrets/certs/https.internal 20 https.internal
+$ scripts/cert/create_self_signed_cert.sh -d ~/.local/secrets/certs/https.internal -v 20 -c https.internal
 Adding 'https.internal' certificate (expires on: 2024-02-19) to keychain /Users/example/Library/Keychains/login.keychain-db ...
 ----
 
@@ -165,7 +168,7 @@ image::self-signed-firefox.png[]
 
 [,console]
 ----
-$ scripts/cert/create_self_signed_cert.sh ~/.local/secrets/certs/localhost
+$ scripts/cert/create_self_signed_cert.sh -d ~/.local/secrets/certs/localhost
 
 $ docker run --rm httpd:2.4.63-alpine3.21 cat /usr/local/apache2/conf/httpd.conf >httpd.conf.orig
 $ sed -e 's/^#\(Include .*httpd-ssl.conf\)/\1/' \
@@ -190,7 +193,7 @@ $ docker run -i -t --rm -p 3000:443 \
 
 [,console]
 ----
-$ scripts/cert/create_self_signed_cert.sh ~/.local/secrets/certs/localhost
+$ scripts/cert/create_self_signed_cert.sh -d ~/.local/secrets/certs/localhost
 
 $ printf 'server {
   listen 443 ssl;
