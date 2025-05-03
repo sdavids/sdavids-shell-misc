@@ -3,11 +3,12 @@
 = delete_self_signed_cert
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/delete_self_signed_cert.sh
 
-{script_url}[This script^] will delete the private key `key.pem` and the self-signed certificate `cert.pem` from the given directory (`$PWD` if not given).
+{script_url}[This script^] will delete a private key `key.pem` and a self-signed certificate `cert.pem`.
 
-If the given directory is not `$PWD` and is empty after the removal it will be removed as well.
+The following parameters are optional:
 
-The optional second parameter is the common name (`localhost` if not given) of the certificate to be removed.
+`c` :: the common name (`localhost` if not given) of the certificate
+`d` :: the directory (`$PWD` if not given) containing the key and certificate; the directory will be also deleted if empty and not `$PWD`
 
 On macOS, the certificate will be removed from the "login" keychain also.
 
@@ -30,7 +31,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 {
 ...
   "scripts": {
-    "cert:delete": "scripts/delete_self_signed_cert.sh certs"
+    "cert:delete": "scripts/delete_self_signed_cert.sh -d certs"
   }
 }
 ----
@@ -48,10 +49,10 @@ $ node --run cert:delete
 $ scripts/cert/delete_self_signed_cert.sh
 Removing 'localhost' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
 
-$ scripts/cert/delete_self_signed_cert.sh ~/.local/secrets/certs/localhost
+$ scripts/cert/delete_self_signed_cert.sh -d ~/.local/secrets/certs/localhost
 Removing 'localhost' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
 
-$ scripts/cert/delete_self_signed_cert.sh ~/.local/secrets/certs/https.internal https.internal
+$ scripts/cert/delete_self_signed_cert.sh -d ~/.local/secrets/certs/https.internal -c https.internal
 Removing 'https.internal' certificate from keychain /Users/example/Library/Keychains/login.keychain-db ...
 ----
 

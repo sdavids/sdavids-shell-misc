@@ -99,7 +99,7 @@ Copy this script (and its related xref:scripts/cert/delete-self-signed-cert.adoc
 ...
   "scripts": {
     "cert:create": "scripts/create_self_signed_cert.sh -d certs",
-    "cert:delete": "scripts/delete_self_signed_cert.sh certs",
+    "cert:delete": "scripts/delete_self_signed_cert.sh -d certs",
     "cert:renew": "scripts/renew_self_signed_cert.sh certs",
     "cert:verify": "scripts/verify_self_signed_cert.sh -d certs",
 ...
