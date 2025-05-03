@@ -48,7 +48,7 @@ Ensure that the common name (set via the third parameter of this script) of the 
 
 [,text]
 ----
-WARNING: /etc/hosts does not have an entry for '127.0.0.1 localhost https.internal'
+WARNING: /etc/hosts does not have an entry for '127.0.0.1 https.internal'
 ----
 
 ./etc/hosts
