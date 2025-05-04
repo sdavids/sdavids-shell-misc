@@ -5,6 +5,10 @@
 
 {script_url}[This script^] will delete the certificate authority.
 
+The following parameter is optional:
+
+`y` :: assume "yes" as answer to all prompts and run non-interactively
+
 The certificate authority will be deleted from the following location:
 
 Linux::

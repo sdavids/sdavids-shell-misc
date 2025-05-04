@@ -23,6 +23,20 @@ if [ "$(easyrsa --version | grep -E -c 'Version:\s+3.1')" -ne 1 ]; then
   exit 1
 fi
 
+while getopts ':y' opt; do
+  case "${opt}" in
+    y)
+      yes='true'
+      ;;
+    ?)
+      echo "Usage: $0 [-y]" >&2
+      exit 1
+      ;;
+  esac
+done
+
+readonly yes="${yes:-false}"
+
 # https://easy-rsa.readthedocs.io/en/latest/advanced/#openssl-config
 if [ -n "${EASYRSA_PKI+x}" ]; then
   readonly pki_dir="${EASYRSA_PKI}"
@@ -54,25 +68,27 @@ fi
 subject="$(openssl x509 -subject -noout -in "${ca_cert}" | sed 's/subject=CN=\(.*\)/\1/')"
 readonly subject
 
-printf "\nWARNING: You are about to delete the CA '%s':\n\n" "${subject}"
+if [ "${yes}" = 'false' ]; then
+  printf "\nWARNING: You are about to delete the CA '%s':\n\n" "${subject}"
 
-if command -v tree >/dev/null 2>&1; then
-  tree --noreport -F "${pki_dir}"
-else
-  printf '%s/\n' "${pki_dir}"
-  ls -F -A -1 "${pki_dir}"
+  if command -v tree >/dev/null 2>&1; then
+    tree --noreport -F "${pki_dir}"
+  else
+    printf '%s/\n' "${pki_dir}"
+    ls -F -A -1 "${pki_dir}"
+  fi
+
+  printf '\nAll existing certificates based on this CA will become invalid.\n\n'
+  read -p 'Do you really want to irreversibly delete the CA (Y/N)? ' -n 1 -r should_delete
+
+  case "${should_delete}" in
+    y | Y) printf '\n\n' ;;
+    *)
+      printf '\n'
+      exit 0
+      ;;
+  esac
 fi
-
-printf '\nAll existing certificates based on this CA will become invalid.\n\n'
-read -p 'Do you really want to irreversibly delete the CA (Y/N)? ' -n 1 -r should_delete
-
-case "${should_delete}" in
-  y | Y) printf '\n\n' ;;
-  *)
-    printf '\n'
-    exit 0
-    ;;
-esac
 
 rm -rf "${pki_dir}"
 
