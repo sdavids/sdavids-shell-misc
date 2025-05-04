@@ -3,7 +3,11 @@
 = verify_ca_based_cert
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/verify_ca_based_cert.sh
 
-{script_url}[This script^] will verify the certificate-authority-based certificate `cert.pem` in the given directory (`$PWD` if not given).
+{script_url}[This script^] will verify a private key `key.pem` and a certificate-authority-based certificate `cert.pem`.
+
+The following parameter is optional:
+
+`d` :: the directory (`$PWD` if not given) containing the key and certificate
 
 On macOS, the CA root certificate will be verified in the "System" keychain also.
 
@@ -22,7 +26,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 {
 ...
   "scripts": {
-    "cert:verify": "scripts/verify_ca_based_cert.sh certs"
+    "cert:verify": "scripts/verify_ca_based_cert.sh -d certs"
   }
 }
 ----
@@ -38,7 +42,7 @@ $ node --run cert:verify
 [,console]
 ----
 $ scripts/cert/verify_ca_based_cert.sh
-$ scripts/cert/verify_ca_based_cert.sh ~/.local/secrets/certs/localhost
+$ scripts/cert/verify_ca_based_cert.sh -d ~/.local/secrets/certs/localhost
 keychain: "/Library/Keychains/System.keychain"
 ...
     "labl"<blob>="Easy-RSA CA (2024-08-05, example-host)"
