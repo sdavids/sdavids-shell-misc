@@ -21,37 +21,60 @@ if [ "$(easyrsa --version | grep -E -c 'Version:\s+3.1')" -ne 1 ]; then
   exit 1
 fi
 
-readonly out_dir="${1:-$PWD}"
+while getopts ':c:d:v:y' opt; do
+  case "${opt}" in
+    c)
+      common_name="${OPTARG}"
+      ;;
+    d)
+      base_dir="${OPTARG}"
+      ;;
+    v)
+      days="${OPTARG}"
+      ;;
+    y)
+      yes='true'
+      ;;
+    ?)
+      echo "Usage: $0 [-c <common_name>] [-d <dir>] [-v <days; 1..24855>] [-y]" >&2
+      exit 1
+      ;;
+  esac
+done
 
-if [ -n "${2+x}" ]; then # $2 defined
-  case $2 in
-    '' | *[!0-9]*) # $2 is not a positive integer or 0
-      echo "'$2' is not a positive integer" >&2
+readonly base_dir="${base_dir:-$PWD}"
+readonly common_name="${common_name:-localhost}"
+readonly yes="${yes:-false}"
+
+if [ -n "${days+x}" ]; then # $days defined
+  case ${days} in
+    '' | *[!0-9]*) # $days is not a positive integer or 0
+      echo "'${days}' is not a positive integer" >&2
       exit 2
       ;;
-    *) # $2 is a positive integer or 0
-      days="$2"
+    *) # $days is a positive integer or 0
       if [ "${days}" -lt 1 ]; then
-        echo "'$2' is not a positive integer" >&2
+        echo "'${days}' is not a positive integer" >&2
         exit 3
       fi
       if [ "${days}" -gt 24855 ]; then
-        echo "'$2' is too big; range: [1, 24855]" >&2
+        echo "'${days}' is outside of the range 1..24855" >&2
         exit 4
       fi
       if [ "${days}" -gt 180 ]; then
-        printf "ATTENTION: '%s' exceeds 180 days, the certificate will not be accepted by Apple platforms or Safari; see https://support.apple.com/en-us/103214 for more information.\n\n" "$2"
+        printf "ATTENTION: '%s' exceeds 180 days, the certificate will not be accepted by Apple platforms or Safari; see https://support.apple.com/en-us/103214 for more information.\n\n" "${days}"
+      fi
+      if [ "${days}" -gt 47 ]; then
+        printf "ATTENTION: '%s' exceeds 47 days, the certificate will not be accepted by browsers after March 14, 2029; see https://www.digicert.com/blog/tls-certificate-lifetimes-will-officially-reduce-to-47-days for more information.\n\n" "${days}"
       fi
       ;;
   esac
-else # $2 undefined
+else # $days undefined
   days=30
 fi
 readonly days
 
-readonly host_name="${3:-localhost}"
-
-if [ "${host_name}" = 'ca' ]; then
+if [ "${common_name}" = 'ca' ]; then
   echo "'ca' is not allowed due to it being the name of the certificate authority" >&2
   exit 5
 fi
@@ -77,22 +100,22 @@ if [ ! -d "${pki_dir}" ]; then
   exit 6
 fi
 
-if [ -f "${pki_dir}/reqs/${host_name}.req" ]; then
-  printf "A certificate for '%s' already exists.\n\nExecute the copy_ca_based_cert.sh script to copy it to a new location.\n" "${host_name}" >&2
+if [ -f "${pki_dir}/reqs/${common_name}.req" ]; then
+  printf "A certificate for '%s' already exists.\n\nExecute the copy_ca_based_cert.sh script to copy it to a new location.\n" "${common_name}" >&2
   exit 7
 fi
 
-readonly cert_path="${out_dir}/cert.pem"
-readonly key_path="${out_dir}/key.pem"
+readonly cert_path="${base_dir}/cert.pem"
+readonly key_path="${base_dir}/key.pem"
 
-readonly easyrsa_key_path="${pki_dir}/private/${host_name}.key"
-readonly easyrsa_cert_path="${pki_dir}/issued/${host_name}.crt"
+readonly easyrsa_key_path="${pki_dir}/private/${common_name}.key"
+readonly easyrsa_cert_path="${pki_dir}/issued/${common_name}.crt"
 
-export EASYRSA_EXTRA_EXTS="subjectAltName=DNS:${host_name}"
+export EASYRSA_EXTRA_EXTS="subjectAltName=DNS:${common_name}"
 
-easyrsa --sbatch --silent-ssl --days="${days}" build-server-full "${host_name}" nopass
+easyrsa --sbatch --silent-ssl --days="${days}" build-server-full "${common_name}" nopass
 
-mkdir -p "${out_dir}"
+mkdir -p "${base_dir}"
 
 if [ ! -e "${key_path}" ] && [ -f "${easyrsa_key_path}" ]; then
   cp "${easyrsa_key_path}" "${key_path}"
@@ -110,10 +133,10 @@ if [ "$(uname)" = 'Darwin' ]; then
 fi
 
 (
-  cd "${out_dir}"
+  cd "${base_dir}"
 
   if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != 'true' ]; then
-    exit 0 # ${out_dir} not a git repository
+    exit 0 # ${base_dir} not a git repository
   fi
 
   set +e
@@ -124,7 +147,7 @@ fi
   cert_ignored=$?
   set -e
 
-  if [ $key_ignored -ne 0 ] || [ $cert_ignored -ne 0 ]; then
+  if [ "${yes}" = 'false' ] && [ $key_ignored -ne 0 ] || [ $cert_ignored -ne 0 ]; then
     printf "\nWARNING: key.pem and/or cert.pem is not ignored in '%s'\n\n" "$PWD/.gitignore"
     read -p 'Do you want me to modify your .gitignore file (Y/N)? ' -n 1 -r should_modify
 
@@ -153,14 +176,23 @@ fi
   git status
 )
 
-if [ "${host_name}" = 'localhost' ]; then
+if [ "${common_name}" = 'localhost' ]; then
   # https://man.archlinux.org/man/grep.1
   if [ "$(grep -E -i -c '127\.0\.0\.1\s+localhost' /etc/hosts)" -eq 0 ]; then
     printf "\nWARNING: /etc/hosts does not have an entry for '127.0.0.1 localhost'\n" >&2
   fi
 else
   # https://man.archlinux.org/man/grep.1
-  if [ "$(grep -E -i -c "127\.0\.0\.1.+${host_name//\./\.}" /etc/hosts)" -eq 0 ]; then
-    printf "\nWARNING: /etc/hosts does not have an entry for '127.0.0.1 %s'\n" "${host_name}" >&2
+  if [ "$(grep -E -i -c "127\.0\.0\.1.+${common_name//\./\.}" /etc/hosts)" -eq 0 ]; then
+    printf "\nWARNING: /etc/hosts does not have an entry for '127.0.0.1 %s'\n" "${common_name}" >&2
+  fi
+fi
+
+# https://github.com/devcontainers/features/tree/main/src/docker-outside-of-docker#1-use-the-localworkspacefolder-as-environment-variable-in-your-code
+if [ -n "${LOCAL_WORKSPACE_FOLDER+x}" ]; then
+  if [ "${base_dir}" = "${base_dir#/}" ]; then
+    printf "The following certificate has been created on your host:\n\n\t%s\n\nExecute the following command on your host to add it to your host's trust store:\n\n\tcd %s && %s -x\n" "${LOCAL_WORKSPACE_FOLDER}/${cert_path}" "${LOCAL_WORKSPACE_FOLDER}" "$0 $*"
+  else
+    printf "The following certificate has been created in your Development Container:\n\n\t%s\n\nCopy it to your host and add it to your host's trust store.\n" "$(realpath "${cert_path}")"
   fi
 fi

@@ -33,7 +33,7 @@ Standalone certificates are simpler to use than certificate-authority-based cert
 xref:scripts/cert/copy-ca-based-cert.adoc[]:: copy a private key and a certificate-authority-based certificate
 xref:scripts/cert/copy-ca-root-cert.adoc[]:: copy the root certificate of a certificate authority
 xref:scripts/cert/create-ca.adoc[]:: create a certificate authority and its root certificate
-xref:scripts/cert/create-ca-based-cert.adoc[]:: create a private key and certificate based on a certificate authority
+xref:scripts/cert/create-ca-based-cert.adoc[]:: create a private key and a certificate based on a certificate authority
 xref:scripts/cert/delete-ca.adoc[]:: delete the certificate authority
 xref:scripts/cert/delete-ca-based-cert.adoc[]:: delete a private key and a certificate from a certificate authority
 xref:scripts/cert/renew-ca-based-cert.adoc[]:: renew the certificate-authority-based certificate
