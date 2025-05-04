@@ -104,7 +104,7 @@ Copy this script (and its related xref:scripts/cert/create-ca.adoc[], xref:scrip
     "cert:ca:delete": "scripts/delete_ca.sh",
     "cert:copy": "scripts/copy_ca_based_cert.sh -d certs",
     "cert:create": "scripts/create_ca_based_cert.sh certs",
-    "cert:delete": "scripts/delete_ca_based_cert.sh certs",
+    "cert:delete": "scripts/delete_ca_based_cert.sh -d certs",
     "cert:renew": "scripts/renew_ca_based_cert.sh certs",
     "cert:verify": "scripts/verify_ca_based_cert.sh -d certs",
 ...

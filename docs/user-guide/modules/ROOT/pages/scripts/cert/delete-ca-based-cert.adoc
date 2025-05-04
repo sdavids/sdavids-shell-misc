@@ -3,11 +3,12 @@
 = delete_ca_based_cert
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/delete_ca_based_cert.sh
 
-{script_url}[This script^] will remove the private key and the certificate from the certificate authority; and delete the key `key.pem` and the certificate `cert.pem` from the given directory (`$PWD` if not given).
+{script_url}[This script^] will delete a private key and a certificate from a certificate authority; the `key.pem` and `cert.pem` files will also be deleted.
 
-If the given directory is not `$PWD` and is empty after the deletion it will be deleted as well.
+The following parameters are optional:
 
-The optional second parameter is the common name (`localhost` if not given) of the certificate to be removed.
+`c` :: the common name (`localhost` if not given) of the certificate
+`d` :: the directory (`$PWD` if not given) containing the key and certificate; the directory will be also deleted if empty and not `$PWD`
 
 [NOTE]
 ====
@@ -21,7 +22,7 @@ Ensure that the xref:scripts/cert/create-ca.adoc[certificate authority has been 
 
 [IMPORTANT]
 ====
-Additional xref:scripts/cert/copy-ca-based-cert.adoc[copies] will not be deleted by this script, i.e., only the private key and certificate in the given directory and the CA will be removed.
+This script will not delete additional xref:scripts/cert/copy-ca-based-cert.adoc[copies], i.e., only the private key and certificate in the given directory (`-d`) and the CA will be removed.
 ====
 
 [TIP]
@@ -34,7 +35,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 {
 ...
   "scripts": {
-    "cert:delete": "scripts/delete_ca_based_cert.sh certs"
+    "cert:delete": "scripts/delete_ca_based_cert.sh -d certs"
   }
 }
 ----
@@ -50,8 +51,8 @@ $ node --run cert:delete
 [,console]
 ----
 $ scripts/cert/delete_ca_based_cert.sh
-$ scripts/cert/delete_ca_based_cert.sh ~/.local/secrets/certs/localhost
-$ scripts/cert/delete_ca_based_cert.sh ~/.local/secrets/certs/https.internal https.internal
+$ scripts/cert/delete_ca_based_cert.sh -d ~/.local/secrets/certs/localhost
+$ scripts/cert/delete_ca_based_cert.sh -d ~/.local/secrets/certs/https.internal -c https.internal
 ----
 
 == Prerequisites

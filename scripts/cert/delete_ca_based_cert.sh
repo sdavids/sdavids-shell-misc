@@ -21,11 +21,25 @@ if [ "$(easyrsa --version | grep -E -c 'Version:\s+3.1')" -ne 1 ]; then
   exit 1
 fi
 
-readonly base_dir="${1:-$PWD}"
+while getopts ':c:d:' opt; do
+  case "${opt}" in
+    c)
+      common_name="${OPTARG}"
+      ;;
+    d)
+      base_dir="${OPTARG}"
+      ;;
+    ?)
+      echo "Usage: $0 [-c <common_name>] [-d <dir>]" >&2
+      exit 1
+      ;;
+  esac
+done
 
-readonly host_name="${2:-localhost}"
+readonly base_dir="${base_dir:-$PWD}"
+readonly common_name="${common_name:-localhost}"
 
-if [ "${host_name}" = 'ca' ]; then
+if [ "${common_name}" = 'ca' ]; then
   echo "'ca' is not allowed due to it being the name of the certificate authority" >&2
   exit 2
 fi
@@ -54,11 +68,11 @@ fi
 readonly key_path="${base_dir}/key.pem"
 readonly cert_path="${base_dir}/cert.pem"
 
-readonly easyrsa_key_path="${pki_dir}/private/${host_name}.key"
-readonly easyrsa_cert_path="${pki_dir}/issued/${host_name}.crt"
-readonly easyrsa_inline_path="${pki_dir}/inline/${host_name}.inline"
-readonly easyrsa_req_path="${pki_dir}/reqs/${host_name}.req"
-readonly easyrsa_renewed_path="${pki_dir}/renewed/issued/${host_name}.crt"
+readonly easyrsa_key_path="${pki_dir}/private/${common_name}.key"
+readonly easyrsa_cert_path="${pki_dir}/issued/${common_name}.crt"
+readonly easyrsa_inline_path="${pki_dir}/inline/${common_name}.inline"
+readonly easyrsa_req_path="${pki_dir}/reqs/${common_name}.req"
+readonly easyrsa_renewed_path="${pki_dir}/renewed/issued/${common_name}.crt"
 readonly easyrsa_index_path="${pki_dir}/index.txt"
 
 if [ -f "${easyrsa_cert_path}" ]; then
@@ -110,9 +124,9 @@ if [ -d "${base_dir}" ] \
 fi
 
 if [ "$(uname)" = 'Darwin' ]; then
-  sed -i '' "/\/CN=${host_name}$/d" "${easyrsa_index_path}"
+  sed -i '' "/\/CN=${common_name}$/d" "${easyrsa_index_path}"
 else
-  sed -i "/\/CN=${host_name}$/d" "${easyrsa_index_path}"
+  sed -i "/\/CN=${common_name}$/d" "${easyrsa_index_path}"
 fi
 
 easyrsa --silent update-db 2>/dev/null
