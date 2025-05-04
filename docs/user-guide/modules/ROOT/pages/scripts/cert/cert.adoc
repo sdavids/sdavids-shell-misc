@@ -9,7 +9,19 @@ This section contains scripts related to <<standalone-certificates,standalone>> 
 
 [NOTE]
 ====
-Standalone certificates are useful if you do not use mutual TLS or if the server's certificate verifier supports using a trust anchor as both a CA certificate and an end-entity certificate.
+Standalone certificates are useful if
+
+* you do not use mutual TLS
+* the HTTP-client can be configured to ignore self-signed certificates
++
+[,console]
+----
+$ curl --insecure ...
+$ wget --no-check-certificate ...
+$ http --verify=no ...
+----
+* the server’s certificate verifier supports using a trust anchor as both a CA certificate and an end-entity certificate
+* you can add the certificate to your trust store
 ====
 
 xref:scripts/cert/create-self-signed-cert.adoc[]:: create a private key and a self-signed certificate
@@ -22,7 +34,10 @@ xref:scripts/cert/verify-self-signed-cert.adoc[]:: verify a private key and a se
 
 [NOTE]
 ====
-Certificate-authority-based certificates are useful if you want to use mutual TLS or if the server's certificate verifier does not support using a trust anchor as both a CA certificate and an end-entity certificate, (e.g., https://docs.rs/craftls/latest/rustls/#non-features[rusttls]).
+Certificate-authority-based certificates are useful if
+
+* you want to use mutual TLS
+* the server's certificate verifier does not support using a trust anchor as both a CA certificate and an end-entity certificate, (e.g., https://docs.rs/craftls/latest/rustls/#non-features[rusttls])
 ====
 
 [TIP]

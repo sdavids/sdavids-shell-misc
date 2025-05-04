@@ -9,7 +9,7 @@ The following parameters are optional:
 
 `c` :: the common name (`localhost` if not given) of the certificate
 `d` :: the directory (`$PWD` if not given) containing the key and certificate
-`v` :: the lifetime of the certificate in days (range: [1, 24855]; default: 30)
+`v` :: the lifetime of the certificate in days (range: [1, 24855]; `30` if not given)
 +
 [WARNING]
 ====

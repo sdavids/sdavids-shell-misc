@@ -10,7 +10,7 @@ The following parameters are optional:
 
 `c` :: the common name (`localhost` if not given) of the certificate
 `d` :: the directory (`$PWD` if not given) the key and certificate will be created in; will be created if it does not exit
-`v` :: the lifetime of the certificate in days (range: [1, 24855]; default: 30)
+`v` :: the lifetime of the certificate in days (range: [1, 24855]; `30` if not given)
 +
 [WARNING]
 ====
@@ -24,7 +24,7 @@ As of March 15, 2029, the maximum lifetime for a certificate will be https://www
 The certificate created by this script is useful if
 
 * you want to use mutual TLS
-* if the server's certificate verifier does not support using a trust anchor as both a CA certificate and an end-entity certificate, (e.g., https://docs.rs/craftls/latest/rustls/#non-features[rusttls])
+* the server's certificate verifier does not support using a trust anchor as both a CA certificate and an end-entity certificate, (e.g., https://docs.rs/craftls/latest/rustls/#non-features[rusttls])
 ====
 
 [NOTE]

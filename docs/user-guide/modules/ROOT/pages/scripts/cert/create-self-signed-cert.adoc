@@ -10,7 +10,7 @@ The following parameters are optional:
 
 `c` :: the common name (`localhost` if not given) of the certificate
 `d` :: the directory (`$PWD` if not given) the key and certificate will be created in; will be created if it does not exit
-`v` :: the lifetime of the certificate in days (range: [1, 24855]; default: 30)
+`v` :: the lifetime of the certificate in days (range: [1, 24855]; `30` if not given)
 +
 [WARNING]
 ====
@@ -28,15 +28,15 @@ The certificate created by this script is useful if
 
 * you do not use mutual TLS
 * the HTTP-client can be configured to ignore self-signed certificates
-* the server’s certificate verifier supports using a trust anchor as both a CA certificate and an end-entity certificate
-* you can add the certificate to your trust store
-
++
 [,console]
 ----
 $ curl --insecure ...
 $ wget --no-check-certificate ...
 $ http --verify=no ...
 ----
+* the server’s certificate verifier supports using a trust anchor as both a CA certificate and an end-entity certificate
+* you can add the certificate to your trust store
 ====
 
 [NOTE]
