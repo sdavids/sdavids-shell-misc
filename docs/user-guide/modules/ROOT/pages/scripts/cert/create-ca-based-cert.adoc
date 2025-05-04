@@ -99,7 +99,7 @@ Copy this script (and its related xref:scripts/cert/create-ca.adoc[], xref:scrip
 {
 ...
   "scripts": {
-    "cert:ca:copy-root": "scripts/copy_ca_root_cert.sh",
+    "cert:ca:copy-root": "scripts/copy_ca_root_cert.sh -d certs",
     "cert:ca:create": "scripts/create_ca.sh",
     "cert:ca:delete": "scripts/delete_ca.sh",
     "cert:copy": "scripts/copy_ca_based_cert.sh certs",

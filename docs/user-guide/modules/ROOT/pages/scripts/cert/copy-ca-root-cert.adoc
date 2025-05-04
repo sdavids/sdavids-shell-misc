@@ -3,9 +3,12 @@
 = copy_ca_root_cert
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/copy_ca_root_cert.sh
 
-{script_url}[This script^] will copy the root certificate `ca.crt` of the certificate authority to the given directory (`$PWD` if not given).
+{script_url}[This script^] will copy the root certificate `ca.crt` of a certificate authority.
 
-The given directory will be created if it does not exit yet.
+The following parameters are optional:
+
+`d` :: the directory (`$PWD` if not given) the root certificate should be copied to; will be created if it does not exit
+`y` :: assume "yes" as answer to all prompts and run non-interactively
 
 [IMPORTANT]
 ====
@@ -34,7 +37,7 @@ Related Script:       xref:scripts/git/git-cleanup.adoc#git-cleanup-untracked-ex
 ----
 $ scripts/cert/copy_ca_root_cert.sh
 
-$ scripts/cert/copy_ca_root_cert.sh ~/.local/secrets/certs/ca-root
+$ scripts/cert/copy_ca_root_cert.sh -d ~/.local/secrets/certs/ca-root
 $ stat -f '%A %N' ~/.local/secrets/certs/ca-root/ca.crt
 600 /Users/example/.local/secrets/certs/ca-root/ca.crt
 $ openssl x509 -issuer -noout -in ~/.local/secrets/certs/ca-root/ca.crt

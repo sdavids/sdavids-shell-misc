@@ -19,9 +19,25 @@ if [ "$(easyrsa --version | grep -E -c 'Version:\s+3.1')" -ne 1 ]; then
   exit 1
 fi
 
-readonly out_dir="${1:-$PWD}"
+while getopts ':d:y' opt; do
+  case "${opt}" in
+    d)
+      base_dir="${OPTARG}"
+      ;;
+    y)
+      yes='true'
+      ;;
+    ?)
+      echo "Usage: $0 [-d <dir>] [-y]" >&2
+      exit 1
+      ;;
+  esac
+done
 
-readonly root_cert_path="${out_dir}/ca.crt"
+readonly base_dir="${base_dir:-$PWD}"
+readonly yes="${yes:-false}"
+
+readonly root_cert_path="${base_dir}/ca.crt"
 
 if [ -e "${root_cert_path}" ]; then
   printf "The certificate '%s' already exists.\n" "${root_cert_path}" >&2
@@ -66,17 +82,17 @@ if [ ! -f "${easyrsa_ca_cert_path}" ]; then
   exit 4
 fi
 
-mkdir -p "${out_dir}"
+mkdir -p "${base_dir}"
 
 cp "${easyrsa_ca_cert_path}" "${root_cert_path}"
 
 chmod 600 "${root_cert_path}"
 
 (
-  cd "${out_dir}"
+  cd "${base_dir}"
 
   if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != 'true' ]; then
-    exit 0 # ${out_dir} not a git repository
+    exit 0 # ${base_dir} not a git repository
   fi
 
   set +e
@@ -85,16 +101,18 @@ chmod 600 "${root_cert_path}"
   set -e
 
   if [ $cert_ignored -ne 0 ]; then
-    printf "\nWARNING: ca.crt is not ignored in '%s'\n\n" "$PWD/.gitignore"
-    read -p 'Do you want me to modify your .gitignore file (Y/N)? ' -n 1 -r should_modify
+    if [ "${yes}" = 'false' ]; then
+      printf "\nWARNING: ca.crt is not ignored in '%s'\n\n" "$PWD/.gitignore"
+      read -p 'Do you want me to modify your .gitignore file (Y/N)? ' -n 1 -r should_modify
 
-    case "${should_modify}" in
-      y | Y) printf '\n\n' ;;
-      *)
-        printf '\n'
-        exit 0
-        ;;
-    esac
+      case "${should_modify}" in
+        y | Y) printf '\n\n' ;;
+        *)
+          printf '\n'
+          exit 0
+          ;;
+      esac
+    fi
 
     printf 'ca.crt\n' >>.gitignore
 
