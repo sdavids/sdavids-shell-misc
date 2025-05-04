@@ -3,11 +3,13 @@
 = copy_ca_based_cert
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/copy_ca_based_cert.sh
 
-{script_url}[This script^] will copy the private key `key.pem` and the certificate `cert.pem` from the certificate authority to the given directory (`$PWD` if not given).
+{script_url}[This script^] will copy a private key `key.pem` and a certificate-authority-based certificate `cert.pem`.
 
-The given directory will be created if it does not exit yet.
+The following parameters are optional:
 
-The optional second parameter is the common name (`localhost` if not given) of the certificate to be copied.
+`c` :: the common name (`localhost` if not given) of the certificate
+`d` :: the directory (`$PWD` if not given) the key and certificate should be copied to; will be created if it does not exit
+`y` :: assume "yes" as answer to all prompts and run non-interactively
 
 [IMPORTANT]
 ====
@@ -40,7 +42,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 {
 ...
   "scripts": {
-    "cert:copy": "scripts/copy_ca_based_cert.sh certs"
+    "cert:copy": "scripts/copy_ca_based_cert.sh -d certs"
   }
 }
 ----
@@ -56,9 +58,9 @@ $ node --run cert:copy
 [,console]
 ----
 $ scripts/cert/copy_ca_based_cert.sh
-$ scripts/cert/copy_ca_based_cert.sh ~/.local/secrets/certs/localhost
+$ scripts/cert/copy_ca_based_cert.sh -d ~/.local/secrets/certs/localhost
 
-$ scripts/cert/copy_ca_based_cert.sh ~/.local/secrets/certs/https.internal https.internal
+$ scripts/cert/copy_ca_based_cert.sh -d ~/.local/secrets/certs/https.internal -c https.internal
 $ stat -f '%A %N' ~/.local/secrets/certs/https.internal/*.pem
 600 /Users/example/.local/secrets/certs/https.internal/cert.pem
 600 /Users/example/.local/secrets/certs/https.internal/key.pem

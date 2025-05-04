@@ -19,10 +19,30 @@ if [ "$(easyrsa --version | grep -E -c 'Version:\s+3.1')" -ne 1 ]; then
   exit 1
 fi
 
-readonly out_dir="${1:-$PWD}"
+while getopts ':c:d:y' opt; do
+  case "${opt}" in
+    c)
+      common_name="${OPTARG}"
+      ;;
+    d)
+      base_dir="${OPTARG}"
+      ;;
+    y)
+      yes='true'
+      ;;
+    ?)
+      echo "Usage: $0 [-c <common_name>] [-d <dir>] [-y]" >&2
+      exit 1
+      ;;
+  esac
+done
 
-readonly key_path="${out_dir}/key.pem"
-readonly cert_path="${out_dir}/cert.pem"
+readonly base_dir="${base_dir:-$PWD}"
+readonly common_name="${common_name:-localhost}"
+readonly yes="${yes:-false}"
+
+readonly key_path="${base_dir}/key.pem"
+readonly cert_path="${base_dir}/cert.pem"
 
 if [ -e "${key_path}" ]; then
   printf "The key '%s' already exists.\n" "${key_path}" >&2
@@ -54,9 +74,7 @@ if [ -e "${cert_path}" ]; then
   exit 3
 fi
 
-readonly host_name="${2:-localhost}"
-
-if [ "${host_name}" = 'ca' ]; then
+if [ "${common_name}" = 'ca' ]; then
   echo "'ca' is not allowed due to it being the name of the certificate authority" >&2
   exit 4
 fi
@@ -82,26 +100,26 @@ if [ ! -d "${pki_dir}" ]; then
   exit 5
 fi
 
-readonly easyrsa_key_path="${pki_dir}/private/${host_name}.key"
-readonly easyrsa_cert_path="${pki_dir}/issued/${host_name}.crt"
+readonly easyrsa_key_path="${pki_dir}/private/${common_name}.key"
+readonly easyrsa_cert_path="${pki_dir}/issued/${common_name}.crt"
 
 if [ -f "${easyrsa_key_path}" ] && [ -f "${easyrsa_cert_path}" ]; then
-  mkdir -p "${out_dir}"
+  mkdir -p "${base_dir}"
 
   cp "${easyrsa_key_path}" "${key_path}"
   cp "${easyrsa_cert_path}" "${cert_path}"
 
   chmod 600 "${key_path}" "${cert_path}"
 else
-  printf "The CA has no private key and certificate for '%s'.\n\nExecute the create_ca_based_cert.sh script to create the private key and certificate.\n" "${host_name}" >&2
+  printf "The CA has no private key and certificate for '%s'.\n\nExecute the create_ca_based_cert.sh script to create the private key and certificate.\n" "${common_name}" >&2
   exit 6
 fi
 
 (
-  cd "${out_dir}"
+  cd "${base_dir}"
 
   if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != 'true' ]; then
-    exit 0 # ${out_dir} not a git repository
+    exit 0 # ${base_dir} not a git repository
   fi
 
   set +e
@@ -112,7 +130,7 @@ fi
   cert_ignored=$?
   set -e
 
-  if [ $key_ignored -ne 0 ] || [ $cert_ignored -ne 0 ]; then
+  if [ "${yes}" = 'false' ] && [ $key_ignored -ne 0 ] || [ $cert_ignored -ne 0 ]; then
     printf "\nWARNING: key.pem and/or cert.pem is not ignored in '%s'\n\n" "$PWD/.gitignore"
     read -p 'Do you want me to modify your .gitignore file (Y/N)? ' -n 1 -r should_modify
 
