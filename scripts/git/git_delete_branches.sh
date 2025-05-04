@@ -5,9 +5,27 @@
 
 set -Eeu -o pipefail -o posix
 
-readonly base_dir="${1:-$PWD}"
+while getopts ':d:k:y' opt; do
+  case "${opt}" in
+    d)
+      base_dir="${OPTARG}"
+      ;;
+    k)
+      branch_to_keep="${OPTARG}"
+      ;;
+    y)
+      yes='true'
+      ;;
+    ?)
+      echo "Usage: $0 [-d <directory>] [-k <branch_to_keep>] [-y]" >&2
+      exit 1
+      ;;
+  esac
+done
 
-branch_to_keep="${2:-}"
+readonly base_dir="${base_dir:-$PWD}"
+readonly branch_to_keep="${branch_to_keep:-}"
+readonly yes="${yes:-false}"
 
 if [ ! -d "${base_dir}" ]; then
   printf "The directory '%s' does not exist.\n" "${base_dir}" >&2
@@ -62,28 +80,30 @@ fi
     exit 0
   fi
 
-  printf "\nWARNING: The following branches will be deleted from the repository located at '%s'.\n\n" "$(realpath "${base_dir}")"
-  if [ -n "${local_branches}" ]; then
-    printf 'Local branches:\n'
-    echo "${local_branches}"
-  fi
-  if [ -n "${remote_branches}" ]; then
+  if [ "${yes}" = 'false' ]; then
+    printf "\nWARNING: The following branches will be deleted from the repository located at '%s'.\n\n" "$(realpath "${base_dir}")"
     if [ -n "${local_branches}" ]; then
-      printf '\n'
+      printf 'Local branches:\n'
+      echo "${local_branches}"
     fi
-    printf 'Remote branches:\n'
-    echo "${remote_branches}"
-  fi
-  printf '\n'
-  read -p 'Do you really want to irreversibly delete these branches (Y/N)? ' -n 1 -r should_delete
+    if [ -n "${remote_branches}" ]; then
+      if [ -n "${local_branches}" ]; then
+        printf '\n'
+      fi
+      printf 'Remote branches:\n'
+      echo "${remote_branches}"
+    fi
+    printf '\n'
+    read -p 'Do you really want to irreversibly delete these branches (Y/N)? ' -n 1 -r should_delete
 
-  case "${should_delete}" in
-    y | Y) printf '\n' ;;
-    *)
-      printf '\n'
-      exit 0
-      ;;
-  esac
+    case "${should_delete}" in
+      y | Y) printf '\n' ;;
+      *)
+        printf '\n'
+        exit 0
+        ;;
+    esac
+  fi
 
   if [ -n "${local_branches}" ]; then
     git branch | grep -v "^* ${branch_to_keep}$" | xargs -I {} git branch --quiet -D {}

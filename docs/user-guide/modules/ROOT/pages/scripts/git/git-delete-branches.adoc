@@ -3,9 +3,13 @@
 = git_delete_branches
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/git/git_delete_branches.sh
 
-{script_url}[This script^] will delete all local and remote branches from the Git repository in the given directory (`$PWD` if not given).
+{script_url}[This script^] will delete all local and remote branches from a given repository.
 
-The optional second parameter is the name of the branch to keep (defaults to the value of the `init.defaultBranch` Git configuration parameter or `main` if not set).
+The following parameters are optional:
+
+`d` :: the directory (`$PWD` if not given) containing the Git repository
+`k` :: the name of the branch to keep (defaults to the value of the `init.defaultBranch` Git configuration parameter or `main` if not set).
+`y` :: assume "yes" as answer to all prompts and run non-interactively
 
 [IMPORTANT]
 ====
@@ -22,7 +26,8 @@ All other local and remote branches will be irreversibly deleted--be careful, yo
 [,console]
 ----
 $ scripts/git/git_delete_branches.sh
-$ scripts/git/git_delete_branches.sh /tmp/example
+$ scripts/git/git_delete_branches.sh -d /tmp/example
+$ scripts/git/git_delete_branches.sh -k master
 ----
 
 == Example
@@ -37,7 +42,7 @@ $ (cd /tmp/example && git branch -vv --all)
   remotes/origin/docs/issue-1 69bad6f issue 1
   remotes/origin/feat/issue-2 b7b9f06 issue 2
   remotes/origin/main         4cf1f7d initial
-$ scripts/git/git_delete_branches.sh /tmp/example
+$ scripts/git/git_delete_branches.sh -d /tmp/example
 
 WARNING: The following branches will be deleted from the repository located at '/private/tmp/example'.
 
@@ -63,7 +68,7 @@ $ (cd /tmp/example2 && git branch -vv --all)
   remotes/origin/docs/issue-1 bf48e73 issue 1
   remotes/origin/feat/issue-2 f8b0f86 issue 2
   remotes/origin/main         3d1dd24 initial
-$ scripts/git/git_delete_branches.sh /tmp/example2 'docs/issue-1'
+$ scripts/git/git_delete_branches.sh -d /tmp/example2 -k 'docs/issue-1'
 
 WARNING: The following branches will be deleted from the repository located at '/private/tmp/example2'.
 
