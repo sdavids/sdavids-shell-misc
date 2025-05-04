@@ -255,5 +255,9 @@ fi
 
 # https://github.com/devcontainers/features/tree/main/src/docker-outside-of-docker#1-use-the-localworkspacefolder-as-environment-variable-in-your-code
 if [ -n "${LOCAL_WORKSPACE_FOLDER+x}" ]; then
-  printf "The following certificate has been created on your host:\n\n\t%s\n\nExecute the following command on your host to add it to your host's trust store:\n\n\tcd %s && %s -x\n" "${LOCAL_WORKSPACE_FOLDER}/${cert_path}" "${LOCAL_WORKSPACE_FOLDER}" "$0 $*"
+  if [ "${base_dir}" = "${base_dir#/}" ]; then
+    printf "The following certificate has been created on your host:\n\n\t%s\n\nExecute the following command on your host to add it to your host's trust store:\n\n\tcd %s && %s -x\n" "${LOCAL_WORKSPACE_FOLDER}/${cert_path}" "${LOCAL_WORKSPACE_FOLDER}" "$0 $*"
+  else
+    printf "The following certificate has been created in your Development Container:\n\n\t%s\n\nCopy it to your host and add it to your host's trust store.\n" "$(realpath "${cert_path}")"
+  fi
 fi
