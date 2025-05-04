@@ -20,6 +20,7 @@ The following parameters are optional:
 `f` :: overwrite existing files without a prompt
 `g` :: add _group_ read and execute permissions; can be combined with `-o`
 `o` :: add _other_ read and execute permissions; can be combined with `-g`
+`y` :: assume "yes" as answer to all prompts and run non-interactively
 
 [NOTE]
 ====

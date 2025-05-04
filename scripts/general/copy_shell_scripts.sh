@@ -5,7 +5,7 @@
 
 set -Eeu -o pipefail -o posix
 
-while getopts ':d:fgos:' opt; do
+while getopts ':d:fgos:y' opt; do
   case "${opt}" in
     d)
       dst_dir="${OPTARG}"
@@ -22,8 +22,11 @@ while getopts ':d:fgos:' opt; do
     s)
       src_dir="${OPTARG}"
       ;;
+    y)
+      yes='true'
+      ;;
     ?)
-      echo "Usage: $0 -d <directory> [-s <directory>] [-f] [-u]" >&2
+      echo "Usage: $0 -d <directory> [-s <directory>] [-f] [-u] [-y]" >&2
       exit 1
       ;;
   esac
@@ -34,6 +37,7 @@ readonly dst_dir="${dst_dir:?DESTINATION DIRECTORY is required}"
 readonly group="${group:-false}"
 readonly other="${other:-false}"
 readonly force="${force:-false}"
+readonly yes="${yes:-false}"
 
 duplicate_file_names="$(find "${src_dir}" -type f -name '*.sh' -exec basename {} \; | sort -r | uniq -d)"
 if [ -n "${duplicate_file_names}" ]; then
@@ -67,7 +71,7 @@ if [ "${force}" = 'false' ]; then
   dst_files="$(find "${dst_dir}" -type f -name '*.sh' -maxdepth 1 -exec basename {} \; | sort)"
   comm_files="$(comm -12 <(echo "${src_files}") <(echo "${dst_files}"))"
 
-  if [ -n "${comm_files}" ]; then
+  if [ "${yes}" = 'false' ] && [ -n "${comm_files}" ]; then
     printf 'The following files will be overwritten:\n\n%s\n\n' "${comm_files}"
     read -p 'Do you really want to irreversibly overwrite them (Y/N)? ' -n 1 -r should_overwrite
 

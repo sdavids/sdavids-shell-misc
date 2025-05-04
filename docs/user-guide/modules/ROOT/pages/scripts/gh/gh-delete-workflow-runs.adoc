@@ -18,6 +18,10 @@ The following parameters are required:
 
 `r` :: the name of the repository (without the `.git` extension) for which the workflow runs should be deleted; the name is not case-sensitive
 
+The following parameter is optional:
+
+`y` :: assume "yes" as answer to all prompts and run non-interactively
+
 The following environment variable is required:
 
 `GH_DELETE_WORKFLOW_RUNS_TOKEN_FILE` :: the path to the file containing the https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28#authenticating-with-a-personal-access-token[GitHub access token] has the https://docs.github.com/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens?apiVersion=2022-11-28#repository-permissions-for-actions[`actions:rw` permission]

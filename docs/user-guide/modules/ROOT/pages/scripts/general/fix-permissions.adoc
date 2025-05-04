@@ -19,6 +19,7 @@ The following parameters are optional:
 
 `g` :: also fix the group permissions (`770`/`660`/`770`); cannot be used together with `-u`
 `u` :: use the current process' https://man.archlinux.org/man/umask.2[umask] to fix the permissions; cannot be used together with `-g`
+`y` :: assume "yes" as answer to all prompts and run non-interactively
 
 [IMPORTANT]
 ====

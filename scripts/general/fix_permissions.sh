@@ -5,7 +5,7 @@
 
 set -Eeu -o pipefail -o posix
 
-while getopts ':d:gu' opt; do
+while getopts ':d:guy' opt; do
   case "${opt}" in
     d)
       base_dir="${OPTARG}"
@@ -16,8 +16,11 @@ while getopts ':d:gu' opt; do
     u)
       mask='true'
       ;;
+    y)
+      yes='true'
+      ;;
     ?)
-      echo "Usage: $0 -d <directory> [-g] [-u]" >&2
+      echo "Usage: $0 -d <directory> [-g] [-u] [-y]" >&2
       exit 1
       ;;
   esac
@@ -26,6 +29,7 @@ done
 readonly base_dir="${base_dir:?DIRECTORY is required}"
 readonly group="${group:-false}"
 readonly mask="${mask:-false}"
+readonly yes="${yes:-false}"
 
 if [ ! -d "${base_dir}" ]; then
   printf "The directory '%s' does not exist.\n" "${base_dir}" >&2
@@ -119,16 +123,18 @@ readonly sh_perm
     printf "\nThe directory '%s' will be excluded.\n" "$(realpath "${base_dir}/${hooks_path:-}")"
   fi
 
-  printf '\n'
-  read -p 'Do you really want to irreversibly fix the permissions (Y/N)? ' -n 1 -r should_fix
+  if [ "${yes}" = 'false' ]; then
+    printf '\n'
+    read -p 'Do you really want to irreversibly fix the permissions (Y/N)? ' -n 1 -r should_fix
 
-  case "${should_fix}" in
-    y | Y) printf '\n' ;;
-    *)
-      printf '\n'
-      exit 0
-      ;;
-  esac
+    case "${should_fix}" in
+      y | Y) printf '\n' ;;
+      *)
+        printf '\n'
+        exit 0
+        ;;
+    esac
+  fi
 
   find "${base_dir}" -type d -exec chmod "${dir_perm}" {} +
   set -f

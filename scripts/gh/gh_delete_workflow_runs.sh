@@ -11,7 +11,7 @@
 
 set -Eeu -o pipefail -o posix
 
-while getopts ':k:r:' opt; do
+while getopts ':k:r:y' opt; do
   case "${opt}" in
     k)
       keep="${OPTARG}"
@@ -19,8 +19,11 @@ while getopts ':k:r:' opt; do
     r)
       repo="${OPTARG}"
       ;;
+    y)
+      yes='true'
+      ;;
     ?)
-      echo "Usage: $0 -r <repository> -k <numberOfWorkflowsToKeep>" >&2
+      echo "Usage: $0 -r <repository> -k <numberOfWorkflowsToKeep> [-y]" >&2
       exit 1
       ;;
   esac
@@ -45,6 +48,8 @@ else # $keep undefined
   exit 4
 fi
 readonly keep
+
+readonly yes="${yes:-false}"
 
 # https://github.com/settings/tokens
 # https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28#authenticating-with-a-personal-access-token
@@ -117,20 +122,22 @@ if [ "${count}" -lt 1 ]; then
   exit 0
 fi
 
-printf '\nWARNING: The following %s workflow run(s) will be deleted:\n\n' "${count}"
+if [ "${yes}" = 'false' ]; then
+  printf '\nWARNING: The following %s workflow run(s) will be deleted:\n\n' "${count}"
 
-jq '. | map({display_title,created_at,run_started_at,html_url})' <<<"${candidates}"
+  jq '. | map({display_title,created_at,run_started_at,html_url})' <<<"${candidates}"
 
-printf '\nDo you really want to irreversibly delete the %s workflow run(s)' "${count}"
-read -p ' (Y/N)? ' -n 1 -r should_fix
+  printf '\nDo you really want to irreversibly delete the %s workflow run(s)' "${count}"
+  read -p ' (Y/N)? ' -n 1 -r should_fix
 
-case "${should_fix}" in
-  y | Y) printf '\n' ;;
-  *)
-    printf '\n'
-    exit 0
-    ;;
-esac
+  case "${should_fix}" in
+    y | Y) printf '\n' ;;
+    *)
+      printf '\n'
+      exit 0
+      ;;
+  esac
+fi
 
 jq -r '. | map({url}) | .[].url' <<<"${candidates}" \
   | xargs -L1 -I {} \
