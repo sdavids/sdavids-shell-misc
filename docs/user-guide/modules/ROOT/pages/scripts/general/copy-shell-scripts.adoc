@@ -13,7 +13,7 @@ On macOS, all https://ss64.com/mac/xattr.html[extended attributes] of the copied
 
 The following parameter is required:
 
-`d` :: the destination directory; the given directory will be created if it does not exit yet
+`d` :: the destination directory; the given directory will be created if it does not exit
 
 The following parameters are optional:
 

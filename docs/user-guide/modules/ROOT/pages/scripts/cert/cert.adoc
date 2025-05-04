@@ -12,10 +12,10 @@ This section contains scripts related to <<standalone-certificates,standalone>> 
 Standalone certificates are useful if you do not use mutual TLS or if the server's certificate verifier supports using a trust anchor as both a CA certificate and an end-entity certificate.
 ====
 
-xref:scripts/cert/create-self-signed-cert.adoc[]:: create a private key and self-signed certificate
-xref:scripts/cert/delete-self-signed-cert.adoc[]:: delete the private key and self-signed certificate
-xref:scripts/cert/renew-self-signed-cert.adoc[]:: renew the private key and self-signed certificate
-xref:scripts/cert/verify-self-signed-cert.adoc[]:: verify the self-signed certificate
+xref:scripts/cert/create-self-signed-cert.adoc[]:: create a private key and a self-signed certificate
+xref:scripts/cert/delete-self-signed-cert.adoc[]:: delete a private key and a self-signed certificate
+xref:scripts/cert/renew-self-signed-cert.adoc[]:: renew a private key and a self-signed certificate
+xref:scripts/cert/verify-self-signed-cert.adoc[]:: verify a private key and a self-signed certificate
 
 [#certificate-authority-based-certificates]
 == Certificate-Authority-Based Certificates
