@@ -3,11 +3,20 @@
 = renew_ca_based_cert
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/cert/renew_ca_based_cert.sh
 
-{script_url}[This script^] will renew the certificate-authority-based certificate `cert.pem` in the given directory (`$PWD` if not given).
+{script_url}[This script^] will renew a private key `key.pem` and a certificate `cert.pem` based on a certificate authority.
 
-The optional second positive integer parameter (range: [1, 24855]) specifies the number of days the generated certificate is valid for; the default is 30 days.
+The following parameters are optional:
 
-The optional third parameter is the common name (`localhost` if not given) of the certificate to be added.
+`c` :: the common name (`localhost` if not given) of the certificate
+`d` :: the directory (`$PWD` if not given) containing the key and certificate
+`v` :: the lifetime of the certificate in days (range: [1, 24855]; default: 30)
++
+[WARNING]
+====
+Certificates with a lifetime exceeding 180 days will https://support.apple.com/en-us/103214[not be accepted by the Apple platform] or Safari.
+
+As of March 15, 2029, the maximum lifetime for a certificate will be https://www.digicert.com/blog/tls-certificate-lifetimes-will-officially-reduce-to-47-days[47 days].
+====
 
 [NOTE]
 ====
@@ -17,13 +26,6 @@ Chrome, Docker, Firefox, and Safari need no further configuration.
 [IMPORTANT]
 ====
 Ensure that the xref:scripts/cert/create-ca.adoc[certificate authority has been created] and a xref:scripts/cert/create-ca-based-cert.adoc[private key and certificate have been created] before executing this script.
-====
-
-[WARNING]
-====
-Certificates with more than 180 days validity will https://support.apple.com/en-us/103214[not be accepted by the Apple platform] or Safari.
-
-As of March 15, 2029, the maximum lifetime for a certificate will be https://www.digicert.com/blog/tls-certificate-lifetimes-will-officially-reduce-to-47-days[47 days].
 ====
 
 [TIP]
@@ -36,7 +38,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 {
 ...
   "scripts": {
-    "cert:renew": "scripts/renew_ca_based_cert.sh certs"
+    "cert:renew": "scripts/renew_ca_based_cert.sh -d certs"
   }
 }
 ----
@@ -52,13 +54,13 @@ $ node --run cert:renew
 [,console]
 ----
 $ scripts/cert/renew_ca_based_cert.sh
-$ scripts/cert/renew_ca_based_cert.sh dist/etc/nginx
+$ scripts/cert/renew_ca_based_cert.sh -d dist/etc/nginx
 
-$ scripts/cert/renew_ca_based_cert.sh . 30
+$ scripts/cert/renew_ca_based_cert.sh -d . -v 30
 $ openssl x509 -enddate -noout -in ~/.local/secrets/certs/https.internal/cert.pem
 notAfter=Sep 16 11:54:50 2024 GMT
 
-$ scripts/cert/renew_ca_based_cert.sh ~/.local/secrets/certs/https.internal 10 https.internal
+$ scripts/cert/renew_ca_based_cert.sh -d ~/.local/secrets/certs/https.internal -v 10 -c https.internal
 $ date -Idate
 2024-08-17
 $ openssl x509 -startdate -noout -in ~/.local/secrets/certs/https.internal/cert.pem

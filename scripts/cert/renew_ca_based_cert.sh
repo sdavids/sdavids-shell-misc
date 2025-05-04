@@ -20,10 +20,29 @@ if [ "$(easyrsa --version | grep -E -c 'Version:\s+3.1')" -ne 1 ]; then
   exit 1
 fi
 
-readonly out_dir="${1:-$PWD}"
+while getopts ':c:d:v:y' opt; do
+  case "${opt}" in
+    c)
+      common_name="${OPTARG}"
+      ;;
+    d)
+      base_dir="${OPTARG}"
+      ;;
+    v)
+      days="${OPTARG}"
+      ;;
+    ?)
+      echo "Usage: $0 [-c <common_name>] [-d <dir>] [-v <days; 1..24855>]" >&2
+      exit 1
+      ;;
+  esac
+done
 
-readonly cert_path="${out_dir}/cert.pem"
-readonly key_path="${out_dir}/key.pem"
+readonly base_dir="${base_dir:-$PWD}"
+readonly common_name="${common_name:-localhost}"
+
+readonly cert_path="${base_dir}/cert.pem"
+readonly key_path="${base_dir}/key.pem"
 
 if [ ! -f "${key_path}" ]; then
   echo "key '${key_path}' does not exist" >&2
@@ -35,35 +54,35 @@ if [ ! -f "${cert_path}" ]; then
   exit 3
 fi
 
-if [ -n "${2+x}" ]; then # $2 defined
-  case $2 in
-    '' | *[!0-9]*) # $2 is not a positive integer or 0
-      echo "'$2' is not a positive integer" >&2
-      exit 4
+if [ -n "${days+x}" ]; then # $days defined
+  case ${days} in
+    '' | *[!0-9]*) # $days is not a positive integer or 0
+      echo "'${days}' is not a positive integer" >&2
+      exit 2
       ;;
-    *) # $2 is a positive integer or 0
-      days="$2"
+    *) # $days is a positive integer or 0
       if [ "${days}" -lt 1 ]; then
-        echo "'$2' is not a positive integer" >&2
-        exit 5
+        echo "'${days}' is not a positive integer" >&2
+        exit 3
       fi
       if [ "${days}" -gt 24855 ]; then
-        echo "'$2' is too big; range: [1, 24855]" >&2
-        exit 6
+        echo "'${days}' is outside of the range 1..24855" >&2
+        exit 4
       fi
       if [ "${days}" -gt 180 ]; then
-        printf "ATTENTION: '%s' exceeds 180 days, the certificate will not be accepted by Apple platforms or Safari; see https://support.apple.com/en-us/103214 for more information.\n\n" "$2"
+        printf "ATTENTION: '%s' exceeds 180 days, the certificate will not be accepted by Apple platforms or Safari; see https://support.apple.com/en-us/103214 for more information.\n\n" "${days}"
+      fi
+      if [ "${days}" -gt 47 ]; then
+        printf "ATTENTION: '%s' exceeds 47 days, the certificate will not be accepted by browsers after March 14, 2029; see https://www.digicert.com/blog/tls-certificate-lifetimes-will-officially-reduce-to-47-days for more information.\n\n" "${days}"
       fi
       ;;
   esac
-else # $2 undefined
+else # $days undefined
   days=30
 fi
 readonly days
 
-readonly host_name="${3:-localhost}"
-
-if [ "${host_name}" = 'ca' ]; then
+if [ "${common_name}" = 'ca' ]; then
   echo "'ca' is not allowed due to it being the name of the certificate authority" >&2
   exit 7
 fi
@@ -89,8 +108,8 @@ if [ ! -d "${pki_dir}" ]; then
   exit 8
 fi
 
-readonly easyrsa_key_path="${pki_dir}/private/${host_name}.key"
-readonly easyrsa_cert_path="${pki_dir}/issued/${host_name}.crt"
+readonly easyrsa_key_path="${pki_dir}/private/${common_name}.key"
+readonly easyrsa_cert_path="${pki_dir}/issued/${common_name}.crt"
 
 if [ ! -f "${easyrsa_key_path}" ]; then
   echo "key '${easyrsa_key_path}' does not exist" >&2
@@ -102,7 +121,7 @@ if [ ! -f "${easyrsa_cert_path}" ]; then
   exit 10
 fi
 
-readonly easyrsa_renew_cert_path="${pki_dir}/renewed/issued/${host_name}.crt"
+readonly easyrsa_renew_cert_path="${pki_dir}/renewed/issued/${common_name}.crt"
 
 if [ -f "${easyrsa_renew_cert_path}" ]; then
   rm -f "${easyrsa_renew_cert_path}"
@@ -110,7 +129,7 @@ fi
 
 rm -f "${cert_path}"
 
-easyrsa --sbatch --silent-ssl --days="${days}" renew "${host_name}"
+easyrsa --sbatch --silent-ssl --days="${days}" renew "${common_name}"
 
 if [ ! -e "${cert_path}" ] && [ -f "${easyrsa_cert_path}" ]; then
   cp "${easyrsa_cert_path}" "${cert_path}"
