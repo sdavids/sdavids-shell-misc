@@ -24,41 +24,49 @@ The following parameters are optional:
 The PDF is generated using the https://tug.org/xetex/[XeTeX] typesetting engine.
 ====
 
+[NOTE]
+====
+The value of `Create Date` is either the value of the `SOURCE_DATE_EPOCH` https://reproducible-builds.org/specs/source-date-epoch/[environment variable] or the current timestamp.
+
+The following will give you the timestamp of the HEAD commit:
+
+[,shell]
+----
+SOURCE_DATE_EPOCH="$(git log --max-count=1 --pretty=format:%ct)"
+----
+====
+
 == Usage
 
 [,console]
 ----
 $ scripts/latex/latex_pdf_build.sh -r main.tex
 
+$ scripts/latex/latex_pdf_build.sh -r main.tex -s scripts/latex/example/src -o /tmp/example
 $ tree --noreport /tmp/example
 /tmp/example
-└── src
-    └── main.tex
-$ scripts/latex/latex_pdf_build.sh -r main.tex -s /tmp/example/src -o /tmp/example/out
+├── aux                                                                   <1>
+│   ├── main.aux
+│   ├── main.fdb_latexmk
+│   ├── main.fls
+│   ├── main.log
+│   └── main.xdv
+└── main.pdf                                                              <2>
+$ exiftool -createdate /tmp/example/main.pdf
+Create Date                     : 2025:05:05 16:39:14Z                    <3>
+$ SOURCE_DATE_EPOCH=0 scripts/latex/latex_pdf_build.sh -r main.tex -s scripts/latex/example/src -o /tmp/example -f -n
 $ tree --noreport /tmp/example
 /tmp/example
-├── out
-│   ├── aux                                                               <1>
-│   │   ├── main.aux
-│   │   ├── main.fdb_latexmk
-│   │   ├── main.fls
-│   │   ├── main.log
-│   │   └── main.xdv
-│   └── main.pdf                                                          <2>
-└── src
-    └── main.tex
-$ scripts/latex/latex_pdf_build.sh -r main.tex -s /tmp/example/src -o /tmp/example/out -f -n
-$ tree --noreport /tmp/example
-/tmp/example
-├── out                                                                   <3>
-│   └── main.pdf
-└── src
-    └── main.tex
+└── main.pdf                                                              <4>
+$ exiftool -createdate /tmp/example/main.pdf
+Create Date                     : 1970:01:01 00:00:00Z                    <5>
 ----
 
 <1> these auxiliary files speed up subsequent PDF generations
 <2> the typeset PDF
-<3> the output directory has been cleaned (`-f`) and no auxiliary files have been created (`-n`)
+<5> `Create Date` has been set to current date
+<4> the output directory has been cleaned (`-f`) and no auxiliary files have been created (`-n`)
+<5> `Create Date` has been set to the value of `SOURCE_DATE_EPOCH`
 
 == Example
 
@@ -85,14 +93,14 @@ Typeset PDF: xref:attachment$latex/main.pdf[main.pdf]
 +
 [,console]
 ----
-$ exiftool build/main.pdf
-ExifTool Version Number         : 12.76
+$ exiftool /tmp/example/main.pdf
+ExifTool Version Number         : 13.25
 File Name                       : main.pdf
-Directory                       : build
+Directory                       : /tmp/example
 File Size                       : 92 kB
-File Modification Date/Time     : 2024:09:16 02:06:54+02:00
-File Access Date/Time           : 2024:09:16 02:06:56+02:00
-File Inode Change Date/Time     : 2024:09:16 02:06:54+02:00
+File Modification Date/Time     : 2025:05:05 18:43:06+02:00
+File Access Date/Time           : 2025:05:05 18:48:07+02:00
+File Inode Change Date/Time     : 2025:05:05 18:43:06+02:00
 File Permissions                : -rw-r--r--
 File Type                       : PDF
 File Type Extension             : pdf
@@ -100,18 +108,17 @@ MIME Type                       : application/pdf
 PDF Version                     : 1.5
 Linearized                      : No
 Page Count                      : 3
-Creator                         :  XeTeX output 2024.09.16:0006
+Creator                         :  XeTeX output 2025.05.05:1642
 Producer                        : xdvipdfmx (20240407)
-Create Date                     : 2024:09:16 00:06:53Z
-$ ../../pdf/pdf_remove_metadata.sh build/main.pdf
+$ scripts/pdf/pdf_remove_metadata.sh /tmp/example/main.pdf
 $ exiftool build/main.pdf
-ExifTool Version Number         : 12.76
+ExifTool Version Number         : 13.25
 File Name                       : main.pdf
-Directory                       : build
+Directory                       : /tmp/example
 File Size                       : 93 kB
-File Modification Date/Time     : 2024:09:16 02:07:09+02:00
-File Access Date/Time           : 2024:09:16 02:07:10+02:00
-File Inode Change Date/Time     : 2024:09:16 02:07:09+02:00
+File Modification Date/Time     : 2025:05:05 18:55:37+02:00
+File Access Date/Time           : 2025:05:05 18:55:37+02:00
+File Inode Change Date/Time     : 2025:05:05 18:55:37+02:00
 File Permissions                : -rw-------
 File Type                       : PDF
 File Type Extension             : pdf
@@ -127,3 +134,4 @@ Page Count                      : 3
 * https://ctan.gust.org.pl/tex-archive/support/latexmk/latexmk.pdf[latexmk]
 * https://www.overleaf.com/learn/latex/XeLaTeX[XeLaTeX]
 * https://tug.org/xetex/[XeTeX]
+* https://reproducible-builds.org/specs/source-date-epoch[SOURCE_DATE_EPOCH]

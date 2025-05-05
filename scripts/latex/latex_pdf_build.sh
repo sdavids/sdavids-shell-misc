@@ -100,6 +100,9 @@ else
   aux_dir='/tmp/aux'
 fi
 
+# https://reproducible-builds.org/docs/source-date-epoch/
+readonly source_date_epoch="${SOURCE_DATE_EPOCH:-$(date +%s)}"
+
 # https://ctan.gust.org.pl/tex-archive/support/latexmk/latexmk.pdf
 if [ "${verbose}" = 'true' ]; then
   docker container run "${platform}" \
@@ -110,6 +113,7 @@ if [ "${verbose}" = 'true' ]; then
     --network='none' \
     --mount "type=bind,src=${src_dir},dst=/src,ro" \
     --mount "type=bind,src=${out_dir},dst=/out" \
+    --env "SOURCE_DATE_EPOCH=${source_date_epoch}" \
     --workdir /src \
     "${latex_image}" \
     latexmk \
@@ -126,6 +130,7 @@ else
     --network='none' \
     --mount "type=bind,src=${src_dir},dst=/src,ro" \
     --mount "type=bind,src=${out_dir},dst=/out" \
+    --env "SOURCE_DATE_EPOCH=${source_date_epoch}" \
     --workdir /src \
     "${latex_image}" \
     latexmk \
