@@ -23,6 +23,13 @@ Travis:: the value of the `TRAVIS_BUILD_ID` https://docs.travis-ci.com/user/envi
 [NOTE]
 ====
 The value of `build.time` is either the value of the `SOURCE_DATE_EPOCH` https://reproducible-builds.org/specs/source-date-epoch/[environment variable] or the current timestamp.
+
+The following will give you the timestamp of the HEAD commit:
+
+[,shell]
+----
+SOURCE_DATE_EPOCH="$(git log --max-count=1 --pretty=format:%ct)"
+----
 ====
 
 == Usage
@@ -40,7 +47,24 @@ $ scripts/web/create_build_info_json.sh src/build-info.json
 {"build":{"id":"1710116654","time":"2024-03-11T00:24:14Z"},"git":{"branch":"main","commit":{"id":"b530d501d059e1bbda58d96d78359014effa5584","time":"2024-03-11T00:22:45Z"}}}
 ----
 
+[,console]
+----
+$ SOURCE_DATE_EPOCH=0 scripts/web/create_build_info_json.sh src/build-info.json
+----
+
+⇓
+
+.src/build-info.json
+[,json]
+----
+{"build":{..."time":"1970-01-01T00:00:00Z"}...}
+----
+
 == Related Scripts
 
 * xref:scripts/web/create-build-info-js.adoc[]
 * xref:scripts/web/create-build-info-ts.adoc[]
+
+== More Information
+
+* https://reproducible-builds.org/specs/source-date-epoch[SOURCE_DATE_EPOCH]
