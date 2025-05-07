@@ -3,9 +3,14 @@
 = clean_node
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/nodejs/clean_node.sh
 
-{script_url}[This script^] will delete both the `node_modules` directory and the `package-lock.json` file in the given directory (`$PWD` if not given).
+{script_url}[This script^] will delete the `node_modules` directory and the `package-lock.json` file in the given directory (`$PWD` if not given).
 
 This is useful to get a clean slate after dependency updates.
+
+The following parameters are optional:
+
+`k` :: keep `package-lock.json` files, i.e., only `node_modules` directories are deleted
+`r` :: recursively delete files
 
 [TIP]
 ====
@@ -33,5 +38,39 @@ $ node --run clean:node && npm i
 [,console]
 ----
 $ scripts/nodejs/clean_node.sh
+
+$ tree --noreport /tmp/nodejs-example-project
+/tmp/nodejs-example-project
+├── sub
+│   ├── sub-sub
+│   │   ├── node_modules
+│   │   └── package-lock.json
+│   ├── node_modules
+│   └── package-lock.json
+├── node_modules
+└── package-lock.json
+
 $ scripts/nodejs/clean_node.sh /tmp/nodejs-example-project
+$ tree --noreport /tmp/nodejs-example-project
+/tmp/nodejs-example-project
+└── sub
+    ├── sub-sub
+    │   ├── node_modules
+    │   └── package-lock.json
+    ├── node_modules
+    └── package-lock.json
+
+$ scripts/nodejs/clean_node.sh -r -k /tmp/nodejs-example-project
+$ tree --noreport /tmp/nodejs-example-project
+/tmp/nodejs-example-project
+└── sub
+    ├── sub-sub
+    │   └── package-lock.json
+    └── package-lock.json
+
+$ scripts/nodejs/clean_node.sh -r /tmp/nodejs-example-project
+$ tree --noreport /tmp/nodejs-example-project
+/tmp/nodejs-example-project
+└── sub
+    └── sub-sub
 ----
