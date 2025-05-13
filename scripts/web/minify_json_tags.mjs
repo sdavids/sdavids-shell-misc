@@ -4,11 +4,11 @@
 // Prerequisite:
 //   npm i --save-dev domutils dom-serializer htmlparser2
 
-import * as htmlparser2 from "htmlparser2";
-import { findAll, findOne, replaceElement, textContent } from "domutils";
 import { access, readFile, writeFile } from "node:fs/promises";
 import { relative } from "node:path";
 import { cwd } from "node:process";
+import { findAll, findOne, replaceElement, textContent } from "domutils";
+import { parseDocument } from "htmlparser2";
 import { render } from "dom-serializer";
 
 /**
@@ -53,7 +53,7 @@ try {
 
 const html = await readFile(file, "utf8");
 
-const dom = htmlparser2.parseDocument(html);
+const dom = parseDocument(html);
 
 const jsonTags = findAll(
   findJsonStructuredScriptTags,
@@ -71,9 +71,7 @@ for (const jsonTag of jsonTags) {
   }
   const minified = JSON.stringify(JSON.parse(text));
   const { type } = jsonTag.attribs;
-  const newDom = htmlparser2.parseDocument(
-    `<script type="${type}">${minified}</script>`,
-  );
+  const newDom = parseDocument(`<script type="${type}">${minified}</script>`);
   const changed = findOne(findJsonStructuredScriptTags, newDom.children);
   replaceElement(jsonTag, changed);
 }
