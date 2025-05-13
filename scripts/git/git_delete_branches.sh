@@ -24,8 +24,8 @@ while getopts ':d:k:y' opt; do
 done
 
 readonly base_dir="${base_dir:-$PWD}"
-readonly branch_to_keep="${branch_to_keep:-}"
 readonly yes="${yes:-false}"
+branch_to_keep="${branch_to_keep:-}"
 
 if [ ! -d "${base_dir}" ]; then
   printf "The directory '%s' does not exist.\n" "${base_dir}" >&2
