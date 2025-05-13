@@ -4,12 +4,12 @@
 // Prerequisite:
 //   npm i --save-dev domutils dom-serializer htmlparser2
 
-import * as htmlparser2 from 'htmlparser2';
-import { findAll, findOne, replaceElement, textContent } from 'domutils';
-import { access, readFile, writeFile } from 'node:fs/promises';
-import { relative } from 'node:path';
-import { cwd } from 'node:process';
-import { render } from 'dom-serializer';
+import * as htmlparser2 from "htmlparser2";
+import { findAll, findOne, replaceElement, textContent } from "domutils";
+import { access, readFile, writeFile } from "node:fs/promises";
+import { relative } from "node:path";
+import { cwd } from "node:process";
+import { render } from "dom-serializer";
 
 /**
  * @param {ChildNode} node
@@ -22,11 +22,11 @@ const isElement = (node) => node.nodeType === 1;
  * @return {boolean}
  */
 const findJsonStructuredScriptTags = (elem) => {
-  if (elem.name !== 'script') {
+  if (elem.name !== "script") {
     return false;
   }
   const { type } = elem.attribs;
-  if (type === 'importmap') {
+  if (type === "importmap") {
     return true;
     // eslint-disable-next-line require-unicode-regexp
   } else if (/^application\/(?:.+\+)?json$/.test(type)) {
@@ -51,7 +51,7 @@ try {
   process.exit(2);
 }
 
-const html = await readFile(file, 'utf8');
+const html = await readFile(file, "utf8");
 
 const dom = htmlparser2.parseDocument(html);
 
@@ -66,7 +66,7 @@ if (jsonTags.length === 0) {
 
 for (const jsonTag of jsonTags) {
   const text = textContent(jsonTag).trim();
-  if (text === '') {
+  if (text === "") {
     continue;
   }
   const minified = JSON.stringify(JSON.parse(text));

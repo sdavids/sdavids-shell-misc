@@ -37,7 +37,7 @@ base:
   font-family: SourceSerif4
 codespan:
   font-family: SourceCodePro
-  font-color: '#000000'
+  font-color: "#000000"
 code:
   font-family: SourceCodePro
 conum:
@@ -52,11 +52,11 @@ admonition:
   icon:
     caution:
       name: fas-exclamation
-      stroke-color: '#bf6900'
+      stroke-color: "#bf6900"
     tip:
-      stroke-color: '#ffd300'
+      stroke-color: "#ffd300"
 role:
   red:
-    font_color: '#ff0000'
+    font_color: "#ff0000"
   green:
-    font_color: '#00aa00'
+    font_color: "#00aa00"
