@@ -3,11 +3,11 @@
 = docker_cleanup
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/docker/docker_cleanup.sh
 
-{script_url}[This script^] removes all containers, images, networks, and volumes with the label `$+{label_group}+=$+{repository}+`, i.e., all project-related Docker artifacts.
+{script_url}[This script^] removes all containers, images, and volumes with the label `$+{label_group}+=$+{repository}+` and the network with the label `$+{label_group}+=$+{namespace}+` , i.e., all project-related Docker artifacts.
 
 [NOTE]
 ====
-The related scripts will ensure the `$+{label_group}+=$+{repository}+` label has been set.
+The related scripts will ensure the `$+{label_group}+=$+{repository}+` and `$+{label_group}+=$+{namespace}+` labels have been set.
 
 See the general Docker script xref:scripts/docker/docker.adoc#usage[usage notes].
 ====
