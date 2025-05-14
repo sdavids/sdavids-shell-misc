@@ -8,6 +8,8 @@
 
 The container will be named `$+{container_name}+` and labeled with `$+{label_group}+=$+{repository}+`.
 
+A network named `$+{repository}+` labeled with `$+{label_group}+=$+{namespace}+` will be created as well.
+
 [NOTE]
 ====
 See the general Docker script xref:scripts/docker/docker.adoc#usage[usage notes].
