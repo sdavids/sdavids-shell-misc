@@ -5,6 +5,20 @@
 
 {script_url}[This script^] will set the identity (`user.name`, `user.email`, and `user.signingKey`) in the Git repositories of the given directory.
 
+[TIP]
+====
+This script is useful if you do not use the same identity in all the projects you work on:
+
+[,console]
+----
+$ git clone git@github.com:company/project.git ~/workspace/company/project
+
+$ scripts/git/git_set_identity.sh -d ~/workspace/company/project -e user@company.com -s ~/.ssh/id_company.pub
+----
+
+See: <<example, longer example>>
+====
+
 The following parameters are required:
 
 `e` :: the email to be used for the identity; can be omitted if `git config get user.email` is set, and you want to use its value; also used for GPG secret key retrieval if `-s` is not set
@@ -13,26 +27,29 @@ The following parameters are required:
 
 The following parameters are optional:
 
-`d` :: the directory (`$PWD` if not given) containing the Git repositories
-`s` :: the path to the https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key#_generate_ssh_key[SSH public key] if you want to use https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgformat[Git SSH signing]
-
+`d` :: the directory (`$PWD` if not given) containing a Git repository
+`r` :: used in conjuction with `-d` to set the identity in direct child directories of the given directory
++
 [NOTE]
 ====
-This script will not recursively search the given directory for Git repositories--only direct child directories are considered:
+[,console]
+----
+$ scripts/git/git_set_identity.sh -r -d root
+----
 
 [,console]
 ----
-$ scripts/git/git_set_identity.sh -d root
+root            <1>
+├── one         <2>
+│   └── three   <1>
+└── two         <2>
 ----
 
-[,console]
-----
-root
-├── considered
-│   └── not_considered
-└── considered_also
-----
+<1> identity will not be set
+<2> identity will be set if a Git repository
 ====
+
+`s` :: the path to the https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key#_generate_ssh_key[SSH public key] if you want to use https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgformat[Git SSH signing]
 
 [NOTE]
 ====
@@ -49,43 +66,40 @@ commit.gpgSign :: set to `true`
 tag.forceSignAnnotated :: set to `true`
 tag.gpgSign :: set to `true`
 user.signingKey :: set to the SSH public key given via `-s` or the first secret key returned by `gpg --list-secret-keys` for the given email if  `-s` is not set
-gpg.format:: set to `ssh` if a SSH public key is given via `-s`, otherwise set to `openpgp`
+gpg.format:: set to `ssh` if an SSH public key is given via `-s`, otherwise set to `openpgp`
+gpg.ssh.allowedSignersFile:: set to the argument of `-a` if given and `-s` is also used otherwise it will be not set
 ====
 
 [IMPORTANT]
 ====
-If you want to use https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgformat[Git SSH signing] you need to configure the https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgsshallowedSignersFile[allowedSignersFile].
+If you want to use https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgformat[Git SSH signing], you need to configure the https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgsshallowedSignersFile[allowed signers file] in order for the local verification to work.
 
-I suggest to configure it globally instead of per repository:
-
+local:: I suggest configuring it globally instead of per repository (`-a`):
++
 [,console]
 ----
-$ echo "$(git config get user.email) namespaces=\"git\" $(cat ~/.ssh/id_dsa.pub)" >~/.ssh/allowed_signers
-$ chmod 600 ~/.ssh/allowed_signers
-$ git config set --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
+$ echo "example@example.com namespaces=\"git\" $(cat ~/.ssh/id_dsa.pub)" >>~/.ssh/git_allowed_signers
+$ chmod 600 ~/.ssh/git_allowed_signers
+$ git config set --global gpg.ssh.allowedSignersFile ~/.ssh/git_allowed_signers
 ----
-
++
 ⇓
-
++
 .~/.gitconfig
 [,ini]
 ----
 [gpg "ssh"]
-  allowedSignersFile = /Users/example/.ssh/allowed_signers
+  allowedSignersFile = /Users/example/.ssh/git_allowed_signers
 ----
-
-.~/.ssh/allowed_signers
++
+.~/.ssh/git_allowed_signers
 [,text]
 ----
 example@example.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEGXWK6+HHmAtv2Sh9nn1WCYOIzgvV7OojYTkKIyuI8x example@example.com
 ----
-====
 
-[TIP]
-====
-This script is useful if you do not use the same identity in all the projects you work on.
-
-See: <<example>>
+GitHub:: https://github.com/settings/ssh/new[Add new SSH Key]--"Key type" should be "Signing Key"
+GitLb:: https://gitlab.com/-/user_settings/ssh_keys[Add an SSH key]--"Usage type" should either be "Signing" or "Authentication & Signing"
 ====
 
 == Usage
@@ -94,14 +108,13 @@ See: <<example>>
 ----
 $ scripts/git/git_set_identity.sh
 $ scripts/git/git_set_identity.sh -s ~/.ssh/id_dsa.pub
+
+$ scripts/git/git_set_identity.sh -r -d ~/workspace/company1 -e user@company1.com
+$ scripts/git/git_set_identity.sh -r -d ~/workspace/company2 -e user@company2.com -s ~/.ssh/id_company2.pub
+
 $ scripts/git/git_set_identity.sh -e cameron@howe.name
-$ scripts/git/git_set_identity.sh \
--d ~/workspaces/mutiny \
--e c.howe@mutiny.com
-$ scripts/git/git_set_identity.sh \
--d ~/workspaces/cardiff-electric \
--e catherine.howe@cardiff-electric.com \
--n 'Catherine Howe'
+$ scripts/git/git_set_identity.sh -r -d ~/workspaces/cardiff-electric -e catherine.howe@cardiff-electric.com -n 'Catherine Howe'
+$ scripts/git/git_set_identity.sh -s ~/.ssh/id_dsa.pub -a ~/.ssh/git_allowed_signers
 ----
 
 [#example]
@@ -125,7 +138,7 @@ $ tree --noreport ~/workspaces
     └── secret-project
 ----
 
-She has three GPG secret keys--one for each company and one personal--and one SSH key:
+She has three GPG keys--one for each company and one personal use--and one SSH key:
 
 [,console]
 ----
@@ -147,11 +160,12 @@ sec   rsa4096/77254FBC1027F48D 2025-02-02 [SC] [expires: 2029-02-02]
       Key fingerprint = C09B 7924 274A 9865 545C  6512 7725 4FBC 1027 F48D
 uid                 [ultimate] Catherine Howe <catherine.howe@cardiff-electric.com>
 ssb   rsa4096/6C2E4F6CB45DD27E 2025-02-02 [E] [expires: 2029-02-02]
+
 $ cat ~/.ssh/id_ed25519-comet-chowe.pub
 ssh-ed25519 ABAAC3NzaC1lZDI1NTE5AAAAIEGXWK6+HHmAtv2Sh9nn1WCYOIzgvV7OojYTkKIyuI88 chowe@comet.com
 ----
 
-She has configured her personal GPG key in her global Git configuration and signs commits and tags by default:
+She configured her personal GPG key in her global Git configuration and signs commits and tags by default:
 
 [,console]
 ----
@@ -165,6 +179,13 @@ $ cat ~/.gitconfig
 [tag]
   forceSignAnnotated = true
   gpgsign = true
+----
+
+She also added the SSH key to her global https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgsshallowedSignersFile[allowed signers file]:
+
+[,console]
+----
+$ echo "chowe@comet.com namespaces=\"git\" $(cat ~/.ssh/id_ed25519-comet-chowe.pub)" >>~/.ssh/git_allowed_signers
 ----
 
 With this configuration, the following identities will be used for commits and tags:
@@ -197,6 +218,7 @@ She now uses this script to configure the identities for the company's projects:
 [,console]
 ----
 $ scripts/git/git_set_identity.sh \
+-r \
 -d ~/workspaces/cardiff-electric \
 -e catherine.howe@cardiff-electric.com \
 -n 'Catherine Howe'
@@ -204,13 +226,14 @@ Catherine Howe <catherine.howe@cardiff-electric.com> C09B7924274A9865545C6512772
 Catherine Howe <catherine.howe@cardiff-electric.com> C09B7924274A9865545C651277254FBC1027F48D - /Users/chowe/workspaces/cardiff-electric/frontend
 
 $ scripts/git/git_set_identity.sh \
--d ~/workspaces/comet \
+-d ~/workspaces/comet/portal \
 -e chowe@comet.com \
--s ~/.ssh/id_ed25519-comet-chowe.pub
+-s ~/.ssh/id_ed25519-comet-chowe.pub \
+-a ~/.ssh/git_allowed_signers
 Cameron Howe <chowe@comet.com> /Users/chowe/.ssh/id_ed25519-comet-chowe.pub - /Users/chowe/workspaces/comet/portal
 
 $ scripts/git/git_set_identity.sh \
--d ~/workspaces/mutiny \
+-d ~/workspaces/mutiny/giant \
 -e c.howe@mutiny.com
 Cameron Howe <c.howe@mutiny.com> 39564B7AA0B51F88A8F8BCBC49F1A380A5660737 - /Users/chowe/workspaces/mutiny/giant
 ----
