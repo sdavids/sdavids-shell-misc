@@ -116,6 +116,7 @@ $ SOURCE_DATE_EPOCH=0 scripts/web/create_build_info_js.sh src/build-info.js
 
 == Related Scripts
 
+* xref:scripts/web/create-build-info-env.adoc[]
 * xref:scripts/web/create-build-info-ts.adoc[]
 * xref:scripts/web/create-build-info-json.adoc[]
 

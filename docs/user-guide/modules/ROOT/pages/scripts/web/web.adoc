@@ -7,6 +7,7 @@ This section contains scripts related to Web development:
 xref:scripts/web/compress-brotli.adoc[]:: compress a file with brotli
 xref:scripts/web/compress-gzip.adoc[]:: compress a file with gzip
 xref:scripts/web/compress-zstd.adoc[]:: compress a file with zstd
+xref:scripts/web/create-build-info-env.adoc[]:: create a `key=value` build information file
 xref:scripts/web/create-build-info-js.adoc[]:: create a JavaScript build information file
 xref:scripts/web/create-build-info-json.adoc[]:: create a JSON build information file
 xref:scripts/web/create-build-info-ts.adoc[]:: create a TypeScript build information file

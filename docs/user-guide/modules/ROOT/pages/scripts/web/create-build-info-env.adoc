@@ -1,0 +1,158 @@
+// SPDX-FileCopyrightText: © 2025 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= create_build_info_env
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/create_build_info_env.sh
+
+{script_url}[This script^] will create a `key=value` file at the given path containing build and source control information.
+
+The given path can either be relative to the base directory (`-d`) or an absolute path—intermediate directories will not be created; if not given `.env` will be used.
+
+The following parameters are optional:
+
+`d` :: the base directory (`$PWD` if not given)
+`e` :: add `export` in front of each key/value pair; also changes the default file name to `.envrc`
+`f` :: overwrite the existing file
+`p` :: a prefix for the keys
+
+[NOTE]
+====
+The value of `BUILD_ID` is depending on where this script is run:
+
+locally:: the current timestamp
+AppVeyor:: the value of the `APPVEYOR_BUILD_ID` https://www.appveyor.com/docs/environment-variables/[environment variable]
+Bitbucket:: the value of the `BITBUCKET_BUILD_NUMBER` https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/#Default-variables[environment variable]
+CircleCI:: the value of the `CIRCLE_WORKFLOW_ID` https://circleci.com/docs/variables/#built-in-environment-variables[environment variable]
+GitHub:: the value of the `GITHUB_RUN_ID` https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables[environment variable]
+GitLab:: the value of the `CI_PIPELINE_ID` https://docs.gitlab.com/ee/ci/variables/predefined_variables.html[environment variable]
+Jenkins:: the value of the `BUILD_ID` https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables[environment variable]
+TeamCity:: the value of the `BUILD_NUMBER` https://www.jetbrains.com/help/teamcity/predefined-build-parameters.html#1c215e8e[environment variable]
+Travis:: the value of the `TRAVIS_BUILD_ID` https://docs.travis-ci.com/user/environment-variables/#default-environment-variables[environment variable]
+====
+
+[NOTE]
+====
+The value of `BUILD_TIME` is either the value of the `SOURCE_DATE_EPOCH` https://reproducible-builds.org/specs/source-date-epoch/[environment variable] or the current timestamp.
+
+The following will give you the timestamp of the HEAD commit:
+
+[,shell]
+----
+SOURCE_DATE_EPOCH="$(git log --max-count=1 --pretty=format:%ct)"
+----
+====
+
+[NOTE]
+====
+This script will add source control information if the base directory (`-d`) is under Git version control, i.e., either the https://git-scm.com/docs/git-rev-parse#Documentation/git-rev-parse.txt---show-toplevel[top-level directory] or one its subdirectories.
+
+[,console]
+----
+/tmp
+├── git_repo
+│   └── .git
+│   └── src
+└── other
+----
+
+-d /tmp:: source control information will not be added
+-d /tmp/git_repo:: source control information will be added
+-d /tmp/git_repo/src:: source control information will be added
+-d /tmp/other:: source control information will not be added
+
+The value of `GIT_COMMIT_ID` is the hash of the HEAD commit of the checked-out branch; the suffix `-next` will be appended if the working tree is dirty.
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/web/create_build_info_env.sh
+
+$ scripts/web/create_build_info_env.sh -e
+$ scripts/web/create_build_info_js.sh -f /tmp/.env.local
+$ scripts/web/create_build_info_js.sh -d ~/git_repo
+$ scripts/web/create_build_info_js.sh -p EX_
+----
+
+[,console]
+----
+$ scripts/web/create_build_info_env.sh
+----
+
+⇓
+
+..env
+[,shell]
+----
+# WARNING: will be overwritten by the `scripts/web/create_build_info_env.sh` script
+BUILD_ID="1747733549"
+BUILD_TIME="2025-05-20T09:32:29Z"
+GIT_BRANCH="main"
+GIT_COMMIT_ID="a56244680c24bd8224a0121914720df1c101b93b"
+GIT_COMMIT_TIME="2025-05-20T09:11:25Z"
+----
+
+[,console]
+----
+$ scripts/web/create_build_info_env.sh -e
+----
+
+⇓
+
+..envrc
+[,shell]
+----
+# WARNING: will be overwritten by the `scripts/web/create_build_info_env.sh` script
+export BUILD_ID="1747733591"
+export BUILD_TIME="2025-05-20T09:33:11Z"
+export GIT_BRANCH="main"
+export GIT_COMMIT_ID="a56244680c24bd8224a0121914720df1c101b93b-next"
+export GIT_COMMIT_TIME="2025-05-20T09:11:25Z"
+----
+
+[,console]
+----
+$ scripts/web/create_build_info_env.sh -p SD_
+----
+
+⇓
+
+..env
+[,shell]
+----
+# WARNING: will be overwritten by the `scripts/web/create_build_info_env.sh` script
+SD_BUILD_ID="1747733611"
+SD_BUILD_TIME="2025-05-20T09:33:31Z"
+SD_GIT_BRANCH="main"
+SD_GIT_COMMIT_ID="a56244680c24bd8224a0121914720df1c101b93b-next"
+SD_GIT_COMMIT_TIME="2025-05-20T09:11:25Z"
+----
+
+[,console]
+----
+$ SOURCE_DATE_EPOCH=0 scripts/web/create_build_info_env.sh
+----
+
+⇓
+
+..env
+[,shell]
+----
+# WARNING: will be overwritten by the `scripts/web/create_build_info_env.sh` script
+BUILD_ID="1747733640"
+BUILD_TIME="1970-01-01T00:00:00Z"
+GIT_BRANCH="main"
+GIT_COMMIT_ID="a56244680c24bd8224a0121914720df1c101b93b-next"
+GIT_COMMIT_TIME="2025-05-20T09:11:25Z"
+----
+
+== Related Scripts
+
+* xref:scripts/web/create-build-info-js.adoc[]
+* xref:scripts/web/create-build-info-ts.adoc[]
+* xref:scripts/web/create-build-info-json.adoc[]
+
+== More Information
+
+* https://reproducible-builds.org/specs/source-date-epoch[SOURCE_DATE_EPOCH]
+* https://git-scm.com/docs/git-rev-parse#Documentation/git-rev-parse.txt---verify[git rev-parse --verify]
