@@ -23,7 +23,7 @@ readonly container_name='sdavids-shell-misc-docker-example'
 
 readonly host_name='localhost'
 
-readonly network_name="${repository}"
+readonly network_name='sdavids_shell_misc'
 
 docker network inspect "${network_name}" >/dev/null 2>&1 \
   || docker network create \

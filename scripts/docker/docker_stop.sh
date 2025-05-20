@@ -14,7 +14,7 @@ if [ -n "${container_id}" ]; then
   docker stop "${container_id}" >/dev/null
 fi
 
-readonly network_name='sdavids-shell-misc'
+readonly network_name='sdavids_shell_misc'
 
 if docker network inspect "${network_name}" >/dev/null 2>&1; then
   docker network rm "${network_name}" >/dev/null
