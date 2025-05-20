@@ -6,7 +6,7 @@
 set -eu
 
 # https://hub.docker.com/r/kjarosh/latex
-readonly latex_version=2024.4
+readonly latex_version=2025.1
 readonly latex_image="kjarosh/latex:${latex_version}"
 
 # https://stackoverflow.com/a/3915420
