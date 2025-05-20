@@ -5,15 +5,56 @@
 
 set -eu
 
-if [ -z "$*" ]; then
-  echo "Usage: $0 FILE" >&2
-  exit 1
+while getopts ':d:f' opt; do
+  case "${opt}" in
+    d)
+      base_dir="${OPTARG}"
+      ;;
+    f)
+      force='true'
+      ;;
+    ?)
+      echo "Usage: $0 [-d <directory>] [-f] <file>" >&2
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+readonly base_dir="${base_dir:-$PWD}"
+readonly force="${force:-false}"
+
+if [ ! -d "${base_dir}" ]; then
+  printf "'%s' is not a directory.\n" "${base_dir}" >&2
+  exit 2
 fi
 
-readonly file="$1"
+if [ -z "${1+x}" ]; then
+  echo "Usage: $0 [-d <directory>] [-f] <file>" >&2
+  exit 3
+else
+  file="$1"
+fi
 
-if [ -f "${file}" ]; then
-  rm -f "${file}"
+case "${file}" in
+  /*)
+    # absolute path
+    ;;
+  *)
+    file="${base_dir}/${file}"
+    ;;
+esac
+
+if [ -d "${file}" ]; then
+  printf "'%s' is a directory.\n" "${file}" >&2
+  exit 4
+elif [ -f "${file}" ]; then
+  if [ "${force}" = 'true' ]; then
+    rm -f "${file}"
+  else
+    printf "'%s' already exists.\n" "${file}" >&2
+    exit 5
+  fi
 fi
 
 # https://reproducible-builds.org/docs/source-date-epoch/
@@ -60,7 +101,13 @@ if [ -n "$(command -v git)" ] && [ "$(git rev-parse --is-inside-work-tree 2>/dev
   branch="$(git rev-parse --verify --abbrev-ref HEAD)"
   readonly branch
 
-  commit="$(git rev-parse --verify HEAD)"
+  if [ -z "$(git status --porcelain=v1 2>/dev/null)" ]; then
+    ext=''
+  else
+    ext='-next'
+  fi
+  commit="$(git rev-parse --verify HEAD)${ext}"
+  unset ext
   readonly commit
 
   commit_at="$(git log --max-count=1 --pretty=format:%ct)"

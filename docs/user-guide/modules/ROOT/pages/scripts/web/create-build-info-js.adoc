@@ -3,7 +3,14 @@
 = create_build_info_js
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/web/create_build_info_js.sh
 
-{script_url}[This script^] will create a file with the given name containing build information accessible by JavaScript code.
+{script_url}[This script^] will create a JavaScript file at the given path containing build and source control information.
+
+The given path can either be relative to the base directory (`-d`) or an absolute path—intermediate directories will not be created.
+
+The following parameters are optional:
+
+`d` :: the base directory (`$PWD` if not given)
+`f` :: overwrite the existing file
 
 [NOTE]
 ====
@@ -32,7 +39,36 @@ SOURCE_DATE_EPOCH="$(git log --max-count=1 --pretty=format:%ct)"
 ----
 ====
 
+[NOTE]
+====
+This script will add source control information if the base directory (`-d`) is under Git version control, i.e., either the https://git-scm.com/docs/git-rev-parse#Documentation/git-rev-parse.txt---show-toplevel[top-level directory] or one its subdirectories.
+
+[,console]
+----
+/tmp
+├── git_repo
+│   └── .git
+│   └── src
+└── other
+----
+
+-d /tmp:: source control information will not be added
+-d /tmp/git_repo:: source control information will be added
+-d /tmp/git_repo/src:: source control information will be added
+-d /tmp/other:: source control information will not be added
+
+The value of `git.commit.id` is the hash of the HEAD commit of the checked-out branch; the suffix `-next` will be appended if the working tree is dirty.
+====
+
 == Usage
+
+[,console]
+----
+$ scripts/web/create_build_info_js.sh build-info.js
+
+$ scripts/web/create_build_info_js.sh -f /tmp/build-info.js
+$ scripts/web/create_build_info_js.sh -d ~/git_repo src/build-info.js
+----
 
 [,console]
 ----
@@ -86,3 +122,4 @@ $ SOURCE_DATE_EPOCH=0 scripts/web/create_build_info_js.sh src/build-info.js
 == More Information
 
 * https://reproducible-builds.org/specs/source-date-epoch[SOURCE_DATE_EPOCH]
+* https://git-scm.com/docs/git-rev-parse#Documentation/git-rev-parse.txt---verify[git rev-parse --verify]
