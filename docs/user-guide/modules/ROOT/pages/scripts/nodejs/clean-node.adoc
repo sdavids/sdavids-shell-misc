@@ -3,14 +3,15 @@
 = clean_node
 :script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/nodejs/clean_node.sh
 
-{script_url}[This script^] will delete the `node_modules` directory and the `package-lock.json` file in the given directory (`$PWD` if not given).
+{script_url}[This script^] will delete the `node_modules` and `.turbo` directories, and lock files (`package-lock.json`/`pnpm-lock.yaml`/`yarn.lock`) in the given directory (`$PWD` if not given).
 
 This is useful to get a clean slate after dependency updates.
 
 The following parameters are optional:
 
-`k` :: keep `package-lock.json` files, i.e., only `node_modules` directories are deleted
+`k` :: keep lock files (`package-lock.json`/`pnpm-lock.yaml`/`yarn.lock`)
 `r` :: recursively delete files
+`t` :: keep `.turbo` directories
 
 [TIP]
 ====
@@ -29,7 +30,9 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 
 [,console]
 ----
-$ node --run clean:node && npm i
+$ node --run clean:node && npm install
+$ node --run clean:node && pnpm install
+$ node --run clean:node && yarn install
 ----
 ====
 
@@ -41,12 +44,15 @@ $ scripts/nodejs/clean_node.sh
 
 $ tree --noreport /tmp/nodejs-example-project
 /tmp/nodejs-example-project
+├── .turbo
 ├── sub
+│   ├── .turbo
 │   ├── sub-sub
+│   │   ├── .turbo
 │   │   ├── node_modules
-│   │   └── package-lock.json
+│   │   └── pnpm-lock.yaml
 │   ├── node_modules
-│   └── package-lock.json
+│   └── yarn.lock
 ├── node_modules
 └── package-lock.json
 
@@ -54,19 +60,31 @@ $ scripts/nodejs/clean_node.sh /tmp/nodejs-example-project
 $ tree --noreport /tmp/nodejs-example-project
 /tmp/nodejs-example-project
 └── sub
+    ├── .turbo
     ├── sub-sub
+    │   ├── .turbo
     │   ├── node_modules
-    │   └── package-lock.json
+    │   └── pnpm-lock.yaml
     ├── node_modules
-    └── package-lock.json
+    └── yarn.lock
 
-$ scripts/nodejs/clean_node.sh -r -k /tmp/nodejs-example-project
+$ scripts/nodejs/clean_node.sh -r -k -t /tmp/nodejs-example-project
 $ tree --noreport /tmp/nodejs-example-project
 /tmp/nodejs-example-project
 └── sub
+    ├── .turbo
     ├── sub-sub
-    │   └── package-lock.json
-    └── package-lock.json
+    │   ├── .turbo
+    │   └── pnpm-lock.yaml
+    └── yarn.lock
+
+$ scripts/nodejs/clean_node.sh -r -t /tmp/nodejs-example-project
+$ tree --noreport /tmp/nodejs-example-project
+/tmp/nodejs-example-project
+└── sub
+    ├── .turbo
+    └── sub-sub
+        └── .turbo
 
 $ scripts/nodejs/clean_node.sh -r /tmp/nodejs-example-project
 $ tree --noreport /tmp/nodejs-example-project
@@ -74,3 +92,10 @@ $ tree --noreport /tmp/nodejs-example-project
 └── sub
     └── sub-sub
 ----
+
+== More Information
+
+* https://docs.npmjs.com/cli/v11/configuring-npm/package-lock-json[package-lock-json]
+* https://classic.yarnpkg.com/lang/en/docs/yarn-lock/[yarn.lock]
+* https://pnpm.io/git#lockfiles[pnpm-lock.yaml]
+* https://turborepo.com/docs/getting-started/add-to-existing-repository#edit-gitignore[.turbo]
