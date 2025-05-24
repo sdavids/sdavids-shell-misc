@@ -1,0 +1,159 @@
+// SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
+// SPDX-License-Identifier: Apache-2.0
+= macos_exclude_node_module_stores
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/nodejs/macos_exclude_node_module_stores.sh
+
+{script_url}[This script^] will exclude all `node_modules` and `.pnpm-store` directories in the given directory (`$PWD` if not given) and its subdirectories from https://support.apple.com/en-us/104984[Time Machine] backups and prevent their https://support.apple.com/guide/mac-help/prevent-spotlight-searches-in-files-mchl1bb43b84/mac[Spotlight indexing].
+
+[TIP]
+====
+Copy the script into your Node.js project and add it as a preinstall life cycle script to your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "preinstall": "scripts/macos_exclude_node_module_stores.sh"
+  }
+}
+----
+
+For this to work, you should not ignore pre- or post-scripts:
+
+https://docs.npmjs.com/cli/v10/using-npm/config#ignore-scripts[NPM]:: For https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html#3-minimize-attack-surfaces-by-ignoring-run-scripts[security reasons], you might want to disable them globally via:
++
+[,console]
+----
+$ npm config --global set ignore-scripts true
+----
++
+Use `--ignore-scripts=false` to enable the pre- or post-scripts for a specific NPM command:
++
+[,console]
+----
+$ npm install --ignore-scripts=false
+
+----
++
+You can show your current configuration via:
++
+[,console]
+----
+$ npm config ls -l
+----
+
+link:https://pnpm.io/settings#ignorescripts[pnpm]:: For security reasons, you might want to disable them globally via:
++
+[,console]
+----
+$ pnpm config --global set ignore-scripts true
+----
++
+Use `--ignore-scripts=false` to enable the pre- or post-scripts for a specific pnpm command:
++
+[,console]
+----
+$ pnpm install --ignore-scripts=false
+----
++
+You can show your current configuration via:
++
+[,console]
+----
+$ pnpm config list
+----
+
+link:https://yarnpkg.com/configuration/yarnrc#enableScripts[yarn]:: For security reasons, you might want to disable them globally:
++
+[,console]
+----
+$ yarn config set --home enableScripts false
+----
++
+Use `--ignore-scripts=false` to enable the pre- or post-scripts for a specific pnpm command:
++
+[,console]
+----
+$ yarn install --ignore-scripts=false
+----
++
+You can show your current configuration via:
++
+[,console]
+----
+$ yarn config current
+----
+
+Alternatively, you can use this script as a https://docs.npmjs.com/cli/v10/commands/npm-run-script[custom script] in your `package.json` file:
+
+.package.json
+[,json]
+----
+{
+...
+  "scripts": {
+    "macos:exclude-node-modules-store": "scripts/macos_exclude_node_module_stores.sh"
+  }
+}
+----
+
+And execute it manually:
+
+[,console]
+----
+$ node --run macos:exclude-node-module-stores
+----
+====
+
+== Usage
+
+[,console]
+----
+$ scripts/nodejs/macos_exclude_node_module_stores.sh
+$ scripts/nodejs/macos_exclude_node_module_stores.sh /tmp/example_project
+
+$ xattr -r /tmp/example_workspace
+$ tree --noreport -a /tmp/example_workspace
+/tmp/example_workspace
+├── project1
+│   └── node_modules
+└── project2
+    └── frontend
+        ├── .pnpm-store
+        └── node_modules
+$ scripts/nodejs/macos_exclude_node_module_stores.sh /tmp/example_workspace
+$ xattr -r /tmp/example_workspace                                         <1>
+/tmp/example_workspace/project1/node_modules: com.apple.metadata:com_apple_backup_excludeItem
+/tmp/example_workspace/project2/frontend/.pnpm-store: com.apple.metadata:com_apple_backup_excludeItem
+/tmp/example_workspace/project2/frontend/node_modules: com.apple.metadata:com_apple_backup_excludeItem
+$ tree --noreport -a /tmp/example_workspace
+/tmp/example_workspace
+├── project1
+│   └── node_modules
+│       └── .metadata_never_index                                         <2>
+└── project2
+    └── frontend
+        ├── .pnpm-store
+        │   └── .metadata_never_index                                     <2>
+        └── node_modules
+            └── .metadata_never_index                                     <2>
+----
+
+<1> `node_modules` and `.pnpm-store` directories are not backed up by Time Machine
+
+<2> Spotlight indexing prevented
+
+== More Information
+
+* https://support.apple.com/en-us/104984[Time Machine]
+* https://ss64.com/mac/tmutil.html[tmutil addexclusion]
+* https://apple.stackexchange.com/questions/25779/on-os-x-what-files-are-excluded-by-rule-from-a-time-machine-backup[com.apple.metadata:com_apple_backup_excludeItem]
+* https://support.apple.com/guide/mac-help/prevent-spotlight-searches-in-files-mchl1bb43b84/mac[Prevent Spotlight searches in files on Mac]
+* https://superuser.com/questions/89556/how-to-disable-creating-spotlight-v100-and-trash-folders-on-external-drive[.metadata_never_index]
+* https://nodejs.org/api/modules.html#loading-from-node_modules-folders[node_modules]
+* https://pnpm.io/settings#storedir[.pnpm-store]
+* https://docs.npmjs.com/cli/v11/commands/npm-install#ignore-scripts[npm --ignore-scripts]
+* https://pnpm.io/cli/install#--ignore-scripts[pnpm --ignore-scripts]
+* https://yarnpkg.com/configuration/yarnrc#enableScripts[yarn enableScripts]

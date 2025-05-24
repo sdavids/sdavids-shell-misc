@@ -28,4 +28,4 @@ readonly base_dir
 
 # https://apple.stackexchange.com/questions/25779/on-os-x-what-files-are-excluded-by-rule-from-a-time-machine-backup
 # https://apple.stackexchange.com/a/258791
-find "${base_dir}" -type d -name 'node_modules' -exec sh -c 'touch "$0/.metadata_never_index" && xattr -w com.apple.metadata:com_apple_backup_excludeItem com.apple.backupd "$0"' {} \;
+find "${base_dir}" \( -type d -name 'node_modules' -o -name '.pnpm-store' \) -exec sh -c 'touch "$0/.metadata_never_index" && xattr -w com.apple.metadata:com_apple_backup_excludeItem com.apple.backupd "$0"' {} \;

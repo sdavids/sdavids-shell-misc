@@ -74,7 +74,7 @@
 ** xref:scripts/nodejs/nodejs.adoc[]
 *** xref:scripts/nodejs/clean-node.adoc[]
 *** xref:scripts/nodejs/dependency-check-node.adoc[]
-*** xref:scripts/nodejs/macos-node-modules-fix.adoc[]
+*** xref:scripts/nodejs/macos-exclude-node-module-stores.adoc[]
 ** xref:scripts/pdf/pdf.adoc[]
 *** xref:scripts/pdf/pdf-remove-metadata.adoc[]
 ** xref:scripts/rust/rust.adoc[]
