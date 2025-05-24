@@ -15,7 +15,6 @@ find "${base_dir}" -type f -name '*.svg' -exec \
   npx --yes --quiet svgo {} \
   --eol lf \
   --multipass \
-  --no-color \
   --quiet \
   --output "{}.tmp" \;
 
