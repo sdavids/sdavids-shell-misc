@@ -37,6 +37,12 @@ jobs:
               - '.hadolint.yaml'
               - '**/Dockerfile'
       - if: steps.changes.outputs.sh == 'true'
+        name: Check shell script formatting
+        # yamllint disable rule:line-length
+        run: |
+          shfmt --diff --indent 2 --case-indent --binary-next-line --simplify .
+          find zfunc -type f -print0 | xargs -0L1 shfmt --diff --indent 2 --case-indent --binary-next-line --simplify
+      - if: steps.changes.outputs.sh == 'true'
         name: Lint shell scripts
         run: |
           shfmt --list=0 . | xargs -0L1 shellcheck
