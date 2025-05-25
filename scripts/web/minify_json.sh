@@ -16,4 +16,4 @@ readonly base_dir="${1:-$PWD}"
 find "${base_dir}" \
   -type f \
   -name '*.json' \
-  -exec sh -c 'mv "$1" "$1.tmp"; jq -c . "$1.tmp" > "$1"; rm "$1.tmp"' shell {} \;
+  -exec sh -c 'mv "$1" "$1.tmp"; jq -c . "$1.tmp" >"$1"; rm "$1.tmp"' shell {} \;

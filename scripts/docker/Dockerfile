@@ -10,7 +10,7 @@
 FROM alpine:3.21.3 AS builder
 
 RUN mkdir -p /tmp/dist && \
-    printf '<!doctype html><title>Test</title><h1>Test</h1>' > /tmp/dist/index.html
+    printf '<!doctype html><title>Test</title><h1>Test</h1>' >/tmp/dist/index.html
 
 LABEL de.sdavids.docker.group="sdavids-shell-misc" \
       de.sdavids.image.type="builder"
