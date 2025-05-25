@@ -41,7 +41,7 @@ fi
     printf -- "---\n\n"
   fi
 
-  find "${base_dir}" -name .DS_Store -print0 | xargs -0 git rm --quiet --force --ignore-unmatch
+  find "${base_dir}" -name .DS_Store -print0 | xargs -0L1 git rm --quiet --force --ignore-unmatch
   find "${base_dir}" -name .DS_Store -delete
 
   git status --short --porcelain
