@@ -12,8 +12,8 @@ You should change the template being used:
 .zfunc/repo_new_gh
 [,shell]
 ----
-- readonly template='sdavids/sdavids-project-template'
-+ readonly template='my-github-user/my-template'
+- template='sdavids/sdavids-project-template'
++ template='my-github-user/my-template'
 ----
 ====
 

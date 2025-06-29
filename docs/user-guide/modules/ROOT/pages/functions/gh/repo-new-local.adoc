@@ -22,10 +22,10 @@ You should change the GitHub user and template being used:
 .zfunc/repo_new_local
 [,shell,highlight=2,4]
 ----
-- readonly template='sdavids/sdavids-project-template'
-+ readonly template='my-github-user/my-template'
-- readonly gh_user_id='sdavids'
-+ readonly gh_user_id='my-github-user'
+- template='sdavids/sdavids-project-template'
++ template='my-github-user/my-template'
+- gh_user_id='sdavids'
++ gh_user_id='my-github-user'
 ----
 ====
 
