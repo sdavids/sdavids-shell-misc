@@ -100,4 +100,10 @@ repo_publish_to_gh() {
     --enable-rebase-merge=true \
     --enable-squash-merge=false \
     --enable-wiki=false
+
+  repo_name_with_owner="$(gh repo view --json nameWithOwner -q '.nameWithOwner')"
+
+  gh api --method PUT "/repos/${repo_name_with_owner}/actions/permissions" -F 'enabled=false'
+
+  unset repo_name_with_owner
 }

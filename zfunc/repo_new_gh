@@ -55,6 +55,12 @@ repo_new_gh() {
       --enable-squash-merge=false \
       --enable-wiki=false
 
+    repo_name_with_owner="$(gh repo view --json nameWithOwner -q '.nameWithOwner')"
+
+    gh api --method PUT "/repos/${repo_name_with_owner}/actions/permissions" -F 'enabled=false'
+
+    unset repo_name_with_owner
+
     sleep "${wait_for_github}"
 
     key="$(git config get user.signingkey)"
