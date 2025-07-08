@@ -6,7 +6,7 @@
 set -Eeu -o pipefail -o posix
 
 # https://hub.docker.com/r/asciidoctor/docker-asciidoctor
-readonly asciidoctor_version=1.89.0
+readonly asciidoctor_version=1.90.0
 readonly asciidoctor_image="asciidoctor/docker-asciidoctor:${asciidoctor_version}"
 
 # https://stackoverflow.com/a/3915420
