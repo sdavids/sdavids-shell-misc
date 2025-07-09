@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: © 2024 Sebastian Davids <sdavids@gmx.de>
 // SPDX-License-Identifier: Apache-2.0
-= dependency_check_node
-:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/nodejs/dependency_check_node.sh
+= dependency_check_npm
+:script_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/scripts/nodejs/dependency_check_npm.sh
 
 {script_url}[This script^] checks for dependency updates of the https://nodejs.org/en[Node.js] project in the given directory (`$PWD` if not given).
 
@@ -17,7 +17,7 @@ Copy the script into your Node.js project and add it as a https://docs.npmjs.com
 {
 ...
   "scripts": {
-    "dependency:updates": "scripts/dependency_check_node.sh"
+    "dependency:updates": "scripts/dependency_check_npm.sh"
   }
 }
 ----
@@ -56,9 +56,9 @@ $ npm config ls -l
 
 [,console]
 ----
-$ scripts/dependency_check_node.sh
-$ scripts/dependency_check_node.sh /tmp/example
-$ scripts/dependency_check_node.sh /tmp/example false
+$ scripts/dependency_check_npm.sh
+$ scripts/dependency_check_npm.sh /tmp/example
+$ scripts/dependency_check_npm.sh /tmp/example false
 
 Package             Current  Wanted  Latest  Location                         Depended by  Package Type     Homepage
 esbuild              0.23.0  0.23.0  0.23.1  node_modules/esbuild             example      devDependencies  https://github.com/evanw/esbuild#readme

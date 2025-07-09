@@ -73,7 +73,7 @@
 *** xref:scripts/latex/latex-pdf-build.adoc[]
 ** xref:scripts/nodejs/nodejs.adoc[]
 *** xref:scripts/nodejs/clean-node.adoc[]
-*** xref:scripts/nodejs/dependency-check-node.adoc[]
+*** xref:scripts/nodejs/dependency-check-npm.adoc[]
 *** xref:scripts/nodejs/macos-exclude-node-module-stores.adoc[]
 ** xref:scripts/pdf/pdf.adoc[]
 *** xref:scripts/pdf/pdf-remove-metadata.adoc[]
