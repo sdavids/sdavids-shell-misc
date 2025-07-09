@@ -16,3 +16,5 @@ $ scripts/web/minify_html.sh dist
 == Prerequisites
 
 * xref:developer-guide::dev-environment/dev-installation.adoc#node-version-manager[npx]
+or
+xref:developer-guide::dev-environment/dev-installation.adoc#pnpm[pnpm]

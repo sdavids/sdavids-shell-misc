@@ -30,3 +30,5 @@ $ scripts/web/minify_svg.sh dist
 == Prerequisites
 
 * xref:developer-guide::dev-environment/dev-installation.adoc#node-version-manager[npx]
+or
+xref:developer-guide::dev-environment/dev-installation.adoc#pnpm[pnpm]

@@ -49,7 +49,7 @@ $ find dist -type f -name '*.html' -exec node scripts/web/minify_json_tags.mjs {
 
 == Prerequisites
 
-* xref:developer-guide::dev-environment/dev-installation.adoc#node-version-manager[npx]
+* xref:developer-guide::dev-environment/dev-installation.adoc#node-version-manager[node]
 +
 [NOTE]
 ====
@@ -57,6 +57,13 @@ Afterward, you need to install the dependencies of this script:
 
 [,console]
 ----
-$ npm i --save-dev domutils dom-serializer htmlparser2
+$ npm install --save-dev domutils dom-serializer htmlparser2
+----
+
+or
+
+[,console]
+----
+$ pnpm add --save-dev domutils dom-serializer htmlparser2
 ----
 ====

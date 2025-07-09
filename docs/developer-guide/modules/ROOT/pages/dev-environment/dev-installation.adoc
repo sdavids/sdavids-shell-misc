@@ -8,6 +8,7 @@
 :hadolint-install-url: https://github.com/hadolint/hadolint?tab=readme-ov-file#install
 :nvm-install-url: https://github.com/nvm-sh/nvm#installing-and-updating
 :oxipng-install-url: https://github.com/shssoichiro/oxipng/issues/69
+:pnpm-install-url: https://pnpm.io/installation
 
 [#brotli]
 == brotli
@@ -320,6 +321,11 @@ Install {oxipng-install-url}[oxipng].
 ----
 $ brew install oxipng
 ----
+
+[#pnpm]
+== pnpm
+
+Install {pnpm-install-url}[pnpm].
 
 [#qpdf]
 == qpdf
