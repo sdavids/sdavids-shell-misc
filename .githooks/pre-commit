@@ -63,12 +63,12 @@ if command -v shfmt >/dev/null 2>&1; then
   set -e
 
   if command -v shellcheck >/dev/null 2>&1; then
-    { shfmt -l=0 . | xargs -0L1 shellcheck; } >&2
+    { find scripts -type f -name '*.sh' -exec shellcheck {} \;; } >&2
   fi
 fi
 
 if command -v shellcheck >/dev/null 2>&1; then
-  { find .githooks zfunc -type f -print0 | xargs -0L1 shellcheck; } >&2
+  { find .githooks zfunc -type f -exec shellcheck {} \;; } >&2
 fi
 
 if command -v yamllint >/dev/null 2>&1; then
