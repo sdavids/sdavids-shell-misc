@@ -68,7 +68,7 @@ chmod "${perm}" "${dst_dir}"
 
 if [ "${force}" = 'false' ]; then
   src_files="$(find "${src_dir}" -type f -name '*.sh' -exec basename {} \; | sort | uniq)"
-  dst_files="$(find "${dst_dir}" -type f -name '*.sh' -maxdepth 1 -exec basename {} \; | sort)"
+  dst_files="$(find "${dst_dir}" -maxdepth 1 -type f -name '*.sh' -exec basename {} \; | sort)"
   comm_files="$(comm -12 <(echo "${src_files}") <(echo "${dst_files}"))"
 
   if [ "${yes}" = 'false' ] && [ -n "${comm_files}" ]; then
