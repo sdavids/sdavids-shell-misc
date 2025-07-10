@@ -38,11 +38,10 @@ jobs:
               - '**/Dockerfile'
       - if: steps.changes.outputs.sh == 'true'
         name: Ensure shfmt is installed
-        # https://github.com/awalsh128/cache-apt-pkgs-action/releases
-        uses: awalsh128/cache-apt-pkgs-action@v1.5.1
+        # https://github.com/mfinelli/setup-shfmt/releases
+        uses: mfinelli/setup-shfmt@v3.0.2
         with:
-          packages: shfmt
-          version: 1.0
+          shfmt-version: 3.12.0
       - if: steps.changes.outputs.sh == 'true'
         name: Check shell script formatting
         # yamllint disable rule:line-length
