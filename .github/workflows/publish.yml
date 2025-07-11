@@ -19,6 +19,7 @@ permissions:
   id-token: write
 jobs:
   build:
+    # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
     runs-on: ubuntu-24.04
     environment:
       name: github-pages
