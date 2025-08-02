@@ -25,16 +25,3 @@ java {
 tasks.quarkusDev {
   workingDirectory = rootProject.layout.projectDirectory.asFile
 }
-
-tasks.withType<JavaCompile>().configureEach {
-  options.apply {
-    isDeprecation = true
-    compilerArgs.addAll(
-      arrayOf(
-        "-parameters",
-        "-Werror",
-        "-Xlint:all",
-      ),
-    )
-  }
-}

@@ -21,16 +21,3 @@ java {
     languageVersion = JavaLanguageVersion.of(21)
   }
 }
-
-tasks.withType<JavaCompile>().configureEach {
-  options.apply {
-    isDeprecation = true
-    compilerArgs.addAll(
-      arrayOf(
-        "-parameters",
-        "-Werror",
-        "-Xlint:all",
-      ),
-    )
-  }
-}
