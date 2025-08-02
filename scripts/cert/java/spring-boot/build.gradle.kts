@@ -14,7 +14,7 @@ dependencies {
 }
 
 group = "de.sdavids"
-version = "1.0.0"
+version = "0.0.0"
 
 java {
   toolchain {
