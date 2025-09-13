@@ -43,7 +43,7 @@ jobs:
       - if: steps.changes.outputs.docs == 'true'
         name: Install Node.js
         # https://github.com/actions/setup-node/releases
-        uses: actions/setup-node@v4.4.0
+        uses: actions/setup-node@v5.0.0
         with:
           # https://nodejs.org/en/about/previous-releases#looking-for-the-latest-release-of-a-version-branch
           node-version: 22.19.0
