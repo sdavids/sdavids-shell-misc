@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Checkout
         # https://github.com/actions/checkout/releases
-        uses: actions/checkout@v4.3.0
+        uses: actions/checkout@v5.0.0
       - name: Classify changes
         # https://github.com/dorny/paths-filter/releases
         uses: dorny/paths-filter@v3.0.2
