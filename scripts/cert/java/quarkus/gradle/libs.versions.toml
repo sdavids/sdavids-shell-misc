@@ -5,8 +5,8 @@
 
 [plugins]
 # https://plugins.gradle.org/plugin/io.quarkus
-quarkusPlugin = "io.quarkus:3.25.0"
+quarkusPlugin = "io.quarkus:3.26.3"
 
 [libraries]
 # https://github.com/quarkusio/quarkus/releases
-quarkusPlatform = "io.quarkus.platform:quarkus-bom:3.25.0"
+quarkusPlatform = "io.quarkus.platform:quarkus-bom:3.26.3"
