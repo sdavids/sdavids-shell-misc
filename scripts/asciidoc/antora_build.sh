@@ -5,8 +5,9 @@
 
 set -eu
 
+# https://hub.docker.com/r/antora/antora
 # https://docs.antora.org/antora/latest/whats-new/
-readonly antora_version='3.1.10'
+readonly antora_version='3.1.12'
 
 # https://stackoverflow.com/a/3915420
 # https://stackoverflow.com/questions/3915040/how-to-obtain-the-absolute-path-of-a-file-via-shell-bash-zsh-sh#comment100267041_3915420
