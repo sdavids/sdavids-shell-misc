@@ -46,7 +46,7 @@ jobs:
         uses: actions/setup-node@v4.4.0
         with:
           # https://nodejs.org/en/about/previous-releases#looking-for-the-latest-release-of-a-version-branch
-          node-version: 22.18.0
+          node-version: 22.19.0
       - if: steps.changes.outputs.docs == 'true'
         name: Install Antora
         # https://docs.antora.org/antora/latest/whats-new/
