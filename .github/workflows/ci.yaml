@@ -61,6 +61,6 @@ jobs:
       - if: steps.changes.outputs.Dockerfile == 'true'
         name: Lint Dockerfile
         # https://github.com/hadolint/hadolint-action/releases
-        uses: hadolint/hadolint-action@v3.1.0
+        uses: hadolint/hadolint-action@v3.2.0
         with:
           dockerfile: scripts/docker/Dockerfile
