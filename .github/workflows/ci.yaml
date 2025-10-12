@@ -40,7 +40,7 @@ jobs:
       - if: steps.changes.outputs.sh == 'true'
         name: Ensure shfmt is installed
         # https://github.com/mfinelli/setup-shfmt/releases
-        uses: mfinelli/setup-shfmt@v4.0.0
+        uses: mfinelli/setup-shfmt@v4.0.1
         with:
           # https://github.com/mvdan/sh/releases
           shfmt-version: 3.12.0
