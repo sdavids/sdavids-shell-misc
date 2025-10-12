@@ -8,4 +8,4 @@
 springDependencyManagement = "io.spring.dependency-management:1.1.7"
 # https://github.com/spring-projects/spring-boot/releases
 # https://plugins.gradle.org/plugin/org.springframework.boot
-springBoot = "org.springframework.boot:3.5.5"
+springBoot = "org.springframework.boot:3.5.6"
