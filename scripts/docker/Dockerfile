@@ -7,7 +7,7 @@
 ### Builder ###
 
 # https://hub.docker.com/_/alpine
-FROM alpine:3.22.1 AS builder
+FROM alpine:3.23.0 AS builder
 
 RUN mkdir -p /tmp/dist && \
     printf '<!doctype html><title>Test</title><h1>Test</h1>' >/tmp/dist/index.html
