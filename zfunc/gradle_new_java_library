@@ -32,7 +32,7 @@ gradle_new_java_library() {
     # https://docs.gradle.org/current/userguide/build_init_plugin.html#header
     gradle init \
       --type java-library \
-      --java-version 21 \
+      --java-version 25 \
       --dsl kotlin \
       --test-framework junit-jupiter \
       --no-comments \
