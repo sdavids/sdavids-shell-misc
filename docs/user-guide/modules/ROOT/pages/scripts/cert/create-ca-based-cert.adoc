@@ -169,7 +169,7 @@ Restart Firefox to refresh its CA root certificates from the system's trust stor
 $ scripts/cert/create_ca.sh
 $ scripts/cert/create_ca_based_cert.sh -d ~/.local/secrets/certs/localhost
 
-$ docker run --rm httpd:2.4.63-alpine3.21 cat /usr/local/apache2/conf/httpd.conf >httpd.conf.orig
+$ docker run --rm httpd:2.4.66-alpine3.23 cat /usr/local/apache2/conf/httpd.conf >httpd.conf.orig
 $ sed -e 's/^#\(Include .*httpd-ssl.conf\)/\1/' \
       -e 's/^#\(LoadModule .*mod_ssl.so\)/\1/' \
       -e 's/^#\(LoadModule .*mod_socache_shmcb.so\)/\1/' \
@@ -182,7 +182,7 @@ $ docker run -i -t --rm -p 3000:443 \
   -v "$PWD/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro" \
   -v "$HOME/.local/secrets/certs/localhost/cert.pem:/usr/local/apache2/conf/server.crt:ro" \
   -v "$HOME/.local/secrets/certs/localhost/key.pem:/usr/local/apache2/conf/server.key:ro" \
-  httpd:2.4.63-alpine3.21
+  httpd:2.4.66-alpine3.23
 ----
 
 => https://localhost:3000
