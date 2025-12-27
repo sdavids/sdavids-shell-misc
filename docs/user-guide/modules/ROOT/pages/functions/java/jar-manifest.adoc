@@ -3,7 +3,7 @@
 = jar_manifest
 :function_url: https://github.com/sdavids/sdavids-shell-misc/blob/main/zfunc/jar_manifest
 
-{function_url}[This function^] will display the https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html[manifest] of the given https://docs.oracle.com/en/java/javase/21/docs/specs/man/jar.html[JAR] file.
+{function_url}[This function^] will display the https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html[manifest] of the given https://docs.oracle.com/en/java/javase/25/docs/specs/man/jar.html[JAR] file.
 
 == Usage
 
