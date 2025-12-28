@@ -93,7 +93,7 @@ response="$(
     -H 'Accept: application/vnd.github+json' \
     -H "Authorization: Bearer ${auth_token}" \
     -H "X-GitHub-Api-Version: ${gh_api_version}" \
-    -w '%{http_code}' \
+    -w '\n%{http_code}' \
     "https://api.github.com/repos/${owner}/${repo}/actions/runs"
 )"
 
