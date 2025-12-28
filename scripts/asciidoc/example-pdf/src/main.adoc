@@ -25,6 +25,11 @@ Sebastian Davids <sdavids@gmx.de>
 // https://docs.asciidoctor.org/asciidoc/latest/sections/chapters/#chapter-signifier
 :!chapter-signifier:
 
+// https://docs.asciidoctor.org/asciidoc/latest/attributes/custom-attributes/
+:github-org-url: https://github.com/sdavids
+:github-repo: sdavids-shell-misc
+:some-version: 1.2.3
+
 // https://docs.asciidoctor.org/asciidoc/latest/toc/position/#at-macro
 toc::[]
 
@@ -125,6 +130,21 @@ sed -i '/^[@#]/d' "$file"
 xref:contact-chowe[Cameron Howe]
 
 xref:contact-jmacmillan[Joe MacMillan]
+
+=== Attributes
+
+// https://docs.asciidoctor.org/asciidoc/latest/attributes/reference-attributes/#reference-custom
+{github-org-url}/{github-repo}
+
+// https://docs.asciidoctor.org/asciidoc/latest/attributes/reference-attributes/#enclose-in-a-passthrough
++{some-version}+ has the value {some-version}.
+
+// https://docs.asciidoctor.org/asciidoc/latest/subs/attributes/#attributes-substitution-value
+// https://docs.asciidoctor.org/asciidoc/latest/subs/apply-subs-to-blocks/#incremental
+[,xml,subs="attributes+"]
+----
+<version>{some-version}</version>
+----
 
 == Lists
 
