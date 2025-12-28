@@ -17,25 +17,26 @@ my_func() {}
 
 [TIP]
 ====
-Example zsh setup:
+Example _zsh_ setup:
 
 [,console]
 ----
-$ mkdir ~/.zfunc
+$ mkdir -p ~/.config/zsh/zfunc
+$ cp zfunc/* ~/.config/zsh/zfunc
 ----
 
 .~/.zshrc
 [,zsh]
 ----
-readonly ext_func="${HOME}/.zfunc"
+readonly local_shell_functions="${HOME}/.config/zsh/zfunc"
 
-export FPATH="${ext_func}:${FPATH}"
+if [ -d "${local_shell_functions}" ]; then
+ export FPATH="${local_shell_functions}:${FPATH}"
 
-for f in ${ext_func}; do
-  # shellcheck disable=SC2046
-  autoload -Uz $(ls "${f}")
-done
+ for f in ${local_shell_functions}; do
+   # shellcheck disable=SC2046
+   autoload -Uz $(ls "${f}")
+ done
+fi
 ----
-
-The functions should be copied into `~/.zfunc`.
 ====
