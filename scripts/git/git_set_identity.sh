@@ -138,12 +138,14 @@ set_identity_no_sign() {
     # https://git-scm.com/docs/git-config#_variables
     git config set user.name "${name}"
     git config set user.email "${email}"
-    git config unset user.signingkey
     git config set --bool commit.gpgsign false
     git config set --bool tag.gpgsign false
     git config set --bool tag.forcesignannotated false
     git config set gpg.format openpgp
+    set +e # unset fails when option does not exist
+    git config unset user.signingkey
     git config unset gpg.ssh.allowedSignersFile
+    set -e
     echo "$(git config get user.name) <$(git config get user.email)> - $PWD"
   fi
 }
@@ -162,11 +164,15 @@ set_identity_with_sign() {
       if [ -n "${allowed_signers_file+x}" ]; then
         git config set gpg.ssh.allowedSignersFile "${allowed_signers_file}"
       else
+        set +e # unset fails when option does not exist
         git config unset gpg.ssh.allowedSignersFile
+        set -e
       fi
     else
       git config set gpg.format openpgp
+      set +e # unset fails when option does not exist
       git config unset gpg.ssh.allowedSignersFile
+      set -e
     fi
     echo "$(git config get user.name) <$(git config get user.email)> $(git config get user.signingkey) - $PWD"
   fi
