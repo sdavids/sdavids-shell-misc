@@ -12,7 +12,7 @@
 set -eu
 
 # https://github.com/google/google-java-format/releases
-readonly version='1.33.0'
+readonly version='1.34.1'
 
 readonly base_dir="${1:-$PWD}"
 

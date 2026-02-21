@@ -12,7 +12,7 @@
 set -Eeu -o pipefail -o posix
 
 # https://github.com/google/google-java-format/releases
-readonly version='1.33.0'
+readonly version='1.34.1'
 
 while getopts ':v' opt; do
   case "${opt}" in
