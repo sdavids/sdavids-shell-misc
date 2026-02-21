@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 // Prerequisite:
-//   npm i --save-dev domutils dom-serializer htmlparser2
+//   npm install --save-dev domutils dom-serializer htmlparser2
 
 import { access, readFile, writeFile } from "node:fs/promises";
 import { relative } from "node:path";
