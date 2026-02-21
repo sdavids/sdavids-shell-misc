@@ -3,12 +3,12 @@
 
 package de.sdavids.example.quarkus.https;
 
+import static jakarta.ws.rs.core.MediaType.TEXT_HTML;
+
 import io.smallrye.common.annotation.RunOnVirtualThread;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
-
-import static jakarta.ws.rs.core.MediaType.TEXT_HTML;
 
 @Path("/")
 public class Server {

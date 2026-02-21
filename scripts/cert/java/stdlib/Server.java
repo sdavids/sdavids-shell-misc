@@ -67,8 +67,7 @@ SSLContext newSSLContext() throws Exception {
   trustManagerFactory.init(keyStore);
 
   var sslContext = SSLContext.getInstance("TLS");
-  sslContext.init(
-      keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
+  sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
 
   return sslContext;
 }
