@@ -168,6 +168,11 @@ $ ../asciidoc_pdf_build.sh
 
 Typeset PDF: xref:attachment$asciidoc/main.pdf[main.pdf]
 
+[TIP]
+====
+More example AsciiDoc files can be found in https://github.com/sdavids/sdavids-shell-misc/blob/main/docs/[docs].
+====
+
 == Prerequisites
 
 * xref:developer-guide::dev-environment/dev-installation.adoc#docker[Docker]
