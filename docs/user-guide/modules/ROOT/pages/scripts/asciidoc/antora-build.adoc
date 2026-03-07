@@ -17,6 +17,17 @@ The following parameters are optional:
 The source directory https://docs.antora.org/antora/latest/content-source-repositories/#git-and-content-sources[needs to be a Git repository root] with at least one commit.
 ====
 
+[NOTE]
+====
+This documentation site is built with Antora and hosted on https://docs.github.com/en/pages/quickstart[GitHub Pages].
+
+The sources are available at https://github.com/sdavids/sdavids-shell-misc/blob/main/docs/[docs].
+
+The Antora playbook can be accessed at https://github.com/sdavids/sdavids-shell-misc/blob/main/docs/antora-playbook.yml[antora-playbook.yaml].
+
+The GitHub Action for publishing this documentation site is available at https://github.com/sdavids/sdavids-shell-misc/blob/main/.github/workflows/publish.yml[publish.yml].
+====
+
 [TIP]
 ====
 Copy this script into your project:
