@@ -8,4 +8,4 @@ module sdavids.de/sdavids-shell-misc-cert
 go 1.26
 
 // https://go.dev/doc/devel/release
-toolchain go1.26.0
+toolchain go1.26.1
