@@ -384,6 +384,100 @@ endif::[]
 
 ifndef::safe-mode-secure[]
 
+[#c4-diagram]
+=== C4 Diagram
+
+==== C4 System Landscape Diagram
+
+[plantuml,diagram-c4-system,svg]
+----
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+HIDE_STEREOTYPE()
+
+Person(s, "Support")
+Person(c, "Customer")
+
+System(t, "Test System")
+System(p, "Prod System")
+SystemDb_Ext(i, "Issue Tracker")
+
+Rel(s, i, "Uses", "https")
+Rel(s, t, "Uses", "https")
+Rel_L(s, p, "Uses", "https")
+
+Rel_R(c, p, "Uses", "https")
+Rel(c, i, "Uses", "https")
+
+@enduml
+----
+
+* https://github.com/plantuml-stdlib/C4-PlantUML?tab=readme-ov-file#system-context--system-landscape-diagrams[C4-PlantUML - System Landscape]
+
+==== C4 Container Diagram
+
+[plantuml,diagram-c4-container,svg]
+----
+@startuml
+
+!theme C4_blue_new from https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/themes
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v20.0/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/Compute/Lambda.puml
+!include AWSPuml/Containers/ElasticContainerServiceContainer2.puml
+!include AWSPuml/FrontEndWebMobile/FrontEndWebMobile.puml
+!include AWSPuml/NetworkingContentDelivery/CloudFront.puml
+!include AWSPuml/NetworkingContentDelivery/ElasticLoadBalancingApplicationLoadBalancer.puml
+!include AWSPuml/SecurityIdentityCompliance/Cognito.puml
+!include AWSPuml/Database/AuroraPostgreSQLInstance.puml
+
+HIDE_STEREOTYPE()
+LAYOUT_LANDSCAPE()
+
+AddElementTag("addition", $fontColor="seagreen")
+AddElementTag("modification", $fontColor="darkorange")
+
+Container(fe, "Frontend", $sprite="FrontEndWebMobile")
+
+Container(awsc, "Cognito", $sprite="Cognito")
+
+Container(awsalb, "App Load Balancer", $sprite="ElasticLoadBalancingApplicationLoadBalancer")
+
+Container(awscf, "CloudFront", $sprite="CloudFront", $tags = "modification")
+
+Boundary(awsecs, "ECS Fargate", $tags = "modification") {
+  Container(b1, "Backend 1", "Spring Boot", $sprite="ElasticContainerServiceContainer2", $descr="validates JWT")
+
+  Container(b2, "Backend 2", "Node.js", $sprite="ElasticContainerServiceContainer2", $tags = "addition")
+}
+
+ContainerDb(awsap, "Database", $sprite="AuroraPostgreSQLInstance")
+
+Container(eap, "Auth Proxy", $sprite="Lambda", $descr="validates JWT", $tags = "addition")
+
+Rel(fe, awsc, "retrieve JWT")
+
+Rel(fe, awscf, "GET /a", $descr="with JWT")
+Rel(fe, awscf, "GET /b", $descr="with JWT")
+
+Rel(awscf, awsalb, "GET /a", $descr="with JWT")
+Rel(awscf, eap, "GET /b", $descr="with JWT")
+
+Rel(awsalb, b1, "GET /a", $descr="with JWT")
+
+Rel(eap, b2, "GET /b")
+
+Rel(b1, awsap, " ")
+
+@enduml
+----
+
+* https://github.com/plantuml-stdlib/C4-PlantUML?tab=readme-ov-file#container-diagram[C4-PlantUML - Container diagram]
+* https://github.com/awslabs/aws-icons-for-plantuml[AWS Icons for PlantUML]
+
 [#mindmap]
 === MindMap
 
@@ -486,100 +580,6 @@ stop
 ....
 
 https://plantuml.com/activity-diagram-beta[Activity Diagram]
-
-[#c4-diagram]
-=== C4 Diagram
-
-==== C4 System Landscape Diagram
-
-[plantuml,diagram-c4-system,svg]
-----
-@startuml
-
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
-
-HIDE_STEREOTYPE()
-
-Person(s, "Support")
-Person(c, "Customer")
-
-System(t, "Test System")
-System(p, "Prod System")
-SystemDb_Ext(i, "Issue Tracker")
-
-Rel(s, i, "Uses", "https")
-Rel(s, t, "Uses", "https")
-Rel_L(s, p, "Uses", "https")
-
-Rel_R(c, p, "Uses", "https")
-Rel(c, i, "Uses", "https")
-
-@enduml
-----
-
-* https://github.com/plantuml-stdlib/C4-PlantUML?tab=readme-ov-file#system-context--system-landscape-diagrams[C4-PlantUML - System Landscape]
-
-==== C4 Container Diagram
-
-[plantuml,diagram-c4-container,svg]
-----
-@startuml
-
-!theme C4_blue_new from https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/themes
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
-!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v20.0/dist
-!include AWSPuml/AWSCommon.puml
-!include AWSPuml/Compute/Lambda.puml
-!include AWSPuml/Containers/ElasticContainerServiceContainer2.puml
-!include AWSPuml/FrontEndWebMobile/FrontEndWebMobile.puml
-!include AWSPuml/NetworkingContentDelivery/CloudFront.puml
-!include AWSPuml/NetworkingContentDelivery/ElasticLoadBalancingApplicationLoadBalancer.puml
-!include AWSPuml/SecurityIdentityCompliance/Cognito.puml
-!include AWSPuml/Database/AuroraPostgreSQLInstance.puml
-
-HIDE_STEREOTYPE()
-LAYOUT_LANDSCAPE()
-
-AddElementTag("addition", $fontColor="seagreen")
-AddElementTag("modification", $fontColor="darkorange")
-
-Container(fe, "Frontend", $sprite="FrontEndWebMobile")
-
-Container(awsc, "Cognito", $sprite="Cognito")
-
-Container(awsalb, "App Load Balancer", $sprite="ElasticLoadBalancingApplicationLoadBalancer")
-
-Container(awscf, "CloudFront", $sprite="CloudFront", $tags = "modification")
-
-Boundary(awsecs, "ECS Fargate", $tags = "modification") {
-  Container(b1, "Backend 1", "Spring Boot", $sprite="ElasticContainerServiceContainer2", $descr="validates JWT")
-
-  Container(b2, "Backend 2", "Node.js", $sprite="ElasticContainerServiceContainer2", $tags = "addition")
-}
-
-ContainerDb(awsap, "Database", $sprite="AuroraPostgreSQLInstance")
-
-Container(eap, "Auth Proxy", $sprite="Lambda", $descr="validates JWT", $tags = "addition")
-
-Rel(fe, awsc, "retrieve JWT")
-
-Rel(fe, awscf, "GET /a", $descr="with JWT")
-Rel(fe, awscf, "GET /b", $descr="with JWT")
-
-Rel(awscf, awsalb, "GET /a", $descr="with JWT")
-Rel(awscf, eap, "GET /b", $descr="with JWT")
-
-Rel(awsalb, b1, "GET /a", $descr="with JWT")
-
-Rel(eap, b2, "GET /b")
-
-Rel(b1, awsap, " ")
-
-@enduml
-----
-
-* https://github.com/plantuml-stdlib/C4-PlantUML?tab=readme-ov-file#container-diagram[C4-PlantUML - Container diagram]
-* https://github.com/awslabs/aws-icons-for-plantuml[AWS Icons for PlantUML]
 
 === Tree Diagram
 
