@@ -25,6 +25,15 @@ readonly host_name='localhost'
 
 readonly network_name='sdavids_shell_misc'
 
+# https://docs.docker.com/reference/cli/docker/container/run/#:~:text=The%20%2D%2Dadd%2Dhost%20flag%20supports%20a%20special%20host%2Dgateway%20value%20that%20resolves%20to%20the%20internal%20IP%20address%20of%20the%20host.%20This%20is%20useful%20when%20you%20want%20containers%20to%20connect%20to%20services%20running%20on%20the%20host%20machine.
+if [ "$(uname -s)" = 'Linux' ]; then
+  add_host=--add-host=host.docker.internal:host-gateway
+else
+  # host.docker.internal is set automatically on macOS and Windows
+  add_host=
+fi
+readonly add_host
+
 docker network inspect "${network_name}" >/dev/null 2>&1 \
   || docker network create \
     --driver bridge "${network_name}" \
@@ -32,7 +41,9 @@ docker network inspect "${network_name}" >/dev/null 2>&1 \
 
 # to ensure ${label} is set, we use --label "${label}"
 # which might overwrite the label ${label_group} of the image
+# shellcheck disable=SC2086
 docker container run \
+  ${add_host} \
   --init \
   --rm \
   --detach \
