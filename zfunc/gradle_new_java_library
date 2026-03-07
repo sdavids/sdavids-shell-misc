@@ -221,6 +221,12 @@ EOF
     fi
 
     # https://docs.gradle.org/current/userguide/command_line_interface.html
-    ./gradlew --quiet check
+    # https://docs.gradle.org/current/userguide/toolchains.html#sub:disable_auto_detect
+    # https://docs.gradle.org/current/userguide/toolchains.html#sub:disable_auto_provision
+    ./gradlew \
+      -Porg.gradle.java.installations.auto-detect=true \
+      -Porg.gradle.java.installations.auto-download=true \
+      --quiet \
+      check
   fi
 }
