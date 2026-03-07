@@ -193,6 +193,8 @@ $ ../asciidoc_html_build.sh
 
 => `build/main.html`
 
+Generated HTML: xref:attachment$asciidoc/html/main.html[main.html]
+
 [TIP]
 ====
 More example AsciiDoc files can be found in https://github.com/sdavids/sdavids-shell-misc/blob/main/docs/[docs].

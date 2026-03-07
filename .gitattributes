@@ -13,3 +13,4 @@
 *.sh diff=bash
 
 *.png binary -eol -whitespace
+*.woff2 binary -eol -whitespace
