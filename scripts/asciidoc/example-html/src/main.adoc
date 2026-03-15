@@ -58,7 +58,7 @@ Copy & Paste Hell!
 ====
 
 // https://docs.asciidoctor.org/asciidoc/latest/verbatim/source-blocks/
-[source,java]
+[,java]
 ----
 class Main {
   void main() {
@@ -90,7 +90,7 @@ Why not use the actual sources with highlighting, line numbers, callouts, and sk
 // https://docs.asciidoctor.org/asciidoc/latest/verbatim/source-highlighter/#enable-line-numbering
 // https://docs.asciidoctor.org/asciidoc/latest/verbatim/highlight-lines/
 // https://docs.asciidoctor.org/asciidoc/latest/directives/include-lines/
-[source,java,linenums,highlight=4..6]
+[,java,linenums,highlight=4..6]
 .src/java/Main.java
 ----
 include::src/java/Main.java[lines=3..-1]
@@ -104,7 +104,7 @@ Just the method defined with the `main` the tag and fix indentation:
 
 // https://docs.asciidoctor.org/asciidoc/latest/directives/include-with-indent/
 // https://docs.asciidoctor.org/asciidoc/latest/directives/include-tagged-regions/
-[source,java,indent=0]
+[,java,indent=0]
 ----
 include::src/java/Main.java[tags=main]
 ----
@@ -159,7 +159,7 @@ xref:contact-chowe[Cameron Howe]
 xref:contact-jmacmillan[Joe MacMillan]
 endif::[]
 
-=== Attributes
+=== Attribute References Substitution
 
 // https://docs.asciidoctor.org/asciidoc/latest/attributes/reference-attributes/#reference-custom
 {github-org-url}/{github-repo}
@@ -172,6 +172,14 @@ endif::[]
 [,xml,subs="attributes+"]
 ----
 <version>{some-version}</version>
+----
+
+=== Quotes Substitution
+
+[,text,subs="quotes"]
+----
+# https://www.postgresql.org/docs/current/libpq-pgpass.html
+host.docker.internal:5432:example_db:admin:**PASSWORD**
 ----
 
 == Lists
@@ -214,9 +222,9 @@ endif::[]
 +
 more content for the same item
 +
-[source,java]
+[,java]
 ----
-System.out.println("YAY!");
+IO.println("YAY!");
 ----
 +
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut odio augue. Nam tristique rhoncus tortor, vitae sollicitudin risus hendrerit.
@@ -345,7 +353,7 @@ endif::[]
 .>| Source Code
 |
 
-[source,java]
+[,java]
 ----
 List<String> collectorCollection =
   productList.stream().map(Product::getName).collect(Collectors.toList());
