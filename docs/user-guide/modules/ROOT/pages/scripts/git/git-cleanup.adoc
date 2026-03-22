@@ -36,7 +36,6 @@ Add them to the https://+git-scm.com/docs/git-clean#Documentation/git-clean.txt-
 ----
   git clean -qfdx \
 +  -e .env \
-  -e .fleet \
   -e .idea \
   -e .classpath \
   -e .project \
