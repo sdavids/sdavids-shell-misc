@@ -67,9 +67,19 @@ mkdir -p "${dst_dir}"
 chmod "${perm}" "${dst_dir}"
 
 if [ "${force}" = 'false' ]; then
-  src_files="$(find "${src_dir}" -type f -name '*.sh' -exec basename {} \; | sort | uniq)"
-  dst_files="$(find "${dst_dir}" -maxdepth 1 -type f -name '*.sh' -exec basename {} \; | sort)"
-  comm_files="$(comm -12 <(echo "${src_files}") <(echo "${dst_files}"))"
+  src_files_file="$(mktemp)"
+  readonly src_files_file
+  dst_files_file="$(mktemp)"
+  readonly dst_files_file
+
+  find "${src_dir}" -type f -name '*.sh' -exec basename {} \; | sort | uniq >"${src_files_file}"
+  find "${dst_dir}" -maxdepth 1 -type f -name '*.sh' -exec basename {} \; | sort >"${dst_files_file}"
+
+  comm_files="$(comm -12 "${src_files_file}" "${dst_files_file}")"
+  readonly comm_files
+
+  rm -f "${src_files_file}"
+  rm -f "${dst_files_file}"
 
   if [ "${yes}" = 'false' ] && [ -n "${comm_files}" ]; then
     printf 'The following files will be overwritten:\n\n%s\n\n' "${comm_files}"
